@@ -6,15 +6,34 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.Random;
 
-public class MainActivity extends AppWidgetProvider {
+public class WeatherWidget extends AppWidgetProvider {
 
+    public static int getNumberOfWidgets(final Context context) {
+        ComponentName componentName = new ComponentName(context, WeatherWidget.class);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] activeWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+        if (activeWidgetIds != null) {
+            return activeWidgetIds.length;
+        } else {
+            return 0;
+        }
+    }
+
+
+
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+        context.startService(new Intent(context, WeatherWidgetUpdateService.class));
+    }
     private static final String ACTION_CLICK = "ACTION_CLICK";
 
     @Override
@@ -23,7 +42,7 @@ public class MainActivity extends AppWidgetProvider {
 
         // Get all ids
         ComponentName thisWidget = new ComponentName(context,
-                MainActivity.class);
+                WeatherWidget.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
         for (int widgetId : allWidgetIds) {
             // create some random data
@@ -36,7 +55,7 @@ public class MainActivity extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.update, String.valueOf(number));
 
             // Register an onClickListener
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, WeatherWidget.class);
 
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
