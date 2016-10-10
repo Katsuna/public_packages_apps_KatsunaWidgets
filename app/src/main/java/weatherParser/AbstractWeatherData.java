@@ -47,6 +47,10 @@ abstract public class AbstractWeatherData {
         this.dateTime = json.optLong (WeatherData.JSON_DATE_TIME, Long.MIN_VALUE);
     }
 
+    public AbstractWeatherData(){
+        this.dateTime = System.currentTimeMillis();
+    }
+
     public long getDateTime () {
         return this.dateTime;
     }

@@ -19,6 +19,15 @@ public class WeatherData extends AbstractWeatherData {
     private static final String JSON_WEATHER   = "weather";
 
     public static class Main extends AbstractWeatherData.Main {
+
+        public Main(float temp, float tempMin, float tempMax, float pressure, float humidity) {
+            this.temp = temp;
+            this.tempMin = tempMin;
+            this.tempMax = tempMax;
+            this.pressure = pressure;
+            this.humidity = humidity;
+        }
+
         private final float temp;
         private final float tempMin;
         private final float tempMax;
@@ -31,6 +40,14 @@ public class WeatherData extends AbstractWeatherData {
             this.tempMax = (float) json.optDouble (Main.JSON_TEMP_MAX);
             this.pressure = (float) json.optDouble (Main.JSON_PRESSURE);
             this.humidity = (float) json.optDouble (Main.JSON_HUMIDITY);
+        }
+
+        public Main() {
+            this.temp = 0;
+            this.tempMin = 0;
+            this.tempMax = 0;
+            this.pressure = 0;
+            this.humidity = 0;
         }
 
         public boolean hasTemp () {
@@ -82,6 +99,14 @@ public class WeatherData extends AbstractWeatherData {
             this.gust = (float) json.optDouble (Wind.JSON_GUST);
             this.varBeg = json.optInt (Wind.JSON_VAR_BEG, Integer.MIN_VALUE);
             this.varEnd = json.optInt (Wind.JSON_VAR_END, Integer.MIN_VALUE);
+        }
+
+        public Wind() {
+            this.speed = 0;
+            this.deg = 0;
+            this.gust = 0;
+            this.varBeg = 0;
+            this.varEnd = 0;
         }
 
         public boolean hasSpeed () {
@@ -165,6 +190,11 @@ public class WeatherData extends AbstractWeatherData {
 
     public static class Clouds extends TimedDetails {
         private static final String JSON_ALL = "all";
+
+        public Clouds() {
+            this.all = 0;
+            this.conditions = null;
+        }
 
         public static class CloudDescription {
             private static final String JSON_DISTANCE = "distance";
@@ -251,7 +281,14 @@ public class WeatherData extends AbstractWeatherData {
             }
         }
 
+        public Clouds(int all, List<CloudDescription> conditions) {
+            this.all = all;
+            this.conditions = conditions;
+        }
         private final int all;
+
+
+
         private final List<CloudDescription> conditions;
 
         public Clouds (JSONObject json) {
@@ -430,6 +467,15 @@ public class WeatherData extends AbstractWeatherData {
     private final Precipitation rain;
     private final Precipitation snow;
     private final List<WeatherCondition> weatherConditions;
+
+    public WeatherData() {
+        this.main = new Main();
+        this.wind = new Wind();
+        this.clouds = new Clouds();
+        this.rain = null;
+        this.snow = null;
+        this.weatherConditions =null;
+    }
 
     public WeatherData (JSONObject json) {
         super (json);

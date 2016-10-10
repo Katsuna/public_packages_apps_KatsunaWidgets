@@ -16,21 +16,12 @@ import android.util.Log;
  */
 public class WeatherWidgetService extends Service {
 
-    public boolean isStandaloneWidget(){
-        for (PackageInfo pack : getPackageManager().getInstalledPackages(PackageManager.GET_PROVIDERS)) {
-            ProviderInfo[] providers = pack.providers;
-            if (providers != null) {
-                for (ProviderInfo provider : providers) {
-                    Log.d("Example", "provider: " + provider.authority);
-                }
-            }
-        }
-        return true;
-    }
+
 
     final private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            System.out.println("Adsdasd");
 //            if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
 //                BatteryInfo batteryInfo = new BatteryInfo(intent);
 //                Intent updateIntent = new Intent(context, UpdateService.class);
@@ -59,7 +50,8 @@ public class WeatherWidgetService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        isStandaloneWidget();
+        System.out.println("Adsdasd2");
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         intentFilter.addAction(Intent.ACTION_BATTERY_LOW);

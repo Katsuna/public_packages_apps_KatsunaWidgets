@@ -14,7 +14,6 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("Start!!!2");
 
         if (WeatherWidget.getNumberOfWidgets(context) > 0) {
             // ensure service is running

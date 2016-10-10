@@ -14,7 +14,13 @@ import android.widget.RemoteViews;
 
 import java.util.Random;
 
+import weatherDb.WeatherContentProvider;
+import weatherDb.WeatherDbHandler;
+
 public class WeatherWidget extends AppWidgetProvider {
+
+    public static WeatherDbHandler wDBHandler;
+    public static WeatherContentProvider weatherContentProvider;
 
     public static int getNumberOfWidgets(final Context context) {
         ComponentName componentName = new ComponentName(context, WeatherWidget.class);
@@ -28,9 +34,33 @@ public class WeatherWidget extends AppWidgetProvider {
     }
 
 
-
+    public boolean isStandaloneWidget(Context context){
+        for (PackageInfo pack : context.getPackageManager().getInstalledPackages(PackageManager.GET_PROVIDERS)) {
+            ProviderInfo[] providers = pack.providers;
+            if (providers != null) {
+                for (ProviderInfo provider : providers) {
+                    Log.d("Example", "provider: " + provider.authority);
+                    if(provider.authority.equals("daemon_miner_app.sqlite.weatherDb.WeatherContentProvider")){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
     @Override
     public void onEnabled(Context context) {
+        System.out.println("I'm here1");
+        WidgetVersion.instance().setIsStandalone(isStandaloneWidget(context));
+        if(WidgetVersion.instance().isStandalone){
+            wDBHandler = new WeatherDbHandler(context);
+
+            
+        }
+        else{
+            weatherContentProvider = new WeatherContentProvider();
+        }
+
         super.onEnabled(context);
         context.startService(new Intent(context, WeatherWidgetUpdateService.class));
     }
@@ -40,6 +70,15 @@ public class WeatherWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
 
+        System.out.println("I'm here");
+        if(WidgetVersion.instance().isStandalone){
+            System.out.println("I'm in the stand");
+            wDBHandler.getCurrentWeather();
+
+        }
+        else{
+            weatherContentProvider.getCurrentWeatherFromContentProvider(context);
+        }
         // Get all ids
         ComponentName thisWidget = new ComponentName(context,
                 WeatherWidget.class);
@@ -49,7 +88,7 @@ public class WeatherWidget extends AppWidgetProvider {
             int number = (new Random().nextInt(100));
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                    R.layout.activity_main);
+                    R.layout.weather_widget_view);
             Log.w("WidgetExample", String.valueOf(number));
             // Set the text
             remoteViews.setTextViewText(R.id.update, String.valueOf(number));

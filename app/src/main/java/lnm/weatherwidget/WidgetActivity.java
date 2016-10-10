@@ -7,9 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,17 +39,16 @@ public class WidgetActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             System.out.println("Start!!!3");
 
-            if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
-              //  BatteryInfo batteryInfo = new BatteryInfo(intent);
-            //    updateView(batteryInfo);
-            }
+//            if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
+//                BatteryInfo batteryInfo = new BatteryInfo(intent);
+//                updateView(batteryInfo);
+//            }
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Start!!!4");
 
         setContentView(R.layout.activity_widget);
 //        mGraphLayout = (LinearLayout) findViewById(R.id.chart);
@@ -64,6 +67,8 @@ public class WidgetActivity extends Activity {
 //        updateView(batteryInfo);
 
         // ensure service is running
+        System.out.println("Start!!!4-");
+
         startService(new Intent(this, WeatherWidgetUpdateService.class));
     }
 
@@ -134,5 +139,16 @@ public class WidgetActivity extends Activity {
 //        }
     }
 
+    public boolean isStandaloneWidget(){
+        for (PackageInfo pack : getPackageManager().getInstalledPackages(PackageManager.GET_PROVIDERS)) {
+            ProviderInfo[] providers = pack.providers;
+            if (providers != null) {
+                for (ProviderInfo provider : providers) {
+                    Log.d("Example", "provider: " + provider.authority);
+                }
+            }
+        }
+        return true;
+    }
 
 }
