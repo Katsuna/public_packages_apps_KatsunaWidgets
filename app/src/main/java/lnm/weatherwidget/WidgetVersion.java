@@ -6,9 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.util.Log;
 
-/**
- * Created by nikos on 28-Sep-16.
- */
+
 public class WidgetVersion {
 
     public static boolean isStandalone;

@@ -151,4 +151,6 @@ public class WidgetActivity extends Activity {
         return true;
     }
 
+    public static void saveLastUpdateTime(SharedPreferences sp) {
+    }
 }
