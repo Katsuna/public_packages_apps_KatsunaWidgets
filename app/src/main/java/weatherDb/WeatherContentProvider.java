@@ -229,29 +229,29 @@ public class WeatherContentProvider extends ContentProvider {
 
     public WeatherData getCurrentWeatherFromContentProvider(Context context){
         /*
- * This defines a one-element String array to contain the selection argument.
- */
+        * This defines a one-element String array to contain the selection argument.
+        */
         String[] mSelectionArgs = {""};
 
 
-// Remember to insert code here to check for invalid or malicious input.
+        // Remember to insert code here to check for invalid or malicious input.
 
-// If the word is the empty string, gets everything
-//        if (TextUtils.isEmpty(mSearchString)) {
-//            // Setting the selection clause to null will return all words
-//            mSelectionClause = null;
-//            mSelectionArgs[0] = "";
-//
-//        } else {
-//            // Constructs a selection clause that matches the word that the user entered.
-//            mSelectionClause = UserDictionary.Words.WORD + " = ?";
-//
-//            // Moves the user's input string to the selection arguments.
-//            mSelectionArgs[0] = mSearchString;
-//
-//        }
+        // If the word is the empty string, gets everything
+        //        if (TextUtils.isEmpty(mSearchString)) {
+        //            // Setting the selection clause to null will return all words
+        //            mSelectionClause = null;
+        //            mSelectionArgs[0] = "";
+        //
+        //        } else {
+        //            // Constructs a selection clause that matches the word that the user entered.
+        //            mSelectionClause = UserDictionary.Words.WORD + " = ?";
+        //
+        //            // Moves the user's input string to the selection arguments.
+        //            mSelectionArgs[0] = mSearchString;
+        //
+        //        }
 
-// Does a query against the table and returns a Cursor object
+        // Does a query against the table and returns a Cursor object
         Cursor mCursor = context.getContentResolver().query(
                 CWEATHER_URI,  // The content URI of the words table
                 null,                       // The columns to return for each row

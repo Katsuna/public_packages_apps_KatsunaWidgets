@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class WidgetVersion {
 
-    public static boolean isStandalone;
+    private static boolean isStandalone;
 
     protected WidgetVersion() {
 

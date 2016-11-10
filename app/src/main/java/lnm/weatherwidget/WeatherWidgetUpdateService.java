@@ -2,14 +2,8 @@ package lnm.weatherwidget;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
-import android.app.Service;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
@@ -17,8 +11,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -30,12 +22,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import weatherDb.ForecastTable;
-import weatherDb.Weather;
+import weatherDb.SecWeather;
 import weatherDb.WeatherContentProvider;
-import weatherDb.WeatherDbHandler;
 import weatherDb.WeatherTable;
 import weatherParser.ForecastWeatherData;
 import weatherParser.JSONWeatherParser;
@@ -51,7 +41,7 @@ public class WeatherWidgetUpdateService extends IntentService {
     public static final String ACTION_FETCH_FORECAST_WEATHER_DATA = "lnm.weatherwiget.action.FETCH_FORECAST_WEATHER_DATA";
     public static final String ACTION_FETCH_LONG_FORECAST_WEATHER_DATA = "lnm.weatherwiget.action.FETCH_LONG_FORECAST_WEATHER_DATA";
 
-    private weatherDb.Weather weather;
+    private SecWeather secWeather;
 
 
     public boolean isStandaloneWidget(){
@@ -107,10 +97,10 @@ public class WeatherWidgetUpdateService extends IntentService {
         switch (action) {
             case ACTION_FETCH_WEATHER_DATA:
                 JSONObject weatherObj = client.getCurrentWeatherJSON(getApplicationContext(), address);
-                System.out.println("Weather:" + weatherObj);
+                System.out.println("SecWeather:" + weatherObj);
                 try {
-                    weather = JSONWeatherParser.getWeather(weatherObj);
-                    addWeatherRecord(weather);
+                    secWeather = JSONWeatherParser.getWeather(weatherObj);
+                    addWeatherRecord(secWeather);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -154,7 +144,7 @@ public class WeatherWidgetUpdateService extends IntentService {
         }
     }
 
-    public void addWeatherRecord(Weather weather) {
+    public void addWeatherRecord(SecWeather secWeather) {
         Log.d("Sqli","kanw add kati stin basi");
 
         Date date = new Date();
@@ -162,14 +152,14 @@ public class WeatherWidgetUpdateService extends IntentService {
 
         ContentValues values = new ContentValues();
 
-        values.put(WeatherTable.id, weather.currentCondition.getWeatherId());
+        values.put(WeatherTable.id, secWeather.currentCondition.getWeatherId());
 
-        values.put(WeatherTable.wind, weather.wind.toString());
-        values.put(WeatherTable.rain, weather.rain.toString());
-        values.put(WeatherTable.snow, weather.snow.toString());
-        values.put(WeatherTable.clouds,weather.clouds.toString());
+        values.put(WeatherTable.wind, secWeather.wind.toString());
+        values.put(WeatherTable.rain, secWeather.rain.toString());
+        values.put(WeatherTable.snow, secWeather.snow.toString());
+        values.put(WeatherTable.clouds, secWeather.clouds.toString());
         values.put(WeatherTable.timestamp, time);
-        WeatherWidget.wDBHandler.addCurrentWeatherRecord(weather,weather.currentCondition.getWeatherId());
+        WeatherWidget.wDBHandler.addCurrentWeatherRecord(secWeather, secWeather.currentCondition.getWeatherId());
         // Inserting Row
 //        Uri uri = getContentResolver().insert(WeatherContentProvider.CWEATHER_URI, values);
 
@@ -184,7 +174,7 @@ public class WeatherWidgetUpdateService extends IntentService {
 //        remoteViews.setTextViewText(R.id.batterytext, String.valueOf(level) + "%");
       Intent activityIntent = new Intent(this, WidgetActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.weather_widget_view, pendingIntent);
+        //remoteViews.setOnClickPendingIntent(R.id.weather_widget_view, pendingIntent);
         return remoteViews;
     }
 

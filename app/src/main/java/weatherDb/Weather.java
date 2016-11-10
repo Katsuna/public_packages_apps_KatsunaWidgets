@@ -1,5 +1,6 @@
 package weatherDb;
 
+import android.content.Context;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,173 +8,148 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import weatherParser.MyLocation;
+import lnm.weatherwidget.R;
+
 
 public class Weather {
 
-    public MyLocation location;
-    public CurrentCondition currentCondition = new CurrentCondition();
-    public int id;
-    public Temperature temperature = new Temperature();
-    public Wind wind = new Wind();
-    public Rain rain = new Rain();
-    public Snow snow = new Snow()	;
-    public Clouds clouds = new Clouds();
+    public enum WindDirection {
+        // don't change order
+        NORTH, NORTH_NORTH_EAST, NORTH_EAST, EAST_NORTH_EAST,
+        EAST, EAST_SOUTH_EAST, SOUTH_EAST, SOUTH_SOUTH_EAST,
+        SOUTH, SOUTH_SOUTH_WEST, SOUTH_WEST, WEST_SOUTH_WEST,
+        WEST, WEST_NORTH_WEST, NORTH_WEST, NORTH_NORTH_WEST;
+
+        public static WindDirection byDegree(double degree) {
+            return byDegree(degree, WindDirection.values().length);
+        }
+
+        public static WindDirection byDegree(double degree, int numberOfDirections) {
+            WindDirection[] directions = WindDirection.values();
+            int availableNumberOfDirections = directions.length;
+
+            int direction = windDirectionDegreeToIndex(degree, numberOfDirections)
+                    * availableNumberOfDirections / numberOfDirections;
+
+            return directions[direction];
+        }
+
+        public String getLocalizedString(Context context) {
+            // usage of enum.ordinal() is not recommended, but whatever
+            return context.getResources().getStringArray(R.array.windDirections)[ordinal()];
+        }
+
+        public String getArrow(Context context) {
+            // usage of enum.ordinal() is not recommended, but whatever
+            return context.getResources().getStringArray(R.array.windDirectionArrows)[ordinal() / 2];
+        }
+    }
+
+    // you may use values like 4, 8, etc. for numberOfDirections
+    public static int windDirectionDegreeToIndex(double degree, int numberOfDirections) {
+        // to be on the safe side
+        degree %= 360;
+        if(degree < 0) degree += 360;
+
+        degree += 180 / numberOfDirections; // add offset to make North start from 0
+
+        int direction = (int) Math.floor(degree * numberOfDirections / 360);
+
+        return direction % numberOfDirections;
+    }
+
+    private String city;
+    private String country;
+    private Date date;
+    private String temperature;
+    private String description;
+    private String wind;
+    private Double windDirectionDegree;
+    private String pressure;
+    private String humidity;
+    private String rain;
+    private String id;
+    private String icon;
+    private String lastUpdated;
     private Date sunrise;
     private Date sunset;
-    private Date date;
-    private String icon;
 
-
-    public byte[] iconData;
-
-    public  class CurrentCondition {
-        private int weatherId;
-        private String condition;
-        private String descr;
-        private String icon;
-
-
-        private float pressure;
-        private float humidity;
-
-        public int getWeatherId() {
-            return weatherId;
-        }
-        public void setWeatherId(int weatherId) {
-            this.weatherId = weatherId;
-        }
-        public String getCondition() {
-            return condition;
-        }
-        public void setCondition(String condition) {
-            this.condition = condition;
-        }
-        public String getDescr() {
-            return descr;
-        }
-        public void setDescr(String descr) {
-            this.descr = descr;
-        }
-        public String getIcon() {
-            return icon;
-        }
-        public void setIcon(String icon) {
-            this.icon = icon;
-        }
-        public float getPressure() {
-            return pressure;
-        }
-        public void setPressure(float pressure) {
-            this.pressure = pressure;
-        }
-        public float getHumidity() {
-            return humidity;
-        }
-        public void setHumidity(float humidity) {
-            this.humidity = humidity;
-        }
-
-
+    public String getCity() {
+        return city;
     }
 
-    public  class Temperature {
-        private float temp;
-        private float minTemp;
-        private float maxTemp;
-
-        public float getTemp() {
-            return temp;
-        }
-        public void setTemp(float temp) {
-            this.temp = temp;
-        }
-        public float getMinTemp() {
-            return minTemp;
-        }
-        public void setMinTemp(float minTemp) {
-            this.minTemp = minTemp;
-        }
-        public float getMaxTemp() {
-            return maxTemp;
-        }
-        public void setMaxTemp(float maxTemp) {
-            this.maxTemp = maxTemp;
-        }
-
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public  class Wind {
-        private float speed;
-        private float deg;
-        public float getSpeed() {
-            return speed;
-        }
-        public void setSpeed(float speed) {
-            this.speed = speed;
-        }
-        public float getDeg() {
-            return deg;
-        }
-        public void setDeg(float deg) {
-            this.deg = deg;
-        }
-
-
+    public String getCountry() {
+        return country;
     }
 
-    public  class Rain {
-        private String time;
-        private float ammount;
-        public String getTime() {
-            return time;
-        }
-        public void setTime(String time) {
-            this.time = time;
-        }
-        public float getAmmount() {
-            return ammount;
-        }
-        public void setAmmount(float ammount) {
-            this.ammount = ammount;
-        }
-
-
-
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public  class Snow {
-        private String time;
-        private float ammount;
-
-        public String getTime() {
-            return time;
-        }
-        public void setTime(String time) {
-            this.time = time;
-        }
-        public float getAmmount() {
-            return ammount;
-        }
-        public void setAmmount(float ammount) {
-            this.ammount = ammount;
-        }
-
-
+    public String getTemperature() {
+        return temperature;
     }
 
-    public  class Clouds {
-        private int perc;
-
-        public int getPerc() {
-            return perc;
-        }
-
-        public void setPerc(int perc) {
-            this.perc = perc;
-        }
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
 
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public String getWind() {
+        return wind;
+    }
+
+    public void setWind(String wind) {
+        this.wind = wind;
+    }
+
+    public Double getWindDirectionDegree() {
+        return windDirectionDegree;
+    }
+
+    public void setWindDirectionDegree(Double windDirectionDegree) {
+        this.windDirectionDegree = windDirectionDegree;
+    }
+
+    public WindDirection getWindDirection() {
+        return WindDirection.byDegree(windDirectionDegree);
+    }
+
+    public WindDirection getWindDirection(int numberOfDirections) {
+        return WindDirection.byDegree(windDirectionDegree, numberOfDirections);
+    }
+
+    public boolean isWindDirectionAvailable() {
+        return windDirectionDegree != null;
+    }
+
+    public String getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(String pressure) {
+        this.pressure = pressure;
+    }
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
     }
 
     public Date getSunrise(){
@@ -273,4 +249,30 @@ public class Weather {
 
         return Math.round((me.getTimeInMillis() - initial.getTimeInMillis()) / 86400000.0);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRain() {
+        return rain;
+    }
+
+    public void setRain(String rain) {
+        this.rain = rain;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+
 }

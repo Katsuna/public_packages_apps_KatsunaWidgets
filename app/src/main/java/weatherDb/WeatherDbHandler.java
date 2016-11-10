@@ -6,11 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.location.Location;
 import android.util.Log;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,7 +98,7 @@ public class WeatherDbHandler  extends SQLiteOpenHelper {
     }
 
 
-    public void addCurrentWeatherRecord(Weather weather, int weatherId) {
+    public void addCurrentWeatherRecord(SecWeather secWeather, int weatherId) {
         Log.d("Sqli","kanw add kati stin basi");
         SQLiteDatabase db = this.getWritableDatabase();
         Date date = new Date();
@@ -108,11 +106,11 @@ public class WeatherDbHandler  extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(id, weatherId);
-        values.put(temp, weather.temperature.getTemp());
-        values.put(wind, weather.wind.toString());
-        values.put(rain, weather.rain.toString());
-        values.put(snow, weather.snow.toString());
-        values.put(clouds,weather.clouds.toString());
+        values.put(temp, secWeather.temperature.getTemp());
+        values.put(wind, secWeather.wind.toString());
+        values.put(rain, secWeather.rain.toString());
+        values.put(snow, secWeather.snow.toString());
+        values.put(clouds, secWeather.clouds.toString());
         values.put(timestamp, time);
 
         // Inserting Row

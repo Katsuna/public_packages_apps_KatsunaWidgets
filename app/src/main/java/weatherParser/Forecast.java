@@ -2,17 +2,17 @@ package weatherParser;
 
 import java.util.ArrayList;
 
-import weatherDb.Weather;
+import weatherDb.SecWeather;
 
 
 public class Forecast {
-    private ArrayList<Weather> weekWeather;
+    private ArrayList<SecWeather> weekWeather;
 
-    public ArrayList<Weather> getWeekWeather() {
+    public ArrayList<SecWeather> getWeekWeather() {
         return weekWeather;
     }
 
-    public void setWeekWeather(ArrayList<Weather> weekWeather) {
+    public void setWeekWeather(ArrayList<SecWeather> weekWeather) {
         this.weekWeather = weekWeather;
     }
 }
