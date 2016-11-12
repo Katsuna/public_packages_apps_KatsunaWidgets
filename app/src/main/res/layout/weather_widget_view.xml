@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widgetRoot"
+
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widgetRoot"
+    android:background="@drawable/widget_back"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true"
-    android:background="@android:color/holo_blue_light"
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
         <TextView
             android:id="@+id/widgetTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            tools:text="WEATHER"
+            android:text="WEATHER"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+    </LinearLayout>
 
-        <LinearLayout
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -34,14 +38,14 @@
                 android:id="@+id/widgetTemperatureTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Temperature "
+                android:text="Temperature "
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
             <TextView
                 android:id="@+id/widgetTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="0 °C"
+                android:text="0 °C"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="16sp" />
             <!--android:src="@drawable/ic_refresh_white_24dp"-->
@@ -49,8 +53,15 @@
 
         </LinearLayout>
 
+
+    <ImageView
+        android:id="@+id/widgetIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       />
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="384dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="false"
@@ -61,7 +72,7 @@
             android:id="@+id/widgetDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="No data"
+            android:text="No data"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -69,10 +80,8 @@
             android:id="@+id/widgetWind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="Wind: 0 m/s"
+            android:text="Wind: 0 m/s"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>
-
