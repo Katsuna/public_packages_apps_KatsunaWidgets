@@ -39,7 +39,7 @@ public class JSONWeatherParser {
     private final String JSON_MODEL = "model";
     static final String JSON_SYS = "sys";
 
-    private String setWeatherIcon(int actualId, int hourOfDay, Context context) {
+    private static String setWeatherIcon(int actualId, int hourOfDay, Context context) {
         int id = actualId / 100;
         String icon = "";
         if (actualId == 800) {
@@ -73,7 +73,7 @@ public class JSONWeatherParser {
         return icon;
     }
 
-    public Weather parseWidgetJson(String result, Context context) {
+    public static Weather parseWidgetJson(String result, Context context) {
         try {
             //WidgetActivity.initMappings();
 
@@ -133,8 +133,8 @@ public class JSONWeatherParser {
         }
     }
 
-    protected String localize(SharedPreferences sp, Context context, String preferenceKey,
-                              String defaultValueKey) {
+    protected static String localize(SharedPreferences sp, Context context, String preferenceKey,
+                                     String defaultValueKey) {
         return WidgetActivity.localize(sp, context, preferenceKey, defaultValueKey);
     }
 

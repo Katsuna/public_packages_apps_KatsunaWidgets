@@ -527,8 +527,8 @@ public class WidgetActivity extends AppCompatActivity implements LocationListene
                 Calendar today = Calendar.getInstance();
                 if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
                     longTermTodayWeather.add(weather);
-                } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) + 1) {
-                    longTermTomorrowWeather.add(weather);
+//                } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR ) + 1) {
+//                    longTermTomorrowWeather.add(weather);
                 } else {
                     longTermWeather.add(weather);
                 }
@@ -915,12 +915,6 @@ public class WidgetActivity extends AppCompatActivity implements LocationListene
 
     private int getTheme(String themePref) {
         switch (themePref) {
-            case "dark":
-                return R.style.AppTheme;
-            case "classic":
-                return R.style.AppTheme;
-            case "classicdark":
-                return R.style.AppTheme;
             default:
                 return R.style.AppTheme;
         }

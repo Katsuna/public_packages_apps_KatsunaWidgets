@@ -15,16 +15,21 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Icon;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 
 import weatherDb.SecWeather;
 import weatherDb.Weather;
 import weatherDb.WeatherContentProvider;
 import weatherDb.WeatherDbHandler;
+import weatherParser.JSONWeatherParser;
+
+import static lnm.weatherwidget.R.attr.icon;
 
 public class WeatherWidget extends AppWidgetProvider {
 
@@ -40,6 +45,47 @@ public class WeatherWidget extends AppWidgetProvider {
         } else {
             return 0;
         }
+    }
+
+    private int getWeatherIconId(String actualId, int hourOfDay, Context context) {
+
+        int icon = 0;
+        if (actualId.equals(context.getString(R.string.weather_sunny))) {
+            if (hourOfDay >= 7 && hourOfDay < 20) {
+                icon = R.drawable.k48_sun;
+            } else {
+                icon = R.drawable.k48_sun;
+            }
+        } else if (actualId.equals(context.getString(R.string.weather_thunder))) {
+            icon = R.drawable.k48_heavyrain;
+
+        }
+        else if (actualId.equals(context.getString(R.string.weather_drizzle))) {
+            icon = R.drawable.k48_light_rain;
+
+        }
+        else if(actualId.equals(context.getString(R.string.weather_foggy))){
+            icon = R.drawable.k48_fog;
+
+        }
+        else if(actualId.equals(context.getString(R.string.weather_cloudy))){
+            icon = R.drawable.k48_clouds;
+
+        }
+        else if(actualId.equals(context.getString(R.string.weather_snowy))){
+            icon = R.drawable.k48_heavysnow;
+
+        }
+        else if(actualId.equals(context.getString(R.string.weather_rainy))){
+            icon = R.drawable.k48_heavyrain;
+
+        }
+
+
+
+        System.out.println(">>>>>>>>>>>>>>1="+icon);
+
+        return icon;
     }
 
 
@@ -135,9 +181,11 @@ public class WeatherWidget extends AppWidgetProvider {
             Weather widgetWeather = new Weather();
             if(!sp.getString("lastToday", "").equals("")) {
                 System.out.println("im called");
-              //  widgetWeather = JSONWeatherParser.getWeather(sp.getString("lastToday", ""), context);
+                widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), context);
             }
             else {
+                System.out.println("im called 2");
+
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
@@ -151,11 +199,12 @@ public class WeatherWidget extends AppWidgetProvider {
 //            remoteViews.setTextViewText(R.id.widgetCity, widgetWeather.getCity() + ", " + widgetWeather.getCountry());
             remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
             remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
+            System.out.println("WInd: "+ widgetWeather.getWind());
             remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
 //            remoteViews.setTextViewText(R.id.widgetPressure, widgetWeather.getPressure());
 //            remoteViews.setTextViewText(R.id.widgetHumidity, context.getString(R.string.humidity) + ": " + widgetWeather.getHumidity() + " %");
             //remoteViews.setTextViewText(R.id.widgetLastUpdate, widgetWeather.getLastUpdated());
-//            remoteViews.setImageViewBitmap(R.id.widgetIcon, getWeatherIcon(widgetWeather.getIcon(), context));
+            remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }

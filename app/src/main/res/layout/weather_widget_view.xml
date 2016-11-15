@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:maxWidth="10000dp">
 
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,9 +11,7 @@
     android:background="@drawable/widget_back"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,8 +23,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="WEATHER"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/bb_inActiveBottomBarItemColor"
+            android:textSize="24sp" />
     </LinearLayout>
 
 
@@ -34,20 +35,21 @@
             android:baselineAligned="false"
             android:gravity="center_vertical|center_horizontal|center">
 
-            <TextView
-                android:id="@+id/widgetTemperatureTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperature "
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-            <TextView
+        <TextView
+            android:id="@+id/widgetTemperatureTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
                 android:id="@+id/widgetTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 °C"
                 android:textColor="@android:color/holo_blue_light"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
             <!--android:src="@drawable/ic_refresh_white_24dp"-->
 
 
@@ -58,6 +60,8 @@
         android:id="@+id/widgetIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/k48_clouds"
        />
 
     <LinearLayout
@@ -72,16 +76,30 @@
             android:id="@+id/widgetDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No data"
+            android:text="@string/no_data"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+
+            android:id="@+id/widgetWindcomma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=","
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
+
             android:id="@+id/widgetWind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:text="Wind: 0 m/s"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
+
+
     </LinearLayout>
 </LinearLayout>
+</RelativeLayout>
