@@ -1,4 +1,4 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

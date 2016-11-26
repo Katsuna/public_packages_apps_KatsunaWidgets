@@ -1,4 +1,4 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,6 +20,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import lnm.weatherwidget.R;
+
 public abstract class GenericRequestTask extends AsyncTask<String, String, TaskOutput> {
 
     ProgressDialog progressDialog;
@@ -28,6 +30,7 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
     public int loading = 0;
 
     public GenericRequestTask(Context context, WidgetActivity activity, ProgressDialog progressDialog) {
+        System.out.println("Dasdasdasdsad");
         this.context = context;
         this.activity = activity;
         this.progressDialog = progressDialog;

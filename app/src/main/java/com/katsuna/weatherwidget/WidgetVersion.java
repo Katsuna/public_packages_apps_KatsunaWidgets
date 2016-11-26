@@ -1,10 +1,4 @@
-package lnm.weatherwidget;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ProviderInfo;
-import android.util.Log;
+package com.katsuna.weatherwidget;
 
 
 public class WidgetVersion {

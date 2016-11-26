@@ -1,8 +1,10 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +30,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import lnm.weatherwidget.R;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -37,6 +40,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
+        int[] appWidgetId = AppWidgetManager.getInstance(context).getAppWidgetIds(
+                new ComponentName(context, ExtendedWeatherWidget.class));
+        System.out.println("I m here");
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             String interval = sp.getString("refreshInterval", "1");
@@ -98,6 +104,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         protected Void doInBackground(String... params) {
             String result = "";
             try {
+                System.out.println("ive been pressed!!!!!!!!!!!!!1");
+
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
                 if(language.equals("cs")) { language = "cz"; }
@@ -142,6 +150,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         protected Void doInBackground(String... params) {
             String result = "";
             try {
+                System.out.println("ive been pressed!!!!!!!!!!!!!2");
+
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
                 if(language.equals("cs")) { language = "cz"; }
@@ -281,6 +291,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
 
             try {
+                System.out.println("ive been pressed!!!!!!!!!!!!!3");
+
                 URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=&lat=" + lat + "&lon=" + lon + "&lang="+ language +"&appid=" + apiKey);
                 Log.d(TAG, "Request: " + url.toString());
 

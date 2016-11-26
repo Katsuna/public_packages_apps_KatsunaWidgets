@@ -1,4 +1,4 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 public class TaskOutput {
     // Indicates result of parsing server response

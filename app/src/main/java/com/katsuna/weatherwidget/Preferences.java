@@ -1,4 +1,4 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 import android.content.Context;
 import android.content.SharedPreferences;

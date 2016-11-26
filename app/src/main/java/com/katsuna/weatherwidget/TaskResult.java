@@ -1,3 +1,3 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 public enum TaskResult { SUCCESS, BAD_RESPONSE, IO_EXCEPTION, TOO_MANY_REQUESTS; }

@@ -3,7 +3,6 @@ package adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import java.util.TimeZone;
 
 
 import lnm.weatherwidget.R;
-import lnm.weatherwidget.WidgetActivity;
+import com.katsuna.weatherwidget.WidgetActivity;
 import utils.UnitConvertor;
 import weatherDb.Weather;
 import weatherDb.WeatherViewHolder;

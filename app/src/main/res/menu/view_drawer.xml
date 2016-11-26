@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <TextView
+            android:id="@+id/today"
+            android:text="Today"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/week"
+            android:text="Week"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/overview"
+            android:text="Overview"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+    </group>
+
+</menu>

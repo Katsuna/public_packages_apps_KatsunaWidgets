@@ -1,4 +1,4 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import lnm.weatherwidget.R;
 import weatherDb.ForecastTable;
 import weatherDb.SecWeather;
 import weatherDb.WeatherContentProvider;
@@ -159,7 +160,7 @@ public class WeatherWidgetUpdateService extends IntentService {
         values.put(WeatherTable.snow, secWeather.snow.toString());
         values.put(WeatherTable.clouds, secWeather.clouds.toString());
         values.put(WeatherTable.timestamp, time);
-        WeatherWidget.wDBHandler.addCurrentWeatherRecord(secWeather, secWeather.currentCondition.getWeatherId());
+    //    WeatherWidget.wDBHandler.addCurrentWeatherRecord(secWeather, secWeather.currentCondition.getWeatherId());
         // Inserting Row
 //        Uri uri = getContentResolver().insert(WeatherContentProvider.CWEATHER_URI, values);
 

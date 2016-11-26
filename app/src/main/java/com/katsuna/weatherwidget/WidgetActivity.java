@@ -1,20 +1,17 @@
-package lnm.weatherwidget;
+package com.katsuna.weatherwidget;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.ApplicationErrorReport;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -25,14 +22,12 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -40,7 +35,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -59,6 +54,7 @@ import java.util.Map;
 
 import adapters.ViewPagerAdapter;
 import adapters.WeatherRecyclerAdapter;
+import lnm.weatherwidget.R;
 import utils.UnitConvertor;
 import weatherDb.Weather;
 
@@ -120,6 +116,10 @@ public class WidgetActivity extends AppCompatActivity implements LocationListene
         setContentView(R.layout.activity_scrolling);
         appView = findViewById(R.id.viewApp);
 
+        RemoteViews updateViews = new RemoteViews(this.getPackageName(),
+                R.layout.extended_widget_view);
+        AppWidgetManager.getInstance(this).updateAppWidget(
+                new ComponentName(this, ExtendedWeatherWidget.class), updateViews);
         progressDialog = new ProgressDialog(WidgetActivity.this);
 
         // Load toolbar
@@ -139,12 +139,12 @@ public class WidgetActivity extends AppCompatActivity implements LocationListene
         todaySunset = (TextView) findViewById(R.id.todaySunset);
         lastUpdate = (TextView) findViewById(R.id.lastUpdate);
         todayIcon = (TextView) findViewById(R.id.todayIcon);
-        todayIcon.setTypeface(weatherFont);
+//        todayIcon.setTypeface(weatherFont);
 
         // Initialize viewPager
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
+//
         destroyed = false;
 
         initMappings();
@@ -549,6 +549,7 @@ public class WidgetActivity extends AppCompatActivity implements LocationListene
         if (destroyed) {
             return;
         }
+        System.out.println("ive been pressed!!!!!!!!!!!!!");
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -783,9 +784,9 @@ public class WidgetActivity extends AppCompatActivity implements LocationListene
 
         @Override
         protected void onPostExecute(TaskOutput output) {
-            super.onPostExecute(output);
+            //super.onPostExecute(output);
             // Update widgets
-            WeatherWidget.updateWidgets(context,WeatherWidget.class);
+           // WeatherWidget.updateWidgets(context,WeatherWidget.class);
         }
 
         @Override

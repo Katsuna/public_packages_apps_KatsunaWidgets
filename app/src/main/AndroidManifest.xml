@@ -8,7 +8,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".WidgetActivity"
+            android:name="com.katsuna.weatherwidget.WidgetActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -25,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <receiver android:name=".WeatherWidget" >
+        <receiver android:name="com.katsuna.weatherwidget.WeatherWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -33,7 +35,15 @@
                 android:resource="@xml/main_widget_info" />
 
         </receiver>
-        <receiver android:name=".AlarmReceiver">
+        <receiver android:name="com.katsuna.weatherwidget.ExtendedWeatherWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/extended_widget_info" />
+
+        </receiver>
+        <receiver android:name="com.katsuna.weatherwidget.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -50,7 +60,75 @@
 
 
         <service
-            android:name=".WeatherWidgetUpdateService"
+            android:name="com.katsuna.weatherwidget.WeatherWidgetUpdateService"
+            android:exported="false"/>
+
+
+        <activity
+            android:name="com.katsuna.clockwidget.MainActivity"
+            android:label="YourAppName"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.katsuna.clockwidget.ClockWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/clock_widget_info" />
+        </receiver>
+
+        <!--    Clock staff -->
+
+
+        <service
+            android:name="com.katsuna.clockwidget.MonitorService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.katsuna.clockwidget.UpdateService"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.katsuna.clockwidget.BootReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+<!--    Battery staff -->
+        <receiver android:name="com.katsuna.batterywidget.BatteryWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget"/>
+        </receiver>
+
+        <receiver
+            android:name="com.katsuna.batterywidget.BatteryWidget"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.katsuna.batterywidget.MonitorService"
+            android:exported="false"/>
+
+        <service
+            android:name="com.katsuna.batterywidget.UpdateService"
             android:exported="false"/>
 
     </application>
