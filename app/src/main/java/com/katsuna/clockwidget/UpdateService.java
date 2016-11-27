@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.katsuna.R;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +34,7 @@ public class UpdateService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action)) {
+
 
 
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.clock_widget);

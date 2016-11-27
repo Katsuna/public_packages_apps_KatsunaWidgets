@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 
 
 public class WeatherHttpClient {

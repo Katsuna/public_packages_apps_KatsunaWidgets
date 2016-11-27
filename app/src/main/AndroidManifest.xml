@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="lnm.weatherwidget">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.katsuna">
 
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,6 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name="com.katsuna.weatherwidget.WidgetActivity"
             android:label="@string/app_name">
@@ -53,6 +55,7 @@
         <receiver android:name="com.katsuna.commons.WidgetCollection" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget" />
@@ -121,16 +124,16 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget"/>
+                android:resource="@xml/battery_widget"/>
         </receiver>
 
-        <receiver
-            android:name="com.katsuna.batterywidget.BatteryWidget"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name="com.katsuna.batterywidget.BatteryWidget"-->
+            <!--android:permission="android.permission.RECEIVE_BOOT_COMPLETED">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name="com.katsuna.batterywidget.MonitorService"

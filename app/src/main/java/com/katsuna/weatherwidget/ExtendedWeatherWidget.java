@@ -10,7 +10,7 @@ import android.widget.RemoteViews;
 import java.util.ArrayList;
 import java.util.List;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 import com.katsuna.weatherDb.Weather;
 
 

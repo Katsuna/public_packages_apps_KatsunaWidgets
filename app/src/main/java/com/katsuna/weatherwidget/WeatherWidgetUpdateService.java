@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 import com.katsuna.weatherDb.ForecastTable;
 import com.katsuna.weatherDb.SecWeather;
 import com.katsuna.weatherDb.WeatherContentProvider;

@@ -28,6 +28,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.katsuna.R;
+
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
@@ -104,7 +106,7 @@ public class BatteryUpdateService extends IntentService {
      * @return the RemoteViews
      */
     private RemoteViews createRemoteViews(final int level, final boolean isCharging) {
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_view);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
         if (isCharging)
         {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_charge);

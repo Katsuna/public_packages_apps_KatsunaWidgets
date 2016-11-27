@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 
 
 public class Weather {

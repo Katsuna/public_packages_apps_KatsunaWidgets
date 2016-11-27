@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 
 
 public class RecyclerViewFragment extends Fragment {

@@ -16,7 +16,7 @@ import android.widget.RemoteViews;
 
 import java.util.Calendar;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 import com.katsuna.weatherDb.Weather;
 import com.katsuna.weatherDb.WeatherContentProvider;
 import com.katsuna.weatherDb.WeatherDbHandler;

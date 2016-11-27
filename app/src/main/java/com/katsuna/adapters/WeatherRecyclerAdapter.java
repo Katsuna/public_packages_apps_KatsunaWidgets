@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 import com.katsuna.weatherwidget.WidgetActivity;
 import com.katsuna.utils.UnitConvertor;
 import com.katsuna.weatherDb.Weather;

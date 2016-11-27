@@ -33,18 +33,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
+import com.katsuna.R;
+
+//import org.achartengine.ChartFactory;
+//import org.achartengine.GraphicalView;
+//import org.achartengine.model.XYMultipleSeriesDataset;
+//import org.achartengine.model.XYSeries;
+//import org.achartengine.renderer.XYMultipleSeriesRenderer;
+//import org.achartengine.renderer.XYSeriesRenderer;
 
 public class WidgetActivity extends Activity {
 
     private LinearLayout mGraphLayout;
-    private GraphicalView mGraphicalView;
-    private XYSeries mXYSeries;
+//    private GraphicalView mGraphicalView;
+//    private XYSeries mXYSeries;
     private TextView mStatusView;
     private TextView mPlugView;
     private TextView mLevelView;
@@ -126,59 +128,59 @@ public class WidgetActivity extends Activity {
     }
 
     private void initGraphicalView() {
-        if (mGraphicalView == null) {
-            XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-            renderer.setYAxisMax(100);
-            renderer.setYAxisMin(0);
-            renderer.setAxisTitleTextSize(20);
-            renderer.setChartTitleTextSize(20);
-            renderer.setLabelsTextSize(20);
-            renderer.setLegendTextSize(20);
-            renderer.setPanEnabled(true, false);
-            renderer.setMargins(new int[]{18, 18, 18, 18});
-            renderer.setZoomEnabled(true, false);
-            renderer.setShowGrid(true);
-            renderer.setZoomButtonsVisible(false);
-
-            XYMultipleSeriesDataset dataSet = new XYMultipleSeriesDataset();
-            mXYSeries = new XYSeries("");
-            dataSet.addSeries(mXYSeries);
-
-            XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
-            xySeriesRenderer.setColor(Color.CYAN);
-            renderer.addSeriesRenderer(xySeriesRenderer);
-
-            mGraphicalView = ChartFactory.getTimeChartView(this, dataSet, renderer, null);
-            mGraphLayout.addView(mGraphicalView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.FILL_PARENT));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                mGraphLayout.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+//        if (mGraphicalView == null) {
+//            XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+//            renderer.setYAxisMax(100);
+//            renderer.setYAxisMin(0);
+//            renderer.setAxisTitleTextSize(20);
+//            renderer.setChartTitleTextSize(20);
+//            renderer.setLabelsTextSize(20);
+//            renderer.setLegendTextSize(20);
+//            renderer.setPanEnabled(true, false);
+//            renderer.setMargins(new int[]{18, 18, 18, 18});
+//            renderer.setZoomEnabled(true, false);
+//            renderer.setShowGrid(true);
+//            renderer.setZoomButtonsVisible(false);
+//
+//            XYMultipleSeriesDataset dataSet = new XYMultipleSeriesDataset();
+//            mXYSeries = new XYSeries("");
+//            dataSet.addSeries(mXYSeries);
+//
+//            XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
+//            xySeriesRenderer.setColor(Color.CYAN);
+//            renderer.addSeriesRenderer(xySeriesRenderer);
+//
+//            mGraphicalView = ChartFactory.getTimeChartView(this, dataSet, renderer, null);
+//            mGraphLayout.addView(mGraphicalView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+//                    ViewGroup.LayoutParams.FILL_PARENT));
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+//                mGraphLayout.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        }
     }
 
     private void drawGraph() {
         initGraphicalView();
-        Database database = null;
-        Cursor cursor = null;
-        try {
-            database = new Database(this);
-            cursor = database.openRead().getEntries();
-            if (cursor.moveToFirst()) {
-                do {
-                    long time = cursor.getLong(Database.TIME);
-                    int level = cursor.getInt(Database.LEVEL);
-                    mXYSeries.add(time, level);
-                } while (cursor.moveToNext());
-            }
-            mGraphicalView.repaint();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (database != null)
-                database.close();
-            if (cursor != null)
-                cursor.close();
-        }
+//        Database database = null;
+//        Cursor cursor = null;
+//        try {
+//            database = new Database(this);
+//            cursor = database.openRead().getEntries();
+//            if (cursor.moveToFirst()) {
+//                do {
+//                    long time = cursor.getLong(Database.TIME);
+//                    int level = cursor.getInt(Database.LEVEL);
+////                    mXYSeries.add(time, level);
+////                } while (cursor.moveToNext());
+//            }
+////            mGraphicalView.repaint();
+////        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (database != null)
+//                database.close();
+//            if (cursor != null)
+//                cursor.close();
+//        }
     }
 
     private String getStatus(BatteryInfo batteryInfo) {

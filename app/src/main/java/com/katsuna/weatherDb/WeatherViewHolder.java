@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 
 
 public class WeatherViewHolder extends RecyclerView.ViewHolder {

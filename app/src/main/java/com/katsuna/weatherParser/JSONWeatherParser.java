@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 import com.katsuna.weatherwidget.WidgetActivity;
 import com.katsuna.utils.UnitConvertor;
 import com.katsuna.weatherDb.SecWeather;

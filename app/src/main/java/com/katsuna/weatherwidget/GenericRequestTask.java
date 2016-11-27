@@ -20,7 +20,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Locale;
 
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 
 public abstract class GenericRequestTask extends AsyncTask<String, String, TaskOutput> {
 

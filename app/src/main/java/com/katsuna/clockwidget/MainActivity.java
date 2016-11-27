@@ -3,6 +3,8 @@ package com.katsuna.clockwidget;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.katsuna.R;
+
 public class MainActivity extends Activity {
 
     @Override

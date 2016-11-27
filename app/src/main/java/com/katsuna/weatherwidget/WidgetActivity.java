@@ -54,7 +54,7 @@ import java.util.Map;
 
 import com.katsuna.adapters.ViewPagerAdapter;
 import com.katsuna.adapters.WeatherRecyclerAdapter;
-import lnm.weatherwidget.R;
+import com.katsuna.R;
 import com.katsuna.utils.UnitConvertor;
 import com.katsuna.weatherDb.Weather;
 
