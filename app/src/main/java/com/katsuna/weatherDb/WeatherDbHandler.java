@@ -1,4 +1,4 @@
-package weatherDb;
+package com.katsuna.weatherDb;
 
 
 import android.content.ContentValues;
@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import weatherParser.WeatherData;
+import com.katsuna.weatherParser.WeatherData;
 
 public class WeatherDbHandler  extends SQLiteOpenHelper {
 

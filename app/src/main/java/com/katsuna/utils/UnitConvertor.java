@@ -1,4 +1,4 @@
-package utils;
+package com.katsuna.utils;
 
 import android.content.SharedPreferences;
 

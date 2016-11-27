@@ -1,4 +1,4 @@
-package adapters;
+package com.katsuna.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

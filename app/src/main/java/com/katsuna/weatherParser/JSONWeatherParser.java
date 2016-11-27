@@ -1,4 +1,4 @@
-package weatherParser;
+package com.katsuna.weatherParser;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,9 +17,9 @@ import java.util.List;
 
 import lnm.weatherwidget.R;
 import com.katsuna.weatherwidget.WidgetActivity;
-import utils.UnitConvertor;
-import weatherDb.SecWeather;
-import weatherDb.Weather;
+import com.katsuna.utils.UnitConvertor;
+import com.katsuna.weatherDb.SecWeather;
+import com.katsuna.weatherDb.Weather;
 
 public class JSONWeatherParser {
     private final String JSON_COD = "cod";

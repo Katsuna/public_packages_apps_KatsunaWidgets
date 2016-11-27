@@ -22,7 +22,7 @@ public class UpdateService extends IntentService {
 
 
     public UpdateService() {
-        super("UpdateService");
+        super("BatteryUpdateService");
     }
 
 

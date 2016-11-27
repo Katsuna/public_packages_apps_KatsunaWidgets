@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lnm.weatherwidget.R;
-import weatherDb.Weather;
+import com.katsuna.weatherDb.Weather;
 
 
 public class ExtendedWeatherWidget extends AppWidgetProvider {

@@ -17,10 +17,10 @@ import android.widget.RemoteViews;
 import java.util.Calendar;
 
 import lnm.weatherwidget.R;
-import weatherDb.Weather;
-import weatherDb.WeatherContentProvider;
-import weatherDb.WeatherDbHandler;
-import weatherParser.JSONWeatherParser;
+import com.katsuna.weatherDb.Weather;
+import com.katsuna.weatherDb.WeatherContentProvider;
+import com.katsuna.weatherDb.WeatherDbHandler;
+import com.katsuna.weatherParser.JSONWeatherParser;
 
 public class WeatherWidget extends AppWidgetProvider {
     private static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
@@ -181,7 +181,7 @@ public class WeatherWidget extends AppWidgetProvider {
             if (providers != null) {
                 for (ProviderInfo provider : providers) {
                     Log.d("Example", "provider: " + provider.authority);
-                    if(provider.authority.equals("daemon_miner_app.sqlite.weatherDb.WeatherContentProvider")){
+                    if(provider.authority.equals("daemon_miner_app.sqlite.com.katsuna.weatherDb.WeatherContentProvider")){
                         return false;
                     }
                 }

@@ -53,10 +53,10 @@ package com.katsuna.weatherwidget;
 //import java.util.List;
 //import java.util.Map;
 //
-//import adapters.ViewPagerAdapter;
-//import adapters.WeatherRecyclerAdapter;
-//import utils.UnitConvertor;
-//import weatherDb.Weather;
+//import com.katsuna.adapters.ViewPagerAdapter;
+//import com.katsuna.adapters.WeatherRecyclerAdapter;
+//import com.katsuna.utils.UnitConvertor;
+//import com.katsuna.weatherDb.Weather;
 //
 //
 //public class WeatherService extends Service {

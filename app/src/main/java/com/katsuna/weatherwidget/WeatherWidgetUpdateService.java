@@ -24,15 +24,15 @@ import java.util.List;
 import java.util.Locale;
 
 import lnm.weatherwidget.R;
-import weatherDb.ForecastTable;
-import weatherDb.SecWeather;
-import weatherDb.WeatherContentProvider;
-import weatherDb.WeatherTable;
-import weatherParser.ForecastWeatherData;
-import weatherParser.JSONWeatherParser;
-import weatherParser.WeatherData;
-import weatherParser.WeatherForecastParser;
-import weatherParser.WeatherHttpClient;
+import com.katsuna.weatherDb.ForecastTable;
+import com.katsuna.weatherDb.SecWeather;
+import com.katsuna.weatherDb.WeatherContentProvider;
+import com.katsuna.weatherDb.WeatherTable;
+import com.katsuna.weatherParser.ForecastWeatherData;
+import com.katsuna.weatherParser.JSONWeatherParser;
+import com.katsuna.weatherParser.WeatherData;
+import com.katsuna.weatherParser.WeatherForecastParser;
+import com.katsuna.weatherParser.WeatherHttpClient;
 
 
 public class WeatherWidgetUpdateService extends IntentService {
@@ -51,7 +51,7 @@ public class WeatherWidgetUpdateService extends IntentService {
             if (providers != null) {
                 for (ProviderInfo provider : providers) {
                     Log.d("Example", "provider: " + provider.authority);
-                    if(provider.authority.equals("daemon_miner_app.sqlite.weatherDb.WeatherContentProvider")){
+                    if(provider.authority.equals("daemon_miner_app.sqlite.com.katsuna.weatherDb.WeatherContentProvider")){
                         return false;
                     }
                 }
@@ -60,10 +60,10 @@ public class WeatherWidgetUpdateService extends IntentService {
         return true;
     }
     /**
-     * Creates an UpdateService.
+     * Creates an BatteryUpdateService.
      */
     public WeatherWidgetUpdateService() {
-        super("UpdateService");
+        super("BatteryUpdateService");
       //  isStandaloneWidget();
         System.out.println("Start!!!5.1");
     }

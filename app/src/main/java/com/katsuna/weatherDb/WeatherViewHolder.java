@@ -1,4 +1,4 @@
-package weatherDb;
+package com.katsuna.weatherDb;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

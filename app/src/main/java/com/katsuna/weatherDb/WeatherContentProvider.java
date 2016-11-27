@@ -1,4 +1,4 @@
-package weatherDb;
+package com.katsuna.weatherDb;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.provider.Settings;
 import android.provider.UserDictionary;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -17,7 +16,7 @@ import android.text.TextUtils;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import weatherParser.WeatherData;
+import com.katsuna.weatherParser.WeatherData;
 
 
 public class WeatherContentProvider extends ContentProvider {
@@ -27,7 +26,7 @@ public class WeatherContentProvider extends ContentProvider {
     private static final int CURRENT = 30;
     private static final int FORECAST = 40;
 
-    private static final String AUTHORITY = "daemon_miner_app.sqlite.weatherDb.WeatherContentProvider";
+    private static final String AUTHORITY = "daemon_miner_app.sqlite.com.katsuna.weatherDb.WeatherContentProvider";
 
     private static final String WEATHER_PATH = "CurrentWeather";
     private static final String FORECAST_PATH = "ForecastWeather";

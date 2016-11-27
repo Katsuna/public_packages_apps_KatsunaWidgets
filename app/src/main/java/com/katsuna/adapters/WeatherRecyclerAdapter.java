@@ -1,4 +1,4 @@
-package adapters;
+package com.katsuna.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,9 +18,9 @@ import java.util.TimeZone;
 
 import lnm.weatherwidget.R;
 import com.katsuna.weatherwidget.WidgetActivity;
-import utils.UnitConvertor;
-import weatherDb.Weather;
-import weatherDb.WeatherViewHolder;
+import com.katsuna.utils.UnitConvertor;
+import com.katsuna.weatherDb.Weather;
+import com.katsuna.weatherDb.WeatherViewHolder;
 
 public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
     private List<Weather> itemList;

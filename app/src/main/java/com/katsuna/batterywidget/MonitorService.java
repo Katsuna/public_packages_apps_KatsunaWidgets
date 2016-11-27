@@ -37,25 +37,25 @@ public class MonitorService extends Service {
             if (firstTime)
             {
                 BatteryInfo batteryInfo = new BatteryInfo(intent);
-                Intent updateIntent = new Intent(context, UpdateService.class);
-                updateIntent.setAction(UpdateService.ACTION_BATTERY_CHANGED);
+                Intent updateIntent = new Intent(context, BatteryUpdateService.class);
+                updateIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHANGED);
                 batteryInfo.saveToIntent(updateIntent);
                 context.startService(updateIntent);
                 firstTime = false;
             }
             if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
                 BatteryInfo batteryInfo = new BatteryInfo(intent);
-                Intent updateIntent = new Intent(context, UpdateService.class);
-                updateIntent.setAction(UpdateService.ACTION_BATTERY_CHANGED);
+                Intent updateIntent = new Intent(context, BatteryUpdateService.class);
+                updateIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHANGED);
                 batteryInfo.saveToIntent(updateIntent);
                 context.startService(updateIntent);
             } else if (Intent.ACTION_BATTERY_LOW.equals(intent.getAction())) {
-                Intent updateIntent = new Intent(context, UpdateService.class);
-                updateIntent.setAction(UpdateService.ACTION_BATTERY_LOW);
+                Intent updateIntent = new Intent(context, BatteryUpdateService.class);
+                updateIntent.setAction(BatteryUpdateService.ACTION_BATTERY_LOW);
                 context.startService(updateIntent);
             } else if (Intent.ACTION_BATTERY_OKAY.equals(intent.getAction())) {
-                Intent updateIntent = new Intent(context, UpdateService.class);
-                updateIntent.setAction(UpdateService.ACTION_BATTERY_OKAY);
+                Intent updateIntent = new Intent(context, BatteryUpdateService.class);
+                updateIntent.setAction(BatteryUpdateService.ACTION_BATTERY_OKAY);
                 context.startService(updateIntent);
             }
         }

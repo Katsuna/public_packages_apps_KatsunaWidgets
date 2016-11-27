@@ -1,4 +1,4 @@
-package weatherParser;
+package com.katsuna.weatherParser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

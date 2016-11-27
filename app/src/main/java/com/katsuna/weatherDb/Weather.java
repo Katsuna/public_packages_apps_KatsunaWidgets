@@ -1,4 +1,4 @@
-package weatherDb;
+package com.katsuna.weatherDb;
 
 import android.content.Context;
 

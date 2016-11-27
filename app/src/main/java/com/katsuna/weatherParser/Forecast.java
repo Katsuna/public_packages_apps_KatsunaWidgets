@@ -1,8 +1,8 @@
-package weatherParser;
+package com.katsuna.weatherParser;
 
 import java.util.ArrayList;
 
-import weatherDb.SecWeather;
+import com.katsuna.weatherDb.SecWeather;
 
 
 public class Forecast {

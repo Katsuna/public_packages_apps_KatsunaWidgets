@@ -52,11 +52,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import adapters.ViewPagerAdapter;
-import adapters.WeatherRecyclerAdapter;
+import com.katsuna.adapters.ViewPagerAdapter;
+import com.katsuna.adapters.WeatherRecyclerAdapter;
 import lnm.weatherwidget.R;
-import utils.UnitConvertor;
-import weatherDb.Weather;
+import com.katsuna.utils.UnitConvertor;
+import com.katsuna.weatherDb.Weather;
 
 /**
  * Created by nikos on 23-Sep-16.

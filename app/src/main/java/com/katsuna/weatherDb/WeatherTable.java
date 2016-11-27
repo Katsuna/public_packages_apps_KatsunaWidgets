@@ -1,16 +1,13 @@
-package weatherDb;
+package com.katsuna.weatherDb;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 
+public class WeatherTable {
 
-public class ForecastTable {
+    public static final String TABLE_WEATHER = "CurrentWeather";
 
-    public static final String TABLE_FORECAST = "ForecastWeather";
-
-    public static final String num = "number";
-    public static final String day = "day";
+    public static final String id = "id";
     public static final String temp = "temperature";
     public static final String wind = "wind";
     public static final String rain = "rain";
@@ -20,11 +17,9 @@ public class ForecastTable {
 
 
     private static final String TABLE_CREATE = "create table "
-            +TABLE_FORECAST
+            + TABLE_WEATHER
             + "("
-            + num + " TEXT PRIMARY KEY,"
-            + day + " TEXT,"
-            + temp + " TEXT,"
+            + id + " TEXT PRIMARY KEY,"
             + wind + " TEXT,"
             + rain + " TEXT,"
             + snow + " TEXT,"
@@ -37,8 +32,8 @@ public class ForecastTable {
 
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
                                  int newVersion) {
-
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_FORECAST);
+        database.execSQL("DROP TABLE IF EXISTS " + TABLE_WEATHER);
         onCreate(database);
     }
+
 }

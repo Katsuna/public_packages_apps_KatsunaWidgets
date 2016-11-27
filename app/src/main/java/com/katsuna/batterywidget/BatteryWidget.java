@@ -53,9 +53,9 @@ public class BatteryWidget extends AppWidgetProvider {
         // ensure service is running
         context.startService(new Intent(context, MonitorService.class));
         // update the widgets
-        Intent updateIntent = new Intent(context, UpdateService.class);
-        updateIntent.setAction(UpdateService.ACTION_WIDGET_UPDATE);
-        updateIntent.putExtra(UpdateService.EXTRA_WIDGET_IDS, widgetIds);
+        Intent updateIntent = new Intent(context, BatteryUpdateService.class);
+        updateIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
+        updateIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, widgetIds);
         context.startService(updateIntent);
     }
 

@@ -1,4 +1,4 @@
-package weatherDb;
+package com.katsuna.weatherDb;
 
 
 import java.text.ParseException;
@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import weatherParser.MyLocation;
+import com.katsuna.weatherParser.MyLocation;
 
 public class SecWeather {
 

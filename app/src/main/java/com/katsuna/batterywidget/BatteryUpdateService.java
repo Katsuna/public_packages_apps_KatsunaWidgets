@@ -33,7 +33,7 @@ import android.widget.RemoteViews;
  * a service on a separate handler thread.
  * <p/>
  */
-public class UpdateService extends IntentService {
+public class BatteryUpdateService extends IntentService {
 
     public static final String ACTION_BATTERY_CHANGED = "com.em.batterywidget.action.BATTERY_CHANGED";
     public static final String ACTION_BATTERY_LOW = "com.em.batterywidget.action.BATTERY_LOW";
@@ -43,10 +43,10 @@ public class UpdateService extends IntentService {
     public static final String EXTRA_WIDGET_IDS = "com.em.batterywidget.extra.WIDGET_IDS";
 
     /**
-     * Creates an UpdateService.
+     * Creates an BatteryUpdateService.
      */
-    public UpdateService() {
-        super("UpdateService");
+    public BatteryUpdateService() {
+        super("BatteryUpdateService");
     }
 
     /**

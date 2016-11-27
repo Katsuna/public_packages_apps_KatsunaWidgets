@@ -20,9 +20,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class BootReceiver extends BroadcastReceiver {
+public class BatteryBootReceiver extends BroadcastReceiver {
 
-    public BootReceiver() {
+    public BatteryBootReceiver() {
     }
 
     @Override
