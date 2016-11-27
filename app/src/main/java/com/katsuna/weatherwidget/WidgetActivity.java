@@ -58,9 +58,7 @@ import com.katsuna.R;
 import com.katsuna.utils.UnitConvertor;
 import com.katsuna.weatherDb.Weather;
 
-/**
- * Created by nikos on 23-Sep-16.
- */
+
 public class WidgetActivity extends AppCompatActivity implements LocationListener{
 
     protected static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
