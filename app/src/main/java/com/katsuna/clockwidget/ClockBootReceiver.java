@@ -13,7 +13,7 @@ public class ClockBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (ClockWidget.getNumberOfWidgets(context) > 0) {
             // ensure service is running
-            context.startService(new Intent(context, MonitorService.class));
+            context.startService(new Intent(context, ClockMonitorService.class));
         }
     }
 }

@@ -29,7 +29,7 @@ public class BatteryBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (BatteryWidget.getNumberOfWidgets(context) > 0) {
             // ensure service is running
-            context.startService(new Intent(context, MonitorService.class));
+            context.startService(new Intent(context, BatteryMonitorService.class));
         }
     }
 }

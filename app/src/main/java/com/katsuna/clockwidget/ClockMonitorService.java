@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
-public class MonitorService extends Service {
+public class ClockMonitorService extends Service {
 
 
     final private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -16,17 +16,17 @@ public class MonitorService extends Service {
             if (Intent.ACTION_TIME_TICK.equals(intent.getAction()) || Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())
                     || Intent.ACTION_TIME_CHANGED.equals(intent.getAction())) {
 
-                Intent updateIntent = new Intent(context, UpdateService.class);
-                updateIntent.setAction(UpdateService.ACTION_CLOCK_CHANGED);
+                Intent updateIntent = new Intent(context, ClockUpdateService.class);
+                updateIntent.setAction(ClockUpdateService.ACTION_CLOCK_CHANGED);
                 context.startService(updateIntent);
             }
         }
     };
 
     /**
-     * Creates the MonitorService.
+     * Creates the BatteryMonitorService.
      */
-    public MonitorService() {
+    public ClockMonitorService() {
         super();
     }
 

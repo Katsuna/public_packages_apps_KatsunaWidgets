@@ -43,7 +43,7 @@ public class BatteryWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        context.startService(new Intent(context, MonitorService.class));
+        context.startService(new Intent(context, BatteryMonitorService.class));
 
     }
 
@@ -51,7 +51,7 @@ public class BatteryWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager widgetManager, int[] widgetIds) {
         super.onUpdate(context, widgetManager, widgetIds);
         // ensure service is running
-        context.startService(new Intent(context, MonitorService.class));
+        context.startService(new Intent(context, BatteryMonitorService.class));
         // update the widgets
         Intent updateIntent = new Intent(context, BatteryUpdateService.class);
         updateIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
@@ -64,7 +64,7 @@ public class BatteryWidget extends AppWidgetProvider {
         super.onDeleted(context, widgetIds);
         if (getNumberOfWidgets(context) == 0) {
             // stop monitoring if there are no more widgets on screen
-            context.stopService(new Intent(context, MonitorService.class));
+            context.stopService(new Intent(context, BatteryMonitorService.class));
         }
     }
 }

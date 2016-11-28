@@ -27,7 +27,7 @@ import android.util.Log;
 /**
  * This service is used to monitor the battery information.
  */
-public class MonitorService extends Service {
+public class BatteryMonitorService extends Service {
     boolean firstTime = true;
     final private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -62,9 +62,9 @@ public class MonitorService extends Service {
     };
 
     /**
-     * Creates the MonitorService.
+     * Creates the BatteryMonitorService.
      */
-    public MonitorService() {
+    public BatteryMonitorService() {
         super();
     }
 

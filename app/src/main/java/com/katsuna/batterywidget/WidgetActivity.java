@@ -22,14 +22,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.BatteryManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -86,7 +81,7 @@ public class WidgetActivity extends Activity {
         updateView(batteryInfo);
 
         // ensure service is running
-        startService(new Intent(this, MonitorService.class));
+        startService(new Intent(this, BatteryMonitorService.class));
     }
 
     @Override
@@ -111,7 +106,7 @@ public class WidgetActivity extends Activity {
         }
         if (BatteryWidget.getNumberOfWidgets(this) == 0) {
             // stop monitoring if there are no more widgets on screen
-            stopService(new Intent(this, MonitorService.class));
+            stopService(new Intent(this, BatteryMonitorService.class));
         }
     }
 

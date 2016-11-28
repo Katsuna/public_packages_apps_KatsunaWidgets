@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class UpdateService extends IntentService {
+public class ClockUpdateService extends IntentService {
 
     public static final String ACTION_CLOCK_CHANGED = "clockwidget.action.CLOCK_CHANGED";
 
@@ -23,7 +23,7 @@ public class UpdateService extends IntentService {
     public static final String EXTRA_WIDGET_IDS = "clockwidget.extra.WIDGET_IDS";
 
 
-    public UpdateService() {
+    public ClockUpdateService() {
         super("BatteryUpdateService");
     }
 
@@ -37,7 +37,7 @@ public class UpdateService extends IntentService {
 
 
 
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.clock_widget);
+                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
                 String []clock = setTime();
                 remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
                 remoteViews.setTextViewText(R.id.date, clock[1]);

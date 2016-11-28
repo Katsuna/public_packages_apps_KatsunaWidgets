@@ -55,7 +55,6 @@
         <receiver android:name="com.katsuna.commons.WidgetCollection" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget" />
@@ -101,11 +100,11 @@
 
 
         <service
-            android:name="com.katsuna.clockwidget.MonitorService"
+            android:name="com.katsuna.clockwidget.ClockMonitorService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name="com.katsuna.clockwidget.UpdateService"
+            android:name="com.katsuna.clockwidget.ClockUpdateService"
             android:exported="false" />
 
         <receiver
@@ -136,7 +135,7 @@
         <!--</receiver>-->
 
         <service
-            android:name="com.katsuna.batterywidget.MonitorService"
+            android:name="com.katsuna.batterywidget.BatteryMonitorService"
             android:exported="false"/>
 
         <service

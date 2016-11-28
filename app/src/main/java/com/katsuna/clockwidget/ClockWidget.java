@@ -32,11 +32,11 @@ public class ClockWidget extends AppWidgetProvider {
         Log.d("Clock widget","I am n update...");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         // ensure service is running
-        context.startService(new Intent(context, MonitorService.class));
+        context.startService(new Intent(context, ClockMonitorService.class));
         // update the widgets
-        Intent updateIntent = new Intent(context, UpdateService.class);
-        updateIntent.setAction(UpdateService.ACTION_WIDGET_UPDATE);
-        updateIntent.putExtra(UpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
+        Intent updateIntent = new Intent(context, ClockUpdateService.class);
+        updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
+        updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
         context.startService(updateIntent);
 
     }
@@ -45,7 +45,7 @@ public class ClockWidget extends AppWidgetProvider {
     public void onEnabled(Context context) {
 
         super.onEnabled(context);
-        context.startService(new Intent(context, MonitorService.class));
+        context.startService(new Intent(context, ClockMonitorService.class));
 
     }
 
@@ -54,7 +54,7 @@ public class ClockWidget extends AppWidgetProvider {
         super.onDeleted(context, widgetIds);
         if (getNumberOfWidgets(context) == 0) {
             // stop monitoring if there are no more widgets on screen
-            context.stopService(new Intent(context, MonitorService.class));
+            context.stopService(new Intent(context, ClockMonitorService.class));
         }
     }
 
