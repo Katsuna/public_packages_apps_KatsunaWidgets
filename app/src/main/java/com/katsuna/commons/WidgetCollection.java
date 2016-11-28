@@ -82,7 +82,7 @@ public class WidgetCollection extends AppWidgetProvider {
             PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget_view);
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.collection_widget);
             watchWidget = new ComponentName(context, WeatherWidget.class);
 
             remoteViews.setOnClickPendingIntent(R.id.widgetRoot, getPendingSelfIntent(context, SYNC_CLICKED));

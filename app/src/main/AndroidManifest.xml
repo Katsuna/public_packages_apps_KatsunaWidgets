@@ -126,13 +126,13 @@
                 android:resource="@xml/battery_widget"/>
         </receiver>
 
-        <!--<receiver-->
-            <!--android:name="com.katsuna.batterywidget.BatteryWidget"-->
-            <!--android:permission="android.permission.RECEIVE_BOOT_COMPLETED">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <receiver
+            android:name="com.katsuna.batterywidget.BatteryBootReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="com.katsuna.batterywidget.BatteryMonitorService"
