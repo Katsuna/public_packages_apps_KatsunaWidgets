@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.katsuna.R;
+import com.katsuna.commons.WidgetCollection;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ public class ClockUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.date, clock[1]);
 
 
-                ComponentName componentName = new ComponentName(this, ClockWidget.class);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
 
