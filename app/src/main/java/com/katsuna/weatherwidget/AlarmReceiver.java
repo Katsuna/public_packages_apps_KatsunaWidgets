@@ -85,6 +85,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             } else {
                 new GetWeatherTask().execute();
                 new GetLongTermWeatherTask().execute();
+                new GetShortTermWeatherTask().execute();
             }
         } else {
             failed = true;
@@ -151,6 +152,54 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
 
+    class GetShortTermWeatherTask extends AsyncTask<String, String, Void> {
+
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String result = "";
+            try {
+
+
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                String language = Locale.getDefault().getLanguage();
+                if(language.equals("cs")) { language = "cz"; }
+                String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
+                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", "ATHENS"), "UTF-8") + "&lang="+ language +"&mode=json&appid=" + apiKey);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+                if(urlConnection.getResponseCode() == 200) {
+                    String line = null;
+                    while ((line = r.readLine()) != null) {
+                        result += line + "\n";
+                    }
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                     //  Log.i("JSON short",result);
+                    editor.putString("lastShortterm", result);
+                    editor.apply();
+                }
+                else {
+                    // Connection problem
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+
+        }
+    }
+
+
+
+
     class GetLongTermWeatherTask extends AsyncTask<String, String, Void> {
 
         protected void onPreExecute() {
@@ -185,7 +234,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     // Connection problem
                 }
             } catch (IOException e) {
-                // No connection
+                e.printStackTrace();
             }
             return null;
         }
