@@ -71,8 +71,20 @@ public class Weather {
     private String id;
     private String icon;
     private String lastUpdated;
+
+
+    private String precipitation;
     private Date sunrise;
     private Date sunset;
+
+
+    public String getPrecipitation() {
+        return precipitation;
+    }
+
+    public void setPrecipitation(String precipitation) {
+        this.precipitation = precipitation;
+    }
 
     public String getCity() {
         return city;

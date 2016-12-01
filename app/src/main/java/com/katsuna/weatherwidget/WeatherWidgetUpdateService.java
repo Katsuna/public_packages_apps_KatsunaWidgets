@@ -74,7 +74,7 @@ public class WeatherWidgetUpdateService extends IntentService {
      */
     @Override
     protected void onHandleIntent(Intent intent) {
-        System.out.println("Start!!!5");
+       //System.out.println("Start!!!5");
 
 
         if (intent != null) {
@@ -100,7 +100,7 @@ public class WeatherWidgetUpdateService extends IntentService {
                 JSONObject weatherObj = client.getCurrentWeatherJSON(getApplicationContext(), address);
                 System.out.println("SecWeather:" + weatherObj);
                 try {
-                    secWeather = JSONWeatherParser.getWeather(weatherObj);
+                    secWeather = JSONWeatherParser.getSecWeather(weatherObj);
                     addWeatherRecord(secWeather);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -173,8 +173,7 @@ public class WeatherWidgetUpdateService extends IntentService {
 //                View.VISIBLE : View.INVISIBLE);
 //
 //        remoteViews.setTextViewText(R.id.batterytext, String.valueOf(level) + "%");
-      Intent activityIntent = new Intent(this, WidgetActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
+
         //remoteViews.setOnClickPendingIntent(R.id.weather_widget_view, pendingIntent);
         return remoteViews;
     }

@@ -26,13 +26,12 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
 
     ProgressDialog progressDialog;
     Context context;
-    WidgetActivity activity;
+    WeatherMonitorService service;
     public int loading = 0;
 
-    public GenericRequestTask(Context context, WidgetActivity activity, ProgressDialog progressDialog) {
-        System.out.println("Dasdasdasdsad");
+    public GenericRequestTask(Context context, WeatherMonitorService service, ProgressDialog progressDialog) {
         this.context = context;
-        this.activity = activity;
+        this.service = service;
         this.progressDialog = progressDialog;
     }
 
@@ -86,7 +85,7 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
                     Log.i("Task", "done successfully");
                     output.taskResult = TaskResult.SUCCESS;
                     // Save date/time for latest successful result
-                    activity.saveLastUpdateTime(PreferenceManager.getDefaultSharedPreferences(context));
+                    service.saveLastUpdateTime(PreferenceManager.getDefaultSharedPreferences(context));
                 }
                 else if (urlConnection.getResponseCode() == 429) {
                     // Too many requests
@@ -132,29 +131,29 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
     }
 
     protected final void handleTaskOutput(TaskOutput output) {
-        switch (output.taskResult) {
-            case SUCCESS: {
-                ParseResult parseResult = output.parseResult;
-                if (ParseResult.CITY_NOT_FOUND.equals(parseResult)) {
-                    Snackbar.make(activity.findViewById(android.R.id.content), context.getString(R.string.msg_city_not_found), Snackbar.LENGTH_LONG).show();
-                } else if (ParseResult.JSON_EXCEPTION.equals(parseResult)) {
-                    Snackbar.make(activity.findViewById(android.R.id.content), context.getString(R.string.msg_err_parsing_json), Snackbar.LENGTH_LONG).show();
-                }
-                break;
-            }
-            case TOO_MANY_REQUESTS: {
-                Snackbar.make(activity.findViewById(android.R.id.content), context.getString(R.string.msg_too_many_requests), Snackbar.LENGTH_LONG).show();
-                break;
-            }
-            case BAD_RESPONSE: {
-                Snackbar.make(activity.findViewById(android.R.id.content), context.getString(R.string.msg_connection_problem), Snackbar.LENGTH_LONG).show();
-                break;
-            }
-            case IO_EXCEPTION: {
-                Snackbar.make(activity.findViewById(android.R.id.content), context.getString(R.string.msg_connection_not_available), Snackbar.LENGTH_LONG).show();
-                break;
-            }
-        }
+//        switch (output.taskResult) {
+//            case SUCCESS: {
+//                ParseResult parseResult = output.parseResult;
+//                if (ParseResult.CITY_NOT_FOUND.equals(parseResult)) {
+//                    Snackbar.make(service.findViewById(android.R.id.content), context.getString(R.string.msg_city_not_found), Snackbar.LENGTH_LONG).show();
+//                } else if (ParseResult.JSON_EXCEPTION.equals(parseResult)) {
+//                    Snackbar.make(service.findViewById(android.R.id.content), context.getString(R.string.msg_err_parsing_json), Snackbar.LENGTH_LONG).show();
+//                }
+//                break;
+//            }
+//            case TOO_MANY_REQUESTS: {
+//                Snackbar.make(service.findViewById(android.R.id.content), context.getString(R.string.msg_too_many_requests), Snackbar.LENGTH_LONG).show();
+//                break;
+//            }
+//            case BAD_RESPONSE: {
+//                Snackbar.make(service.findViewById(android.R.id.content), context.getString(R.string.msg_connection_problem), Snackbar.LENGTH_LONG).show();
+//                break;
+//            }
+//            case IO_EXCEPTION: {
+//                Snackbar.make(service.findViewById(android.R.id.content), context.getString(R.string.msg_connection_not_available), Snackbar.LENGTH_LONG).show();
+//                break;
+//            }
+//        }
     }
 
     private String getLanguage() {
@@ -167,7 +166,7 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
 
     private URL provideURL(String[] coords) throws UnsupportedEncodingException, MalformedURLException {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        String apiKey = sp.getString("apiKey", activity.getResources().getString(R.string.open_weather_maps_app_id));
+        String apiKey = sp.getString("apiKey", service.getResources().getString(R.string.open_weather_maps_app_id));
 
         StringBuilder urlBuilder = new StringBuilder("http://api.openweathermap.org/data/2.5/");
         urlBuilder.append(getAPIName()).append("?");
@@ -185,11 +184,11 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
     }
 
     private void restorePreviousCity() {
-        if (!TextUtils.isEmpty(activity.recentCity)) {
+        if (!TextUtils.isEmpty(service.recentCity)) {
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-            editor.putString("city", activity.recentCity);
+            editor.putString("city", service.recentCity);
             editor.commit();
-            activity.recentCity = "";
+            service.recentCity = "";
         }
     }
 
