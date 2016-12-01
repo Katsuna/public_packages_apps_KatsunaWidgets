@@ -25,6 +25,8 @@ import com.katsuna.commons.WidgetCollection;
 import com.katsuna.weatherDb.Weather;
 import com.katsuna.weatherParser.JSONWeatherParser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -77,7 +79,7 @@ public class WeatherUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_EXTENDED_DAY.equals(action)){
-                RemoteViews remoteViews =createRemoteViews(3);
+                RemoteViews remoteViews =createRemoteViews(4);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -185,8 +187,8 @@ public class WeatherUpdateService extends IntentService {
 
             remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             int[] daysIDS = new int[] {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
-            int[] iconsIDs = new int[] {R.id.icon1, R.id.icon2, R.id.icon3,R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7 };
-            int[] tempIDs = new int[] {R.id.temp1, R.id.temp2, R.id.temp3,R.id.temp4, R.id.temp5, R.id.temp6, R.id.temp7 };
+            int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
+            int[] tempIDs = new int[] {R.id.day_temp1, R.id.day_temp2, R.id.day_temp3,R.id.day_temp4, R.id.day_temp5, R.id.day_temp6, R.id.day_temp7 };
 
             int j = 0;
 
@@ -202,6 +204,44 @@ public class WeatherUpdateService extends IntentService {
                 j++;
             }
         }
+        else if(layout == 4){
+
+            List<Weather> forecast = new ArrayList<>();
+            if (!sp.getString("lastShortterm", "").equals("")) {
+                forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
+            } else {
+                System.out.println("im called 2");
+                try {
+                    pendingIntent2.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            remoteViews = new RemoteViews(getPackageName(), R.layout.day_widget_view);
+            remoteViews.setOnClickPendingIntent(R.id.day_back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.state_day_now, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
+
+            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
+            remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
+            remoteViews.setTextViewText(R.id.widgetWeekWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
+
+            remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+            int[] timeIDS = new int[] {R.id.time1, R.id.time2, R.id.time3,R.id.time4, R.id.time5,R.id.time6, R.id.time7};
+            int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
+            int[] tempIDs = new int[] {R.id.day_temp1, R.id.day_temp2, R.id.day_temp3,R.id.day_temp4, R.id.day_temp5, R.id.day_temp6, R.id.day_temp7 };
+
+
+            DateFormat format = new SimpleDateFormat("HH:mm");
+            for(int i = 0; i < 7; i++){
+
+                remoteViews.setTextViewText(timeIDS[i],format.format(forecast.get(i).getDate()));
+                remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+                remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());
+            }
+        }
+
+
         return remoteViews;
     }
 

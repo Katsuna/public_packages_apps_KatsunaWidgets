@@ -49,7 +49,7 @@
             android:name="com.katsuna.weatherwidget.WeatherWidgetUpdateService"
             android:exported="false"/>
 
-
+<!-- delete main -->
         <activity
             android:name="com.katsuna.clockwidget.MainActivity"
             android:label="YourAppName"

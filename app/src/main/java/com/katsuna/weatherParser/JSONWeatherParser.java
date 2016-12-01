@@ -48,7 +48,7 @@ public class JSONWeatherParser {
             if (hourOfDay >= 7 && hourOfDay < 20) {
                 icon = context.getString(R.string.weather_sunny);
             } else {
-                icon = context.getString(R.string.weather_clear_night);
+                icon = context.getString(R.string.weather_sunny);
             }
         } else {
             switch (id) {
@@ -141,19 +141,76 @@ public class JSONWeatherParser {
         }
     }
 
+    public static List<Weather> parseShortTermWidgetJson(String result, Context context) {
+        ArrayList<Weather> forecast =  new ArrayList<>();
+        int i;
+        try {
+            JSONObject reader = new JSONObject(result);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+            JSONArray list = reader.getJSONArray("list");
+            for (i = 0; i < list.length(); i++) {
+                //   JSONObject listItem = list.getJSONObject(i);
+                Weather weather = new Weather();//getWeather(listItem);
+
+                JSONObject listItem = list.getJSONObject(i);
+                JSONObject main = listItem.getJSONObject("main");
+                float temperature = UnitConvertor.convertTemperature(Float.parseFloat(main.getString("temp").toString()), sp);
+                weather.setDate(listItem.getString("dt"));
+                weather.setTemperature(Math.round(temperature) + "°" + localize(sp, context, "unit", "C"));
+                weather.setDescription(listItem.optJSONArray("weather").getJSONObject(0).getString("description"));
+                JSONObject windObj = listItem.optJSONObject("wind");
+                if (windObj != null) {
+                    weather.setWind(windObj.getString("speed"));
+                    weather.setWindDirectionDegree(windObj.getDouble("deg"));
+                }
+                weather.setPressure(main.getString("pressure"));
+                weather.setHumidity(main.getString("humidity"));
+
+                JSONObject rainObj = listItem.optJSONObject("rain");
+                String rain = "";
+                if (rainObj != null) {
+                    rain = getRainString(rainObj);
+                } else {
+                    JSONObject snowObj = listItem.optJSONObject("snow");
+                    if (snowObj != null) {
+                        rain = getRainString(snowObj);
+                    } else {
+                        rain = "0";
+                    }
+                }
+                weather.setRain(rain);
+
+                final String idString = listItem.optJSONArray("weather").getJSONObject(0).getString("id");
+                weather.setId(idString);
+
+                final String dateMsString = listItem.getString("dt") + "000";
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(Long.parseLong(dateMsString));
+                weather.setIcon(setWeatherIcon(Integer.parseInt(idString), cal.get(Calendar.HOUR_OF_DAY),context));
+
+                forecast.add(weather);
+
+
+            }
+
+
+            return forecast;
+        } catch (JSONException e) {
+            Log.e("JSONException Data long", result);
+            e.printStackTrace();
+            return forecast;
+        }
+    }
+
+
 
     public static List<Weather> parseLongTermWidgetJson(String result, Context context) {
         ArrayList<Weather> forecast =  new ArrayList<>();
         int i;
         try {
-            //WeatherMonitorService.initMappings();
-
             JSONObject reader = new JSONObject(result);
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-
-            // Temperature
-
-
 
             JSONArray list = reader.getJSONArray("list");
             for (i = 0; i < list.length(); i++) {

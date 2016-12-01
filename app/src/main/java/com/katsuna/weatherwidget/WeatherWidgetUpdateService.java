@@ -167,7 +167,7 @@ public class WeatherWidgetUpdateService extends IntentService {
     }
 
     private RemoteViews createRemoteViews(WeatherData weatherData) {
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.weather_widget_view);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
 //        remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery);
 //        remoteViews.setViewVisibility(R.id.percent100, (level <= 100 && level > 90) ?
 //                View.VISIBLE : View.INVISIBLE);
