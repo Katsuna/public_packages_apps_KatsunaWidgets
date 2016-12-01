@@ -57,9 +57,27 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="NOW"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
                 </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/state_week"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="WEEK"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,13 +86,14 @@
 
                 >
                 <TextView
-                    android:id="@+id/back"
+                    android:id="@+id/state_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="back"
+                    android:text="DAY"
+                    android:textAlignment="center"
 
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:gravity="right" />
                 </LinearLayout>
 
@@ -96,7 +115,7 @@
                 />
 
             <TextView
-                android:id="@+id/widgetTemperature"
+                android:id="@+id/widgetExTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 °C"
@@ -110,14 +129,14 @@
 
 
         <ImageView
-            android:id="@+id/widgetIcon"
+            android:id="@+id/widgetExIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/k48_clouds"
             />
         <TextView
-            android:id="@+id/widgetDescription"
+            android:id="@+id/widgetExDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_data"
@@ -142,13 +161,31 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/widgetWind"
+            android:id="@+id/widgetExWind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:text="Wind: 0 m/s"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:gravity="right" >
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textAlignment="center"
+
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:gravity="right" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -7,8 +7,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -18,24 +16,25 @@ import com.katsuna.batterywidget.BatteryUpdateService;
 import com.katsuna.clockwidget.ClockWidget;
 import com.katsuna.clockwidget.ClockMonitorService;
 import com.katsuna.clockwidget.ClockUpdateService;
-import com.katsuna.weatherDb.Weather;
 import com.katsuna.weatherDb.WeatherContentProvider;
 import com.katsuna.weatherDb.WeatherDbHandler;
-import com.katsuna.weatherParser.JSONWeatherParser;
 import com.katsuna.weatherwidget.AlarmReceiver;
-import com.katsuna.weatherwidget.WeatherWidget;
-
-import java.util.Calendar;
+import com.katsuna.weatherwidget.WeatherMonitorService;
+import com.katsuna.weatherwidget.WeatherUpdateService;
 
 public class WidgetCollection extends AppWidgetProvider {
 
+    public static final String BACK_CLICKED = "backClicked";
+    public static final String WEEK_CLICKED = "weekCLicked";
+    public static final String DAY_CLICKED = "dayClicked";
     private PendingIntent service = null;
-    private static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
+    public static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
     private static final String DEBUG_TAG = "onClicked";
     private boolean extended = false;
     public static WeatherDbHandler wDBHandler;
     public static WeatherContentProvider weatherContentProvider;
     public static String ACTION_MENU_CLICKED = "MenuClicked";
+    private String actionClicked ="backClicked";
 
 
     public static int getNumberOfWidgets(final Context context) {
@@ -51,7 +50,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("Clock widget","I am n update...");
+        Log.d("Collection widget","I am n update...");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
         // CLOCK WIDGET UPDATE
@@ -73,55 +72,27 @@ public class WidgetCollection extends AppWidgetProvider {
         context.startService(updateBatteryIntent);
 
         // WEATHER WIDGET UPDATE
-        for (int widgetId : appWidgetIds) {
-            RemoteViews remoteViews;
-            ComponentName watchWidget;
-
-            Intent intent = new Intent(context, AlarmReceiver.class);
-            intent.setAction(ACTION_MENU_CLICKED);
-            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent intent = new Intent(context, AlarmReceiver.class);
+//        intent.setAction(ACTION_MENU_CLICKED);
+//        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, appWidgetIds[0], intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            remoteViews = new RemoteViews(context.getPackageName(), R.layout.collection_widget);
-            watchWidget = new ComponentName(context, WeatherWidget.class);
-
-            remoteViews.setOnClickPendingIntent(R.id.widgetRoot, getPendingSelfIntent(context, SYNC_CLICKED));
-
-//
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-
-            Weather widgetWeather = new Weather();
-            if (!sp.getString("lastToday", "").equals("")) {
-                System.out.println("im called");
-                widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), context);
-            } else {
-                System.out.println("im called 2");
-                try {
-                    pendingIntent2.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
-                }
-                return;
-            }
-////            remoteViews.setTextViewText(R.id.widgetCity, widgetWeather.getCity() + ", " + widgetWeather.getCountry());
-            remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-            remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
-            remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-//            remoteViews.setTextViewText(R.id.widgetPressure, widgetWeather.getPressure());
-//            remoteViews.setTextViewText(R.id.widgetHumidity, context.getString(R.string.humidity) + ": " + widgetWeather.getHumidity() + " %");
-            //remoteViews.setTextViewText(R.id.widgetLastUpdate, widgetWeather.getLastUpdated());
-            remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
-            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-        }
+        context.startService(new Intent(context, BatteryMonitorService.class));
+        Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+        updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+        updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
+        context.startService(updateWeatherIntent);
 
     }
 
     @Override
     public void onEnabled(Context context) {
-
+        System.out.println("On enabled called");
         super.onEnabled(context);
         context.startService(new Intent(context, ClockMonitorService.class));
         context.startService(new Intent(context, BatteryMonitorService.class));
+        context.startService(new Intent(context, WeatherMonitorService.class));
+
 
     }
 
@@ -140,23 +111,42 @@ public class WidgetCollection extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
         super.onReceive(context, intent);
-        System.out.println("yeahhhhhhhhhh"+ intent.getAction());
+        System.out.println("on Receive widget:"+ intent.getAction());
         if (SYNC_CLICKED.equals(intent.getAction())) {
 
-
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-
-            RemoteViews remoteViews;
-            ComponentName watchWidget;
-
-            remoteViews = new RemoteViews(context.getPackageName(), R.layout.extended_widget_view);
-//            remoteViews.setViewVisibility(R.id.widgetRoot,View.INVISIBLE);
-//            remoteViews.setViewVisibility(R.id.extendedRoot,View.VISIBLE);
-            watchWidget = new ComponentName(context, WeatherWidget.class);
-
-            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-
+            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_NOW);
+            context.startService(updateWeatherIntent);
         }
+        else if (BACK_CLICKED.equals(intent.getAction())){
+            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_BACK);
+            context.startService(updateWeatherIntent);
+        }
+        else if (WEEK_CLICKED.equals(intent.getAction())){
+            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_WEEK);
+            context.startService(updateWeatherIntent);
+        }
+        else if (DAY_CLICKED.equals(intent.getAction())){
+            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_DAY);
+            context.startService(updateWeatherIntent);
+        }
+
+//            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//
+//            RemoteViews remoteViews;
+//            ComponentName watchWidget;
+//
+//            remoteViews = new RemoteViews(context.getPackageName(), R.layout.extended_widget_view);
+////            remoteViews.setViewVisibility(R.id.widgetRoot,View.INVISIBLE);
+////            remoteViews.setViewVisibility(R.id.extendedRoot,View.VISIBLE);
+//            watchWidget = new ComponentName(context, WidgetCollection.class);
+//
+//            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
+
+
     }
 
     protected PendingIntent getPendingSelfIntent(Context context, String action) {

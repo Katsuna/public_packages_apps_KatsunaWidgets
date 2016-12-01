@@ -17,10 +17,10 @@ import java.util.TimeZone;
 
 
 import com.katsuna.R;
-import com.katsuna.weatherwidget.WidgetActivity;
 import com.katsuna.utils.UnitConvertor;
 import com.katsuna.weatherDb.Weather;
 import com.katsuna.weatherDb.WeatherViewHolder;
+import com.katsuna.weatherwidget.WeatherMonitorService;
 
 public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
     private List<Weather> itemList;
@@ -96,10 +96,8 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherViewHold
                     /* We must explicitly set things back, because RecyclerView seems to reuse views and
                      * without restoring back the "normal" color, just about everything gets tinted if we
                      * scroll a couple of times! */
-                    color = ta.getColor(1, context.getResources().getColor(R.color.colorBackground));
                 }
                 ta.recycle();
-                customViewHolder.itemView.setBackgroundColor(color);
             }
         }
 
@@ -114,14 +112,14 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherViewHold
         customViewHolder.itemIcon.setText(weatherItem.getIcon());
         if (sp.getString("speedUnit", "m/s").equals("bft")) {
             customViewHolder.itemyWind.setText(context.getString(R.string.wind) + ": " +
-                    UnitConvertor.getBeaufortName((int) wind) + " " + WidgetActivity.getWindDirectionString(sp, context, weatherItem));
+                    UnitConvertor.getBeaufortName((int) wind) + " " + WeatherMonitorService.getWindDirectionString(sp, context, weatherItem));
         } else {
             customViewHolder.itemyWind.setText(context.getString(R.string.wind) + ": " + new DecimalFormat("#.0").format(wind) + " " +
-                    WidgetActivity.localize(sp, context, "speedUnit", "m/s")
-                    + " " + WidgetActivity.getWindDirectionString(sp, context, weatherItem));
+                    WeatherMonitorService.localize(sp, context, "speedUnit", "m/s")
+                    + " " + WeatherMonitorService.getWindDirectionString(sp, context, weatherItem));
         }
         customViewHolder.itemPressure.setText(context.getString(R.string.pressure) + ": " + new DecimalFormat("#.0").format(pressure) + " " +
-                WidgetActivity.localize(sp, context, "pressureUnit", "hPa"));
+                WeatherMonitorService.localize(sp, context, "pressureUnit", "hPa"));
         customViewHolder.itemHumidity.setText(context.getString(R.string.humidity) + ": " + weatherItem.getHumidity() + " %");
     }
 

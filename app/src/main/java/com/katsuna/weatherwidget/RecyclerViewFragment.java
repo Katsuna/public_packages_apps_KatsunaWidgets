@@ -29,10 +29,7 @@ public class RecyclerViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RemoteViews updateViews = new RemoteViews(getContext().getPackageName(),
-                R.layout.extended_widget_view);
-        AppWidgetManager.getInstance(getContext()).updateAppWidget(
-                new ComponentName(getContext(), ExtendedWeatherWidget.class), updateViews);
+
 
 //        ExtendedWeatherWidget widget = (ExtendedWeatherWidget) getIntent();
 //        recyclerView.setAdapter(mainActivity.getAdapter(bundle.getInt("day")));

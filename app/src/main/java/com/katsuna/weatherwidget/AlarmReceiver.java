@@ -34,22 +34,28 @@ import com.katsuna.R;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
+    public static final int REQUEST_CODE_CURRENT = 12345;
+    public static final int REQUEST_CODE_FORECAST = 23456;
+    public static final int REQUEST_CODE_LONG_FORECAST = 34567;
 
     Context context;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
-        int[] appWidgetId = AppWidgetManager.getInstance(context).getAppWidgetIds(
-                new ComponentName(context, ExtendedWeatherWidget.class));
+
         System.out.println("I m here");
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            System.out.println("I m boot");
+
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             String interval = sp.getString("refreshInterval", "1");
             if (!interval.equals("0")) {
                 setRecurringAlarm(context);
                 getWeather();
             }
+
+
         } else if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             // Get weather if last attempt failed or if 'update location in background' is activated
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -60,7 +66,13 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         } else {
             getWeather();
+
         }
+
+
+        Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+        updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+        context.startService(updateWeatherIntent);
     }
 
     private void getWeather() {
@@ -104,7 +116,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         protected Void doInBackground(String... params) {
             String result = "";
             try {
-                System.out.println("ive been pressed!!!!!!!!!!!!!1");
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
@@ -122,7 +133,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("lastToday", result);
                     editor.apply();
-                    WidgetActivity.saveLastUpdateTime(sp);
+                    WeatherMonitorService.saveLastUpdateTime(sp);
                 }
                 else {
                     // Connection problem
@@ -150,13 +161,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         protected Void doInBackground(String... params) {
             String result = "";
             try {
-                System.out.println("ive been pressed!!!!!!!!!!!!!2");
+
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
                 if(language.equals("cs")) { language = "cz"; }
                 String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", "ATHENS"), "UTF-8") + "&lang="+ language +"&mode=json&appid=" + apiKey);
+                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", "ATHENS"), "UTF-8") + "&lang="+ language +"&mode=json&appid=" + apiKey);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
@@ -166,6 +177,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         result += line + "\n";
                     }
                     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                 //   Log.i("JSON long",result);
                     editor.putString("lastLongterm", result);
                     editor.apply();
                 }
@@ -362,6 +374,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public static void setRecurringAlarm(Context context) {
+        System.out.println("I ve been called recurring");
         String intervalPref = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString("refreshInterval", "1");
         Intent refresh = new Intent(context, AlarmReceiver.class);

@@ -20,31 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name="com.katsuna.weatherwidget.WidgetActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <receiver android:name="com.katsuna.weatherwidget.WeatherWidget" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/main_widget_info" />
-
-        </receiver>
-        <receiver android:name="com.katsuna.weatherwidget.ExtendedWeatherWidget" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/extended_widget_info" />
-
-        </receiver>
         <receiver android:name="com.katsuna.weatherwidget.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -95,6 +70,15 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/clock_widget_info" />
         </receiver>
+
+        <service
+            android:name="com.katsuna.weatherwidget.WeatherMonitorService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.katsuna.weatherwidget.WeatherUpdateService"
+            android:exported="false" />
+
 
         <!--    Clock staff -->
 
