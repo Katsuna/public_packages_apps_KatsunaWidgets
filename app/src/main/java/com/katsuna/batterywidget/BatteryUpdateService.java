@@ -98,9 +98,14 @@ public class BatteryUpdateService extends IntentService {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_charge);
 
         }
-        else if (level < 10)
+        else if (level <= 10)
         {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_alert);
+
+        }
+        else if (level > 10 )
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_30_01);
 
         }
         else
