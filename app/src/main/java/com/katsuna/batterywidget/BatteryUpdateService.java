@@ -98,21 +98,57 @@ public class BatteryUpdateService extends IntentService {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_charge);
 
         }
-        else if (level <= 10)
+        else if (level > 0 && level <=5)
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_red_5);
+        else if (level > 5 && level <=10)
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_red_10);
+
+        else if (level < 10 && level <=20)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_alert);
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_red_20);
 
         }
-        else if (level > 10 )
+        else if (level < 20 && level <=30)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_30_01);
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_30);
 
         }
-        else
+        else if (level <=30 && level <=40)
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_40);
+
+        }
+        else if (level <40 && level <=50)
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_50);
+
+        }
+        else if (level <=50 && level <=60)
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_60);
+
+        }
+        else if (level < 60 && level <=70)
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_70);
+
+        }
+        else if (level <=70 && level <=80)
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_80);
+
+        }
+        else if (level > 80 && level <=90)
+        {
+            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_90);
+
+        }
+        else if (level > 90 && level <=100)
         {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_black);
 
         }
+
 //        remoteViews.setViewVisibility(R.id.percent100, (level <= 100 && level > 90) ?
 //                View.VISIBLE : View.INVISIBLE);
 //        remoteViews.setViewVisibility(R.id.percent90, (level <= 90 && level > 80) ?
