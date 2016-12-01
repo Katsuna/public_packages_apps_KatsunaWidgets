@@ -5,6 +5,7 @@
     <color name="colorAccent">#e3e4e6</color>
     <color name="colorBackground">@android:color/transparent</color>
     <color name="colorTintedBackground">#cdcdcd</color>
+    <color name="whiteTrans">#80FFFFFF</color>
 
     <color name="darkTheme_colorPrimary">#2196F3</color>
     <color name="darkTheme_colorPrimaryDark">#1E88E5</color>

@@ -3,9 +3,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="400dp"
+    android:layout_height="wrap_content"
     android:id="@+id/weekRoot"
-    android:background="@android:color/white"
+    android:background="@drawable/widget_back"
     >
 
     <LinearLayout

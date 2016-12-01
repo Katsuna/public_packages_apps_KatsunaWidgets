@@ -145,7 +145,6 @@ public class WeatherUpdateService extends IntentService {
         }
         else if( layout == 2) {
             if(widgetWeather.getIcon()!= null) {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>"+widgetWeather.getWindDirection());
                 remoteViews = new RemoteViews(getPackageName(), R.layout.extended_widget_view);
                 remoteViews.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
                 remoteViews.setOnClickPendingIntent(R.id.state_week, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
@@ -179,7 +178,7 @@ public class WeatherUpdateService extends IntentService {
             remoteViews = new RemoteViews(getPackageName(), R.layout.week_widget_view);
             remoteViews.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_now, getPendingSelfIntent(this, WidgetCollection.SYNC_CLICKED));
-            remoteViews.setOnClickPendingIntent(R.id.state_day, getPendingSelfIntent(this, WidgetCollection.DAY_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.state_week_day, getPendingSelfIntent(this, WidgetCollection.DAY_CLICKED));
 
             remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
             remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
@@ -187,8 +186,8 @@ public class WeatherUpdateService extends IntentService {
 
             remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             int[] daysIDS = new int[] {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
-            int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
-            int[] tempIDs = new int[] {R.id.day_temp1, R.id.day_temp2, R.id.day_temp3,R.id.day_temp4, R.id.day_temp5, R.id.day_temp6, R.id.day_temp7 };
+            int[] iconsIDs = new int[] {R.id.icon1, R.id.icon2, R.id.icon3,R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7 };
+            int[] tempIDs = new int[] {R.id.temp1, R.id.temp2, R.id.temp3,R.id.temp4, R.id.temp5, R.id.temp6, R.id.temp7 };
 
             int j = 0;
 
@@ -220,7 +219,9 @@ public class WeatherUpdateService extends IntentService {
 
             remoteViews = new RemoteViews(getPackageName(), R.layout.day_widget_view);
             remoteViews.setOnClickPendingIntent(R.id.day_back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
-            remoteViews.setOnClickPendingIntent(R.id.state_day_now, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.state_day_now, getPendingSelfIntent(this, WidgetCollection.SYNC_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.state_day_week, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
+
 
             remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
             remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());

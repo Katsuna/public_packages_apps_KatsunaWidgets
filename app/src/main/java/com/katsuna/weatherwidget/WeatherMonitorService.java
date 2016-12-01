@@ -61,7 +61,7 @@ import java.util.Random;
 
 import com.katsuna.R;
 import com.katsuna.adapters.ViewPagerAdapter;
-import com.katsuna.adapters.WeatherRecyclerAdapter;
+//import com.katsuna.adapters.WeatherRecyclerAdapter;
 import com.katsuna.batterywidget.BatteryInfo;
 import com.katsuna.batterywidget.BatteryUpdateService;
 import com.katsuna.utils.UnitConvertor;

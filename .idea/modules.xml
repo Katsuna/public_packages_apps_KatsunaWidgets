@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/WidgetCollection.iml" filepath="$PROJECT_DIR$/WidgetCollection.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/package_apps_KatsunaWidgetCollection.iml" filepath="$PROJECT_DIR$/package_apps_KatsunaWidgetCollection.iml" />
     </modules>

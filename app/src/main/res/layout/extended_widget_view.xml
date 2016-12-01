@@ -12,10 +12,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="400dp"
+    android:layout_height="wrap_content"
     android:id="@+id/extendedRoot"
-    android:background="@android:color/white"
-    android:minHeight="1000dp"
+    android:background="@drawable/widget_back"
     >
 
     <LinearLayout
