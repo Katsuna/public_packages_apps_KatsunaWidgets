@@ -129,7 +129,8 @@ public class JSONWeatherParser {
             widgetWeather.setSunset(reader.optJSONObject("sys").getString("sunset"));
             widgetWeather.setIcon(setWeatherIcon(Integer.parseInt(reader.optJSONArray("weather").getJSONObject(0).getString("id")), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
             widgetWeather.setLastUpdated(lastUpdate);
-            widgetWeather.setWindDirectionDegree(Double.valueOf(reader.optJSONObject("wind").getString("deg")));
+            if(reader.optJSONObject("wind").has("deg"))
+                widgetWeather.setWindDirectionDegree(Double.valueOf(reader.optJSONObject("wind").getString("deg")));
             Log.e("JSONException Data", result);
 
 

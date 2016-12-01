@@ -45,13 +45,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         this.context = context;
 
         System.out.println("I m here");
+
+        String action = intent.getStringExtra("action");
+
+
+
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             System.out.println("I m boot");
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             String interval = sp.getString("refreshInterval", "1");
             if (!interval.equals("0")) {
-                setRecurringAlarm(context);
                 getWeather();
             }
 
@@ -65,7 +69,28 @@ public class AlarmReceiver extends BroadcastReceiver {
                 getWeather();
             }
         } else {
-            getWeather();
+            System.out.println("I m else alarm" +action);
+            if(action != null) {
+                switch (action) {
+                    case "current":
+                        System.out.println(">:" + action);
+
+                        getCurrentWeather();
+                        break;
+                    case "forecast":
+                        System.out.println(">:2" + action);
+
+                        getShortWeather();
+                        break;
+                    case "long_forecast":
+                        getLongWeather();
+                        break;
+                }
+            }
+            else{
+                getWeather();
+            }
+
 
         }
 
@@ -73,6 +98,62 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
         updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
         context.startService(updateWeatherIntent);
+    }
+
+    private void getCurrentWeather() {
+        Log.d("Alarm", "Recurring alarm; requesting download service.");
+        boolean failed;
+        if (isNetworkAvailable()) {
+            failed = false;
+            if (isUpdateLocation()) {
+                new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
+            } else {
+                new GetWeatherTask().execute();
+            }
+        } else {
+            failed = true;
+        }
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("backgroundRefreshFailed", failed);
+        editor.apply();
+    }
+
+    private void getShortWeather() {
+        Log.d("Alarm", "Recurring alarm; requesting download service.");
+        boolean failed;
+        if (isNetworkAvailable()) {
+            failed = false;
+            if (isUpdateLocation()) {
+                new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
+
+            }
+                new GetShortTermWeatherTask().execute();
+        } else {
+            failed = true;
+        }
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("backgroundRefreshFailed", failed);
+        editor.apply();
+    }
+
+    private void getLongWeather() {
+        Log.d("Alarm", "Recurring alarm; requesting download service.");
+        boolean failed;
+        if (isNetworkAvailable()) {
+            failed = false;
+            if (isUpdateLocation()) {
+                new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
+            }
+                new GetLongTermWeatherTask().execute();
+        } else {
+            failed = true;
+        }
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("backgroundRefreshFailed", failed);
+        editor.apply();
     }
 
     private void getWeather() {

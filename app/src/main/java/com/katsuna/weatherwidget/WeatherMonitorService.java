@@ -60,7 +60,6 @@ import java.util.Map;
 import java.util.Random;
 
 import com.katsuna.R;
-import com.katsuna.adapters.ViewPagerAdapter;
 //import com.katsuna.adapters.WeatherRecyclerAdapter;
 import com.katsuna.batterywidget.BatteryInfo;
 import com.katsuna.batterywidget.BatteryUpdateService;
@@ -198,11 +197,11 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
 
         //*************Forecast***************//
-        Intent intentForecast = new Intent(getApplicationContext(), WeatherAlarmReceiver.class);
+        Intent intentForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
         intentForecast.putExtra("action","forecast");
 
         // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent fIntent = PendingIntent.getBroadcast(this, WeatherAlarmReceiver.REQUEST_CODE_FORECAST,
+        final PendingIntent fIntent = PendingIntent.getBroadcast(this, AlarmReceiver.REQUEST_CODE_FORECAST,
                 intentForecast, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Setup periodic alarm every 5 seconds
@@ -214,10 +213,10 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
 
         //*******long forecast**********//
-        Intent intentLongForecast = new Intent(getApplicationContext(), WeatherAlarmReceiver.class);
+        Intent intentLongForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
         intentLongForecast.putExtra("action","long_forecast");
         // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent lIntent = PendingIntent.getBroadcast(this, WeatherAlarmReceiver.REQUEST_CODE_LONG_FORECAST,
+        final PendingIntent lIntent = PendingIntent.getBroadcast(this, AlarmReceiver.REQUEST_CODE_LONG_FORECAST,
                 intentLongForecast, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Setup periodic alarm every 5 seconds
@@ -526,37 +525,6 @@ public class WeatherMonitorService extends Service implements LocationListener{
         return ParseResult.OK;
     }
 
-    private void updateLongTermWeatherUI() {
-        if (destroyed) {
-            return;
-        }
-        System.out.println("ive been pressed!!!!!!!!!!!!!");
-
-
-        Bundle bundleToday = new Bundle();
-        bundleToday.putInt("day", 0);
-        RecyclerViewFragment recyclerViewFragmentToday = new RecyclerViewFragment();
-        recyclerViewFragmentToday.setArguments(bundleToday);
-
-        Bundle bundleTomorrow = new Bundle();
-        bundleTomorrow.putInt("day", 1);
-        RecyclerViewFragment recyclerViewFragmentTomorrow = new RecyclerViewFragment();
-        recyclerViewFragmentTomorrow.setArguments(bundleTomorrow);
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("day", 2);
-        RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
-        recyclerViewFragment.setArguments(bundle);
-
-        int currentPage = viewPager.getCurrentItem();
-
-        tabLayout.setupWithViewPager(viewPager);
-
-        if (currentPage == 0 && longTermTodayWeather.isEmpty()) {
-            currentPage = 1;
-        }
-        viewPager.setCurrentItem(currentPage, false);
-    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -768,7 +736,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
         @Override
         protected void updateMainUI() {
-            updateLongTermWeatherUI();
+            //updateLongTermWeatherUI();
         }
     }
 

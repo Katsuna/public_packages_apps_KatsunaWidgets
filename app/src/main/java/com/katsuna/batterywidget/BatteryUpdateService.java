@@ -29,6 +29,7 @@ public class BatteryUpdateService extends IntentService {
     public static final String ACTION_WIDGET_UPDATE = "com.em.batterywidget.action.WIDGET_UPDATE";
 
     public static final String EXTRA_WIDGET_IDS = "com.em.batterywidget.extra.WIDGET_IDS";
+    public static final String ACTION_BATTERY_BACK = "com.em.batterywidget.action.BATTERY_CHANGED";
 
     /**
      * Creates an BatteryUpdateService.
@@ -80,6 +81,28 @@ public class BatteryUpdateService extends IntentService {
                 final int[] widgetIds = intent.getIntArrayExtra(EXTRA_WIDGET_IDS);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(widgetIds, remoteViews);
+            }
+            else  if (ACTION_BATTERY_BACK.equals(action)) {
+                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
+
+                final int level = newBatteryInfo.getLevel();
+                final boolean isCharging = newBatteryInfo.isCharging();
+
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(this);
+                BatteryInfo oldBatteryInfo = new BatteryInfo(sharedPreferences);
+                if (oldBatteryInfo.getLevel() != newBatteryInfo.getLevel()) {
+                    Database database = new Database(this);
+                    database.openWrite().insert(new DatabaseEntry(newBatteryInfo.getLevel()));
+                    database.close();
+                }
+
+                newBatteryInfo.saveToSharedPreferences(sharedPreferences);
+                RemoteViews remoteViews = createRemoteViews(level, isCharging);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
         }
     }

@@ -17,6 +17,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.katsuna.R;
+import com.katsuna.batterywidget.BatteryInfo;
 import com.katsuna.batterywidget.BatteryMonitorService;
 import com.katsuna.batterywidget.BatteryUpdateService;
 import com.katsuna.clockwidget.ClockMonitorService;
@@ -91,13 +92,18 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-
                 // BATTERY WIDGET UPDATE
-                this.startService(new Intent(this, BatteryMonitorService.class));
+               // this.startService(new Intent(this, BatteryMonitorService.class));
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, BatteryMonitorService.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                try {
+                    pendingIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
                 // update the widgets
-                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
-                this.startService(updateBatteryIntent);
+//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHANGED);
+//                this.startService(updateBatteryIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -119,10 +125,8 @@ public class WeatherUpdateService extends IntentService {
 
         Weather widgetWeather = new Weather();
         if (!sp.getString("lastToday", "").equals("")) {
-            System.out.println("im called");
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
-            System.out.println("im called 2");
             try {
                 pendingIntent2.send();
             } catch (PendingIntent.CanceledException e) {
@@ -154,7 +158,8 @@ public class WeatherUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.widgetExDescription, widgetWeather.getDescription());
                 remoteViews.setTextViewText(R.id.widgetHumidity, "Humidity:"+ widgetWeather.getHumidity() + "%");
                 remoteViews.setTextViewText(R.id.precipitation, "Chance of rain/snow: "+ widgetWeather.getPrecipitation());
-                remoteViews.setTextViewText(R.id.widgetExWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
+                if(widgetWeather.getWindDirectionDegree() != null)
+                    remoteViews.setTextViewText(R.id.widgetExWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
 
                 remoteViews.setImageViewResource(R.id.widgetExIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             }
@@ -165,7 +170,6 @@ public class WeatherUpdateService extends IntentService {
             if (!sp.getString("lastLongterm", "").equals("")) {
                 System.out.println("im called");
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
-                System.out.println(">>>>>>>>> size:"+forecast.size()+" temp:"+forecast.get(0).getDate()+"date2" +forecast.get(1).getDate());
             } else {
                 System.out.println("im called 2");
                 try {
@@ -255,7 +259,6 @@ public class WeatherUpdateService extends IntentService {
     private int getWeatherIconId(String actualId, int hourOfDay, Context context) {
 
         int icon = 0;
-        System.out.println(actualId+">>>>"+context);
         if (actualId.equals(context.getString(R.string.weather_sunny))) {
             if (hourOfDay >= 7 && hourOfDay < 20) {
                 icon = R.drawable.k48_sun;

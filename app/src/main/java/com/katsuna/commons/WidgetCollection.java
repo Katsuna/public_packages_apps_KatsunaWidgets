@@ -51,38 +51,39 @@ public class WidgetCollection extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d("Collection widget","I am n update...");
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-        // CLOCK WIDGET UPDATE
-        // ensure service is running
-        context.startService(new Intent(context, ClockMonitorService.class));
-        // update the widgets
-        Intent updateIntent = new Intent(context, ClockUpdateService.class);
-        updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
-        updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
-        context.startService(updateIntent);
+        if( extended == false) {
+            super.onUpdate(context, appWidgetManager, appWidgetIds);
+            // CLOCK WIDGET UPDATE
+            // ensure service is running
+            context.startService(new Intent(context, ClockMonitorService.class));
+            // update the widgets
+            Intent updateIntent = new Intent(context, ClockUpdateService.class);
+            updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
+            updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
+            context.startService(updateIntent);
 
 
-        // BATTERY WIDGET UPDATE
-        context.startService(new Intent(context, BatteryMonitorService.class));
-        // update the widgets
-        Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-        updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
-        updateBatteryIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
-        context.startService(updateBatteryIntent);
+            // BATTERY WIDGET UPDATE
+            context.startService(new Intent(context, BatteryMonitorService.class));
+            // update the widgets
+            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
+            updateBatteryIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
+            context.startService(updateBatteryIntent);
 
-        // WEATHER WIDGET UPDATE
+            // WEATHER WIDGET UPDATE
 //        Intent intent = new Intent(context, AlarmReceiver.class);
 //        intent.setAction(ACTION_MENU_CLICKED);
 //        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, appWidgetIds[0], intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        context.startService(new Intent(context, BatteryMonitorService.class));
-        Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-        updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-        updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
-        context.startService(updateWeatherIntent);
-
+            context.startService(new Intent(context, BatteryMonitorService.class));
+            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+            updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
+            context.startService(updateWeatherIntent);
+        }
     }
 
     @Override
@@ -113,26 +114,32 @@ public class WidgetCollection extends AppWidgetProvider {
         super.onReceive(context, intent);
         System.out.println("on Receive widget:"+ intent.getAction());
         if (SYNC_CLICKED.equals(intent.getAction())) {
-
+            extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_NOW);
             context.startService(updateWeatherIntent);
         }
         else if (BACK_CLICKED.equals(intent.getAction())){
+
+
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_BACK);
             context.startService(updateWeatherIntent);
+            extended = false;
         }
         else if (WEEK_CLICKED.equals(intent.getAction())){
+            extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_WEEK);
             context.startService(updateWeatherIntent);
         }
         else if (DAY_CLICKED.equals(intent.getAction())){
+            extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_DAY);
             context.startService(updateWeatherIntent);
         }
+
 
 //            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 //
