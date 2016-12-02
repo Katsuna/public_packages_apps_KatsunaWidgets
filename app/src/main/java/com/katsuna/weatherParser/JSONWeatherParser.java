@@ -131,6 +131,8 @@ public class JSONWeatherParser {
             widgetWeather.setLastUpdated(lastUpdate);
             if(reader.optJSONObject("wind").has("deg"))
                 widgetWeather.setWindDirectionDegree(Double.valueOf(reader.optJSONObject("wind").getString("deg")));
+            else
+                widgetWeather.setWindDirectionDegree(null);
             Log.e("JSONException Data", result);
 
 

@@ -186,6 +186,7 @@ public class WeatherUpdateService extends IntentService {
 
             remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
             remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
+            if(widgetWeather.getWindDirectionDegree() != null)
             remoteViews.setTextViewText(R.id.widgetWeekWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
 
             remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
