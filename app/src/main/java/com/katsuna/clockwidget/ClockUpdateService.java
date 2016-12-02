@@ -6,7 +6,10 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CalendarView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -31,9 +34,11 @@ public class ClockUpdateService extends IntentService {
 
     public ClockUpdateService() {
         super("BatteryUpdateService");
+
     }
 
     CalendarView calendar;
+    private  Handler handler;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -60,7 +65,9 @@ public class ClockUpdateService extends IntentService {
 
 
             }
-            else if (ACTION_CLOCK_CHANGED.equals(action)){
+            else {
+                System.out.println("CLOCK CALLEndar!!!!!!!!");
+
                 initializeCalendar();
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.calendar_widget_view);
                 String []clock = setTime();
@@ -81,9 +88,14 @@ public class ClockUpdateService extends IntentService {
     }
 
     protected PendingIntent getPendingSelfIntent(Context context, String action) {
+
         Intent intent = new Intent(context, WidgetCollection.class);
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
+
+    private void runOnUiThread(Runnable r) {
+        handler.post(r);
     }
 
     public String [] setTime() {
@@ -113,17 +125,35 @@ public class ClockUpdateService extends IntentService {
     }
 
     public void initializeCalendar() {
-        calendar = (CalendarView) getResources().findViewById(R.id.calendar);
 
+        Context applicationContext = getApplicationContext();
+        handler = new Handler(applicationContext.getMainLooper());
 
-
-        //sets the listener to be notified upon selected date change.
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            //show the selected date as a toast
+        runOnUiThread(new Runnable() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
-                Toast.makeText(getApplicationContext(), day + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+            public void run() {
+                Toast.makeText(getApplicationContext(), "AAAAAAAAAAAAA", Toast.LENGTH_LONG).show();
+
+//                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                View layout = inflater.inflate(R.layout.calendar_widget_view, null);
+//                calendar = (CalendarView) findViewById(R.id.calendar);
+
+                //sets the listener to be notified upon selected date change.
+//                calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//                    //show the selected date as a toast
+//                    @Override
+//                    public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+//                        Toast.makeText(getApplicationContext(), day + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+//                    }
+//                });
+
             }
         });
+
+
+
+
     }
+
+
 }
