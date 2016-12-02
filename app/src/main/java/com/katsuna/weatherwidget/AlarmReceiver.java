@@ -1,13 +1,17 @@
 package com.katsuna.weatherwidget;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,6 +21,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -32,11 +38,14 @@ import java.util.Locale;
 
 import com.katsuna.R;
 
+import static com.katsuna.weatherwidget.WeatherMonitorService.MY_PERMISSIONS_ACCESS_FINE_LOCATION;
 
-public class AlarmReceiver extends BroadcastReceiver {
+
+public class AlarmReceiver extends BroadcastReceiver implements LocationListener{
     public static final int REQUEST_CODE_CURRENT = 12345;
     public static final int REQUEST_CODE_FORECAST = 23456;
     public static final int REQUEST_CODE_LONG_FORECAST = 34567;
+    LocationManager locationManager;
 
     Context context;
 
@@ -186,6 +195,102 @@ public class AlarmReceiver extends BroadcastReceiver {
     private boolean isUpdateLocation() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean("updateLocationAutomatically", false);
+    }
+
+//    private void saveLocation(String result) {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        recentCity = preferences.getString("city", Constants.DEFAULT_CITY);
+//
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putString("city", result);
+//        editor.commit();
+//
+//        if (!recentCity.equals(result)) {
+//            // New location, update weather
+//            getTodayWeather();
+//            getLongTermWeather();
+//        }
+//    }
+//
+//    void getCityByLocation() {
+//        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                // Explanation not needed, since user requests this himself
+//
+//            } else {
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+//            }
+//
+//        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
+//                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            progressDialog = new ProgressDialog(this);
+//            progressDialog.setMessage(getString(R.string.getting_location));
+//            progressDialog.setCancelable(false);
+//            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    try {
+//                        locationManager.removeUpdates(MainActivity.this);
+//                    } catch (SecurityException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//            progressDialog.show();
+//            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+//                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+//            }
+//            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+//            }
+//        } else {
+//            showLocationSettingsDialog();
+//        }
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    getCityByLocation();
+//                }
+//                return;
+//            }
+//        }
+//    }
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+            locationManager.removeUpdates(this);
+        } catch (SecurityException e) {
+            Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
+        }
+        Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+//        new ProvideCityNameTask(this, this, progressDialog).execute("coords", Double.toString(latitude), Double.toString(longitude));
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 
     public class GetWeatherTask extends AsyncTask<String, String, Void> {

@@ -29,6 +29,8 @@ public class WidgetCollection extends AppWidgetProvider {
     public static final String DAY_CLICKED = "dayClicked";
     private PendingIntent service = null;
     public static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
+    public static final String TIME_CLICKED    = "automaticWidgetSyncTimeClick";
+
     private static final String DEBUG_TAG = "onClicked";
     public static boolean extended = false;
     public static WeatherDbHandler wDBHandler;
@@ -138,6 +140,12 @@ public class WidgetCollection extends AppWidgetProvider {
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_DAY);
             context.startService(updateWeatherIntent);
+        }
+        else if(TIME_CLICKED.equals(intent.getAction())){
+            extended = true;
+            Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
+            updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_EXTENDED_CLOCK);
+            context.startService(updateClockIntent);
         }
 
 
