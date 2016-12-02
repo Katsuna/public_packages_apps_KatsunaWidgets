@@ -45,7 +45,7 @@ public class ClockUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            System.out.println("CLOCK CALLED");
+            System.out.println("CLOCK CALLED:"+action);
             if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false) {
                 System.out.println("CLOCK CALLED in");
 
@@ -65,7 +65,7 @@ public class ClockUpdateService extends IntentService {
 
 
             }
-            else {
+            else if (ACTION_WIDGET_EXTENDED_CLOCK.equals(action)){
                 System.out.println("CLOCK CALLEndar!!!!!!!!");
 
                 initializeCalendar();
@@ -73,8 +73,9 @@ public class ClockUpdateService extends IntentService {
                 String []clock = setTime();
                 remoteViews.setOnClickPendingIntent(R.id.calendar_back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
-                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-                remoteViews.setTextViewText(R.id.date, clock[1]);
+
+                remoteViews.setTextViewText(R.id.calendar_appwidget_text, clock[0]);
+                remoteViews.setTextViewText(R.id.calendar_date, clock[1]);
 
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -127,12 +128,11 @@ public class ClockUpdateService extends IntentService {
     public void initializeCalendar() {
 
         Context applicationContext = getApplicationContext();
-        handler = new Handler(applicationContext.getMainLooper());
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), "AAAAAAAAAAAAA", Toast.LENGTH_LONG).show();
+//        handler = new Handler(applicationContext.getMainLooper());
+//
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
 
 //                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 //                View layout = inflater.inflate(R.layout.calendar_widget_view, null);
@@ -147,8 +147,8 @@ public class ClockUpdateService extends IntentService {
 //                    }
 //                });
 
-            }
-        });
+//            }
+//        });
 
 
 

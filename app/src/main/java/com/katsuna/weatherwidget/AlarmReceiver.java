@@ -21,8 +21,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -38,13 +40,21 @@ import java.util.Locale;
 
 import com.katsuna.R;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static com.katsuna.weatherwidget.WeatherMonitorService.MY_PERMISSIONS_ACCESS_FINE_LOCATION;
 
 
-public class AlarmReceiver extends BroadcastReceiver implements LocationListener{
+public class AlarmReceiver extends BroadcastReceiver implements LocationListener {
     public static final int REQUEST_CODE_CURRENT = 12345;
     public static final int REQUEST_CODE_FORECAST = 23456;
     public static final int REQUEST_CODE_LONG_FORECAST = 34567;
+    private static final String DEFAULT_CITY = "Athens";
+    private static final long LOCATION_REFRESH_TIME = 3600 * 1000 * 3;
+    private static final float LOCATION_REFRESH_DISTANCE = 1000;
+    public String recentCity = "";
+    String longitude = "";
+    String latitude = "";
+
     LocationManager locationManager;
 
     Context context;
@@ -57,7 +67,20 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
         String action = intent.getStringExtra("action");
 
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+                LOCATION_REFRESH_DISTANCE, this);
+        getLastBestLocation();
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             System.out.println("I m boot");
@@ -78,12 +101,11 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 getWeather();
             }
         } else {
-            System.out.println("I m else alarm" +action);
-            if(action != null) {
+            System.out.println("I m else alarm" + action);
+            if (action != null) {
                 switch (action) {
                     case "current":
                         System.out.println(">:" + action);
-
                         getCurrentWeather();
                         break;
                     case "forecast":
@@ -95,11 +117,9 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                         getLongWeather();
                         break;
                 }
-            }
-            else{
+            } else {
                 getWeather();
             }
-
 
         }
 
@@ -137,7 +157,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
 
             }
-                new GetShortTermWeatherTask().execute();
+            new GetShortTermWeatherTask().execute();
         } else {
             failed = true;
         }
@@ -155,7 +175,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             if (isUpdateLocation()) {
                 new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
             }
-                new GetLongTermWeatherTask().execute();
+            new GetLongTermWeatherTask().execute();
         } else {
             failed = true;
         }
@@ -197,74 +217,67 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         return preferences.getBoolean("updateLocationAutomatically", false);
     }
 
-//    private void saveLocation(String result) {
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//        recentCity = preferences.getString("city", Constants.DEFAULT_CITY);
-//
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putString("city", result);
-//        editor.commit();
-//
-//        if (!recentCity.equals(result)) {
-//            // New location, update weather
-//            getTodayWeather();
-//            getLongTermWeather();
-//        }
-//    }
-//
-//    void getCityByLocation() {
-//        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                // Explanation not needed, since user requests this himself
-//
-//            } else {
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-//                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
-//            }
-//
-//        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
-//                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            progressDialog = new ProgressDialog(this);
-//            progressDialog.setMessage(getString(R.string.getting_location));
-//            progressDialog.setCancelable(false);
-//            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    try {
-//                        locationManager.removeUpdates(MainActivity.this);
-//                    } catch (SecurityException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//            progressDialog.show();
-//            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-//                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-//            }
-//            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-//            }
-//        } else {
-//            showLocationSettingsDialog();
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
-//                // If request is cancelled, the result arrays are empty.
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    getCityByLocation();
-//                }
-//                return;
-//            }
-//        }
-//    }
+    private void saveLocation(String result) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        recentCity = preferences.getString("city", DEFAULT_CITY);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("city", result);
+        editor.commit();
+
+        if (!recentCity.equals(result)) {
+            // New location, update weather
+            getWeather();
+        }
+    }
+
+    private void showLocationSettingsDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle(R.string.location_settings);
+        alertDialog.setMessage(R.string.location_settings_message);
+        alertDialog.setPositiveButton(R.string.location_settings_button, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                context.startActivity(intent);
+            }
+        });
+        alertDialog.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
+    }
+
+    void getCityByLocation() {
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            }
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            }
+        } else {
+            showLocationSettingsDialog();
+        }
+    }
+
+    // @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getCityByLocation();
+                }
+                return;
+            }
+        }
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         try {
@@ -273,8 +286,9 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
         }
         Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
+        latitude = String.valueOf(location.getLatitude());
+        longitude = String.valueOf(location.getLongitude());
+        System.out.println("location changed");
 //        new ProvideCityNameTask(this, this, progressDialog).execute("coords", Double.toString(latitude), Double.toString(longitude));
     }
 
@@ -303,16 +317,25 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         protected Void doInBackground(String... params) {
             String result = "";
             try {
+               // System.out.println("day weather call");
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
-                if(language.equals("cs")) { language = "cz"; }
+                if (language.equals("cs")) {
+                    language = "cz";
+                }
                 String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", "Athens"), "UTF-8") + "&lang="+ language +"&appid=" + apiKey);
+                //
+                URL url = null;
+                if (!latitude.equals("")) {
+                    url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&appid=" + apiKey);
+                } else
+                    url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&appid=" + apiKey);
+
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
-                if(urlConnection.getResponseCode() == 200) {
+                if (urlConnection.getResponseCode() == 200) {
                     String line = null;
                     while ((line = r.readLine()) != null) {
                         result += line + "\n";
@@ -321,8 +344,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     editor.putString("lastToday", result);
                     editor.apply();
                     WeatherMonitorService.saveLastUpdateTime(sp);
-                }
-                else {
+                } else {
                     // Connection problem
                 }
             } catch (IOException e) {
@@ -349,26 +371,32 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             String result = "";
             try {
 
+             //   System.out.println("short term weather call");
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
-                if(language.equals("cs")) { language = "cz"; }
+                if (language.equals("cs")) {
+                    language = "cz";
+                }
                 String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", "ATHENS"), "UTF-8") + "&lang="+ language +"&mode=json&appid=" + apiKey);
+                URL url = null;
+                if (!latitude.equals("")) {
+                    url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&&appid=" + apiKey);
+                } else
+                    url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
-                if(urlConnection.getResponseCode() == 200) {
+                if (urlConnection.getResponseCode() == 200) {
                     String line = null;
                     while ((line = r.readLine()) != null) {
                         result += line + "\n";
                     }
                     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                     //  Log.i("JSON short",result);
+                    //  Log.i("JSON short",result);
                     editor.putString("lastShortterm", result);
                     editor.apply();
-                }
-                else {
+                } else {
                     // Connection problem
                 }
             } catch (IOException e) {
@@ -384,8 +412,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
     }
 
 
-
-
     class GetLongTermWeatherTask extends AsyncTask<String, String, Void> {
 
         protected void onPreExecute() {
@@ -397,26 +423,34 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             String result = "";
             try {
 
-
+           //     System.out.println("long term weather call");
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
-                if(language.equals("cs")) { language = "cz"; }
+                if (language.equals("cs")) {
+                    language = "cz";
+                }
                 String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", "ATHENS"), "UTF-8") + "&lang="+ language +"&mode=json&appid=" + apiKey);
+                URL url = null;
+
+                if (!latitude.equals("")) {
+                    url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
+                } else
+                    url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
+
+
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
-                if(urlConnection.getResponseCode() == 200) {
+                if (urlConnection.getResponseCode() == 200) {
                     String line = null;
                     while ((line = r.readLine()) != null) {
                         result += line + "\n";
                     }
                     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                 //   Log.i("JSON long",result);
+                    //   Log.i("JSON long",result);
                     editor.putString("lastLongterm", result);
                     editor.apply();
-                }
-                else {
+                } else {
                     // Connection problem
                 }
             } catch (IOException e) {
@@ -441,7 +475,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         @Override
         protected void onPreExecute() {
             Log.d(TAG, "Trying to determine location...");
-            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
             locationListener = new BackgroundLocationListener();
             try {
                 if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -492,6 +526,8 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             }
         }
 
+
+
         public class BackgroundLocationListener implements LocationListener {
             private static final String TAG = "LocationListener";
             private Location location;
@@ -521,7 +557,38 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             }
         }
     }
+    private void getLastBestLocation() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
 
+        }
+        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        long GPSLocationTime = 0;
+        if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+
+        long NetLocationTime = 0;
+
+        if (null != locationNet) {
+            NetLocationTime = locationNet.getTime();
+        }
+
+        if ( 0 < GPSLocationTime - NetLocationTime ) {
+            latitude = String.valueOf(locationGPS.getLatitude());
+            longitude = String.valueOf(locationGPS.getLatitude());
+        }
+        else {
+            latitude = String.valueOf(locationGPS.getLatitude());
+            longitude = String.valueOf(locationGPS.getLatitude());
+        }
+    }
     public class GetCityNameTask extends AsyncTask<String, String, Void> {
         private static final String TAG = "GetCityNameTask";
 

@@ -142,6 +142,7 @@ public class WidgetCollection extends AppWidgetProvider {
             context.startService(updateWeatherIntent);
         }
         else if(TIME_CLICKED.equals(intent.getAction())){
+            System.out.println("mika");
             extended = true;
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_EXTENDED_CLOCK);
