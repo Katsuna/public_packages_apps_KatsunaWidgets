@@ -50,7 +50,7 @@ public class BatteryUpdateService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println("Im here also somehow"+action);
-            if (ACTION_BATTERY_CHANGED.equals(action)) {
+            if (ACTION_BATTERY_CHANGED.equals(action ) && WidgetCollection.extended == false) {
                 BatteryInfo newBatteryInfo = new BatteryInfo(intent);
 
                 final int level = newBatteryInfo.getLevel();
@@ -118,25 +118,10 @@ public class BatteryUpdateService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_BATTERY_BACK.equals(action)) {
-                System.out.println("Im called after back clicked start");
 
-//                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
-//
                 final int level = Math.round(getBatteryLevel());
                 final boolean isCharging = isConnected(this);
-//                        newBatteryInfo.isCharging();
-                System.out.println("Im called after back clicked start:"+level);
-//
-//                SharedPreferences sharedPreferences = PreferenceManager
-//                        .getDefaultSharedPreferences(this);
-//                BatteryInfo oldBatteryInfo = new BatteryInfo(sharedPreferences);
-//                if (oldBatteryInfo.getLevel() != newBatteryInfo.getLevel()) {
-//                    Database database = new Database(this);
-//                    database.openWrite().insert(new DatabaseEntry(newBatteryInfo.getLevel()));
-//                    database.close();
-//                }
 
-//                newBatteryInfo.saveToSharedPreferences(sharedPreferences);
                 RemoteViews remoteViews = createRemoteViews(level, isCharging);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

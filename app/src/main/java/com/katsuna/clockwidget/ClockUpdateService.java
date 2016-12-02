@@ -34,7 +34,9 @@ public class ClockUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action)) {
+            System.out.println("CLOCK CALLED");
+            if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false) {
+                System.out.println("CLOCK CALLED in");
 
 
 

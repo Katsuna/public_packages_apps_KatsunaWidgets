@@ -100,15 +100,6 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-                // BATTERY WIDGET UPDATE
-               // this.startService(new Intent(this, BatteryMonitorService.class));
-//                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, BatteryMonitorService.class), PendingIntent.FLAG_UPDATE_CURRENT);
-//                try {
-//                    pendingIntent.send();
-//                } catch (PendingIntent.CanceledException e) {
-//                    e.printStackTrace();
-//                }
-//                // update the widgets
                 Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
                 updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
                 this.startService(updateBatteryIntent);

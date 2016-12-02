@@ -30,7 +30,7 @@ public class WidgetCollection extends AppWidgetProvider {
     private PendingIntent service = null;
     public static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
     private static final String DEBUG_TAG = "onClicked";
-    private boolean extended = false;
+    public static boolean extended = false;
     public static WeatherDbHandler wDBHandler;
     public static WeatherContentProvider weatherContentProvider;
     public static String ACTION_MENU_CLICKED = "MenuClicked";
