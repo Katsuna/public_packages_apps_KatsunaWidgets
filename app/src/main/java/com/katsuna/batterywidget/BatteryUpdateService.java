@@ -32,6 +32,9 @@ public class BatteryUpdateService extends IntentService {
 
     public static final String EXTRA_WIDGET_IDS = "com.em.batterywidget.extra.WIDGET_IDS";
     public static final String ACTION_BATTERY_BACK = "com.em.batterywidget.action.BATTERY_CHANGED";
+    public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
+    public static final String ACTION_CLOCK_CHOICE =  "com.katsuna.batterywidget.action.clock_choice";
+    public static final String ACTION_BATTERY_CHOICE =  "com.katsuna.batterywidget.action.battery_choice";
 
     /**
      * Creates an BatteryUpdateService.
@@ -50,12 +53,12 @@ public class BatteryUpdateService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println("Im here also somehow"+action);
-            if (ACTION_BATTERY_CHANGED.equals(action ) && WidgetCollection.extended == false) {
+            if ((ACTION_BATTERY_CHANGED.equals(action ) && WidgetCollection.extended == false) ) {
                 BatteryInfo newBatteryInfo = new BatteryInfo(intent);
 
                 final int level = newBatteryInfo.getLevel();
                 final boolean isCharging = newBatteryInfo.isCharging();
-                RemoteViews remoteViews = createRemoteViews(level, isCharging);
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -81,13 +84,13 @@ public class BatteryUpdateService extends IntentService {
                 BatteryInfo batteryInfo = new BatteryInfo(sharedPreferences);
                 final int level = batteryInfo.getLevel();
                 final boolean isCharging = batteryInfo.isCharging();
-                RemoteViews remoteViews = createRemoteViews(level, isCharging);
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
                 final int[] widgetIds = intent.getIntArrayExtra(EXTRA_WIDGET_IDS);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(widgetIds, remoteViews);
             }
             else  if (ACTION_BATTERY_BACK.equals(action)) {
-//                System.out.println("Im called after back clicked");
+                System.out.println("Im called after back clicked");
 //                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
 //
 //                final int level = newBatteryInfo.getLevel();
@@ -104,7 +107,7 @@ public class BatteryUpdateService extends IntentService {
 //                }
 //
 //                newBatteryInfo.saveToSharedPreferences(sharedPreferences);
-//                RemoteViews remoteViews = createRemoteViews(level, isCharging);
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging, 1);
 //                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
 //                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 //                appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -116,17 +119,36 @@ public class BatteryUpdateService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent != null) {
+
             final String action = intent.getAction();
+            System.out.println("Started service with action:"+action);
+
             if (ACTION_BATTERY_BACK.equals(action)) {
 
                 final int level = Math.round(getBatteryLevel());
                 final boolean isCharging = isConnected(this);
 
-                RemoteViews remoteViews = createRemoteViews(level, isCharging);
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
+            else if (ACTION_WEATHER_CHOICE.equals(action)){
+                final int level = Math.round(getBatteryLevel());
+                final boolean isCharging = isConnected(this);
+
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
+            else if (ACTION_CLOCK_CHOICE.equals(action)){
+
+            }
+            else if (ACTION_BATTERY_CHOICE.equals(action)){
+
+            }
+
         }
         return START_NOT_STICKY;
     }
@@ -157,8 +179,13 @@ public class BatteryUpdateService extends IntentService {
      * @param isCharging whether the battery has been charging
      * @return the RemoteViews
      */
-    private RemoteViews createRemoteViews(final int level, final boolean isCharging) {
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
+    private RemoteViews createRemoteViews(final int level, final boolean isCharging, int backFlag) {
+        RemoteViews remoteViews = null;
+        if (backFlag == 0)
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
+        else
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
+
         if (isCharging)
         {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_charge);

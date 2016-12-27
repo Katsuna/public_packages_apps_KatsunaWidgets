@@ -54,6 +54,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
     public String recentCity = "";
     String longitude = "";
     String latitude = "";
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     LocationManager locationManager;
 
@@ -70,13 +71,17 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+//            final AlertDialog.Builder builder = new AlertDialog.Builder(context); 
+//            builder.setTitle("This app needs location access");
+//            builder.setMessage("Please grant location access so this app can detect beacons.");
+//            builder.setPositiveButton(android.R.string.ok, null); 
+//            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {  
+//                @Override 
+//                public void onDismiss(DialogInterface dialog) {
+//                    ActivityCompat.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION); 
+//                }  
+//            }); 
+//            builder.show(); 
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
                 LOCATION_REFRESH_DISTANCE, this);
@@ -128,6 +133,8 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
         context.startService(updateWeatherIntent);
     }
+
+
 
     private void getCurrentWeather() {
         Log.d("Alarm", "Recurring alarm; requesting download service.");

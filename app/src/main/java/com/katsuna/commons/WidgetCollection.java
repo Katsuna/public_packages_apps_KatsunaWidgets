@@ -22,13 +22,16 @@ import com.katsuna.weatherwidget.AlarmReceiver;
 import com.katsuna.weatherwidget.WeatherMonitorService;
 import com.katsuna.weatherwidget.WeatherUpdateService;
 
+import java.util.Calendar;
+
 public class WidgetCollection extends AppWidgetProvider {
 
     public static final String BACK_CLICKED = "backClicked";
     public static final String WEEK_CLICKED = "weekCLicked";
     public static final String DAY_CLICKED = "dayClicked";
     private PendingIntent service = null;
-    public static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
+    public static final String WEATHER_CLICKED    = "automaticWidgetSyncButtonClick";
+    public static final String VIEW_WEATHER_CLICKED    = "automaticWidgetForecastButtonClick";
     public static final String TIME_CLICKED    = "automaticWidgetSyncTimeClick";
 
     private static final String DEBUG_TAG = "onClicked";
@@ -80,7 +83,7 @@ public class WidgetCollection extends AppWidgetProvider {
 //        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, appWidgetIds[0], intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            context.startService(new Intent(context, BatteryMonitorService.class));
+            context.startService(new Intent(context, WeatherMonitorService.class));
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
             updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
@@ -90,7 +93,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        System.out.println("On enabled called");
+        System.out.println("On enabled called!");
         super.onEnabled(context);
         context.startService(new Intent(context, ClockMonitorService.class));
         context.startService(new Intent(context, BatteryMonitorService.class));
@@ -102,10 +105,13 @@ public class WidgetCollection extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] widgetIds) {
         super.onDeleted(context, widgetIds);
+        System.out.println("On remove called");
+
         if (getNumberOfWidgets(context) == 0) {
             // stop monitoring if there are no more widgets on screen
             context.stopService(new Intent(context, ClockMonitorService.class));
             context.stopService(new Intent(context, BatteryMonitorService.class));
+            context.stopService(new Intent(context, WeatherMonitorService.class));
 
         }
     }
@@ -115,19 +121,24 @@ public class WidgetCollection extends AppWidgetProvider {
         // TODO Auto-generated method stub
         super.onReceive(context, intent);
         System.out.println("on Receive widget:"+ intent.getAction());
-        if (SYNC_CLICKED.equals(intent.getAction())) {
+        if (WEATHER_CLICKED.equals(intent.getAction())) {
+            extended = true;
+            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_WEATHER_CHOICE);
+            context.startService(updateWeatherIntent);
+
+        }
+        if (VIEW_WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_NOW);
             context.startService(updateWeatherIntent);
         }
         else if (BACK_CLICKED.equals(intent.getAction())){
-
-
+            extended = false;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_BACK);
             context.startService(updateWeatherIntent);
-            extended = false;
         }
         else if (WEEK_CLICKED.equals(intent.getAction())){
             extended = true;

@@ -31,6 +31,8 @@ public class ClockUpdateService extends IntentService {
     public static final String EXTRA_WIDGET_IDS = "clockwidget.extra.WIDGET_IDS";
 
     public static final String ACTION_WIDGET_EXTENDED_CLOCK = "com.katsuna.weatherwidget.action.Clock";
+    public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
+
 
     public ClockUpdateService() {
         super("BatteryUpdateService");
@@ -76,6 +78,19 @@ public class ClockUpdateService extends IntentService {
 
                 remoteViews.setTextViewText(R.id.calendar_appwidget_text, clock[0]);
                 remoteViews.setTextViewText(R.id.calendar_date, clock[1]);
+
+
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
+            else if( ACTION_WEATHER_CHOICE.equals(action)){
+                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
+                String []clock = setTime();
+                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.TIME_CLICKED));
+
+                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+                remoteViews.setTextViewText(R.id.date, clock[1]);
 
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
