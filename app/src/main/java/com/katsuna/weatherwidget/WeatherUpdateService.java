@@ -47,7 +47,8 @@ public class WeatherUpdateService extends IntentService {
     public static final String ACTION_WIDGET_EXTENDED_DAY = "com.katsuna.weatherwidget.action.WeatherDay";
     public static final String ACTION_WIDGET_EXTENDED_WEEK = "com.katsuna.weatherwidget.action.WeatherWeek";
     public static final String ACTION_WIDGET_EXTENDED_BACK = "com.katsuna.weatherwidget.action.Back";
-    public static final String ACTION_WIDGET_WEATHER_CHOICE = "com.katsuna.weatherwidget.action.WeatherChoice";;
+    public static final String ACTION_WIDGET_WEATHER_CHOICE = "com.katsuna.weatherwidget.action.WeatherChoice";
+    public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.weatherwidget.action.ClockChoice";
 
 
     public WeatherUpdateService() {
@@ -124,6 +125,14 @@ public class WeatherUpdateService extends IntentService {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
+            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action)){
+
+
+                RemoteViews remoteViews =createRemoteViews(6);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
         }
 
 
@@ -148,10 +157,13 @@ public class WeatherUpdateService extends IntentService {
             }
         }
 
-        if( layout == 1) {
+        if( layout == 1 || layout == 6) {
             if(widgetWeather.getIcon()!= null) {
+                if (layout == 1)
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
+                else if (layout == 6)
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
 
-                remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
                 remoteViews.setOnClickPendingIntent(R.id.widgetRoot, getPendingSelfIntent(this, WidgetCollection.WEATHER_CLICKED));
 
                 remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
@@ -214,8 +226,6 @@ public class WeatherUpdateService extends IntentService {
 //                j++;
 
             for(int i = 0; i < 7; i++){
-
-
                 remoteViews.setTextViewText(daysIDS[i],getDay(forecast.get(i).getDate()));
                 remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
                 remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());

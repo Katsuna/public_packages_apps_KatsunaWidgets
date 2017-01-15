@@ -143,7 +143,13 @@ public class BatteryUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_CLOCK_CHOICE.equals(action)){
+                final int level = Math.round(getBatteryLevel());
+                final boolean isCharging = isConnected(this);
 
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_BATTERY_CHOICE.equals(action)){
 
@@ -183,8 +189,11 @@ public class BatteryUpdateService extends IntentService {
         RemoteViews remoteViews = null;
         if (backFlag == 0)
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
-        else
+        else if (backFlag == 1)
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
+        else if (backFlag == 2)
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
+
 
         if (isCharging)
         {
@@ -213,19 +222,15 @@ public class BatteryUpdateService extends IntentService {
         }
         else if (level <40 && level <=50)
         {
-
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_50);
-
         }
         else if (level <=50 && level <=60)
         {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_60);
-
         }
         else if (level < 60 && level <=70)
         {
             remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_70);
-
         }
         else if (level <=70 && level <=80)
         {

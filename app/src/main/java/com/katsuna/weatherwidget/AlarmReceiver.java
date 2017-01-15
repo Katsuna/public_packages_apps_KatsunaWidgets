@@ -123,6 +123,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                         break;
                 }
             } else {
+                System.out.println("Im in get weather current else");
                 getWeather();
             }
 
@@ -586,14 +587,14 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         if (null != locationNet) {
             NetLocationTime = locationNet.getTime();
         }
-
-        if ( 0 < GPSLocationTime - NetLocationTime ) {
-            latitude = String.valueOf(locationGPS.getLatitude());
-            longitude = String.valueOf(locationGPS.getLatitude());
-        }
-        else {
-            latitude = String.valueOf(locationGPS.getLatitude());
-            longitude = String.valueOf(locationGPS.getLatitude());
+        if( locationGPS != null || locationNet!= null) {
+            if (0 < GPSLocationTime - NetLocationTime) {
+                latitude = String.valueOf(locationGPS.getLatitude());
+                longitude = String.valueOf(locationGPS.getLatitude());
+            } else {
+                latitude = String.valueOf(locationNet.getLatitude());
+                longitude = String.valueOf(locationNet.getLatitude());
+            }
         }
     }
     public class GetCityNameTask extends AsyncTask<String, String, Void> {

@@ -15,7 +15,10 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.katsuna.R;
+import com.katsuna.batterywidget.BatteryUpdateService;
 import com.katsuna.commons.WidgetCollection;
+import com.katsuna.weatherwidget.WeatherMonitorService;
+import com.katsuna.weatherwidget.WeatherUpdateService;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -32,6 +35,7 @@ public class ClockUpdateService extends IntentService {
 
     public static final String ACTION_WIDGET_EXTENDED_CLOCK = "com.katsuna.weatherwidget.action.Clock";
     public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
+    public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.batterywidget.action.clock_choice";;
 
 
     public ClockUpdateService() {
@@ -85,6 +89,8 @@ public class ClockUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if( ACTION_WEATHER_CHOICE.equals(action)){
+                System.out.println("CLOCK Weather Opened!!!!!!!!");
+
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
                 String []clock = setTime();
                 remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.TIME_CLICKED));
@@ -92,6 +98,30 @@ public class ClockUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
                 remoteViews.setTextViewText(R.id.date, clock[1]);
 
+
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
+            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action)){
+
+                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
+                String []clock = setTime();
+                remoteViews.setOnClickPendingIntent(R.id.calendar_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
+                remoteViews.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
+                System.out.println("in clock choice with time:"+clock[0]);
+                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+                remoteViews.setTextViewText(R.id.date, clock[1]);
+
+                // update the widgets
+                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
+                this.startService(updateBatteryIntent);
+
+                this.startService(new Intent(this, WeatherMonitorService.class));
+                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
+                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_CLOCK_CHOICE);
+                this.startService(updateWeatherIntent);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
