@@ -35,7 +35,9 @@ public class ClockUpdateService extends IntentService {
 
     public static final String ACTION_WIDGET_EXTENDED_CLOCK = "com.katsuna.weatherwidget.action.Clock";
     public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
-    public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.batterywidget.action.clock_choice";;
+    public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.batterywidget.action.clock_choice";
+    public static final String ACTION_WIDGET_EXTENDED_BACK = "com.katsuna.clockwidget.action.Back";
+
 
 
     public ClockUpdateService() {
@@ -108,7 +110,7 @@ public class ClockUpdateService extends IntentService {
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
                 String []clock = setTime();
                 remoteViews.setOnClickPendingIntent(R.id.calendar_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
-                remoteViews.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
+                remoteViews.setOnClickPendingIntent(R.id.clock_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
                 System.out.println("in clock choice with time:"+clock[0]);
                 remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
                 remoteViews.setTextViewText(R.id.date, clock[1]);

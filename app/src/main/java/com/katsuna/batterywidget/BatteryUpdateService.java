@@ -119,14 +119,15 @@ public class BatteryUpdateService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent != null) {
+            System.out.println("IM in here");
 
             final String action = intent.getAction();
-            System.out.println("Started service with action:"+action);
+            System.out.println("Started  battery service with action:"+action);
+
+            final int level = Math.round(getBatteryLevel());
+            final boolean isCharging = isConnected(this);
 
             if (ACTION_BATTERY_BACK.equals(action)) {
-
-                final int level = Math.round(getBatteryLevel());
-                final boolean isCharging = isConnected(this);
 
                 RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -134,8 +135,7 @@ public class BatteryUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WEATHER_CHOICE.equals(action)){
-                final int level = Math.round(getBatteryLevel());
-                final boolean isCharging = isConnected(this);
+
 
                 RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -143,8 +143,6 @@ public class BatteryUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_CLOCK_CHOICE.equals(action)){
-                final int level = Math.round(getBatteryLevel());
-                final boolean isCharging = isConnected(this);
 
                 RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -152,7 +150,11 @@ public class BatteryUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_BATTERY_CHOICE.equals(action)){
-
+                System.out.println("IM in here");
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,3);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
 
         }
@@ -187,12 +189,22 @@ public class BatteryUpdateService extends IntentService {
      */
     private RemoteViews createRemoteViews(final int level, final boolean isCharging, int backFlag) {
         RemoteViews remoteViews = null;
-        if (backFlag == 0)
+        if (backFlag == 0) {
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
+            remoteViews.setOnClickPendingIntent(R.id.battery_root, getPendingSelfIntent(this, WidgetCollection.BATTERY_CLICKED));
+
+        }
         else if (backFlag == 1)
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
         else if (backFlag == 2)
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
+        else if (backFlag ==3){
+            System.out.println("I<M in back 3");
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
+            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
+
+        }
 
 
         if (isCharging)
@@ -277,4 +289,9 @@ public class BatteryUpdateService extends IntentService {
         return remoteViews;
     }
 
+    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+        Intent intent = new Intent(context, WidgetCollection.class);
+        intent.setAction(action);
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
 }

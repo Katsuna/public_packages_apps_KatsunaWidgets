@@ -50,7 +50,7 @@
         <!-- delete main -->
         <activity
             android:name="com.katsuna.clockwidget.MainActivity"
-            android:label="YourAppName"
+            android:label="HomeScreenWidget"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

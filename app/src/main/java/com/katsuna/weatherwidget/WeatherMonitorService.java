@@ -209,7 +209,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
         // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
         // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
         alarmFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                AlarmManager.INTERVAL_HOUR *5, fIntent);
+                AlarmManager.INTERVAL_HOUR *3, fIntent);
 
 
         //*******long forecast**********//

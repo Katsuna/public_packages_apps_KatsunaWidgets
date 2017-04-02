@@ -7,64 +7,100 @@
     android:gravity="left"
     android:background="@drawable/widget_back"
     >
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/time_root">
+        android:orientation="horizontal"
+        android:id="@+id/time_root"
+        android:layout_marginRight="10dp">
+
         <TextView
-            android:text="Time &amp; Date"
+            android:text="@string/time_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/title"
-            android:textSize="30sp"
-            android:layout_marginTop="14dp"
-            android:layout_alignParentTop="true"
+            android:textSize="24sp"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
-
+            android:maxWidth="150dp"
             />
 
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+
+            >
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="10dp">
+
         <TextView
+
             android:id="@+id/appwidget_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/appwidget_text"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textSize="35sp"
             android:textStyle="bold"
             android:text="10:00 PM"
-            android:layout_below="@+id/title"
-            android:layout_alignRight="@+id/date"
-            android:layout_alignEnd="@+id/date"
             android:layout_marginLeft="10dp"
-            />
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_marginLeft="10dp"
 
-    <TextView
-        android:layout_marginLeft="10dp"
-
-        android:text="Monday 20 June"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/appwidget_text"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            android:text="Monday 20 June"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/date"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/appwidget_text"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp" />
+            </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/battery_root"
+        android:clickable="true"
+
+        >
+    <TextView
         android:layout_marginLeft="10dp"
 
-        android:id="@+id/weatherTitle"
+        android:id="@+id/batteryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Battery"
+        android:text="@string/battery_title"
         android:textColor="@color/bb_inActiveBottomBarItemColor"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        />
 
 
     <LinearLayout
@@ -72,40 +108,61 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
 
+        android:gravity="right"
+        android:layout_marginRight="10dp">
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="30dp">
+            <LinearLayout
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+
+                >
         <ImageView
             android:id="@+id/battery_view"
-            android:layout_width="85dp"
-            android:layout_height="match_parent"
+            android:layout_width="92dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/battery_black"
             android:layout_below="@+id/textView2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:gravity="right"
+         />
 
-        <TextView
-            android:id="@+id/batterytext"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:gravity="center|center"
-            android:maxLines="1"
-            android:shadowDx="3"
-            android:shadowDy="3"
-            android:shadowRadius="4"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:typeface="sans"
-            />
+            <TextView
+                android:id="@+id/batterytext"
+                android:layout_width="60dp"
+                android:maxLines="1"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="4"
+                android:textColor="@android:color/black"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:gravity="right"
 
+                android:layout_height="50dp" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
-
-
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <RelativeLayout
         android:layout_marginLeft="10dp"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:maxWidth="10000dp"
         android:clickable="true"
@@ -118,94 +175,109 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left">
+
                 <TextView
-                    android:id="@+id/widgetTitle"
+                    android:id="@+id/weatherTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Weather"
                     android:textColor="@color/bb_inActiveBottomBarItemColor"
                     android:textSize="24sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:baselineAligned="false"
-                android:gravity="left">
-
-                <TextView
-                    android:id="@+id/widgetTemperatureTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/temperature"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    />
-
-                <TextView
-                    android:id="@+id/widgetTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 °C"
-                    android:textColor="@android:color/holo_blue_light"
-                    android:textSize="18sp"
-                    />
-                <!--android:src="@drawable/ic_refresh_white_24dp"-->
-
-
-            </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/widgetIcon"
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/k48_clouds"
-                />
-
-            <LinearLayout
-                android:layout_width="384dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:baselineAligned="false"
+                android:padding="10dp"
                 >
 
-                <TextView
-                    android:id="@+id/widgetDescription"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/no_data"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:orientation="vertical"
+                    android:baselineAligned="false"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="30dp">
+                    <TextView
+                        android:id="@+id/city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/default_city"
+                        android:textColor="@android:color/black"
+                        android:textSize="25sp"
+                        />
 
-                <TextView
 
-                    android:id="@+id/widgetWindcomma"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=","
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false"
+                        android:gravity="center"
 
-                <TextView
-                    android:id="@+id/widgetWind"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:text="Wind: 0 m/s"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                        >
 
-            </LinearLayout>
+                        <ImageView
+                            android:id="@+id/widgetIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:src="@drawable/k48_clouds"
+                            />
+
+                        <TextView
+                            android:id="@+id/widgetTemperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 °C"
+                            android:textColor="@android:color/black"
+                            android:textSize="25sp"
+                            />
+                        <!--android:src="@drawable/ic_refresh_white_24dp"-->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false"
+                        android:gravity="center"
+                        >
+
+                            <TextView
+                                android:id="@+id/widgetDescription"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/no_data"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp" />
+
+                            <TextView
+
+                                android:id="@+id/widgetWindcomma"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=","
+                                android:textColor="@android:color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/widgetWind"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:text="Wind: 0 m/s"
+                                android:textColor="@android:color/black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

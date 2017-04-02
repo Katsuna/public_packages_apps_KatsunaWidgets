@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.RemoteViews;
 
 import com.katsuna.R;
@@ -17,6 +18,12 @@ import com.katsuna.batterywidget.BatteryUpdateService;
 import com.katsuna.clockwidget.ClockWidget;
 import com.katsuna.clockwidget.ClockMonitorService;
 import com.katsuna.clockwidget.ClockUpdateService;
+import com.katsuna.commons.entities.ColorProfile;
+import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfileContainer;
+import com.katsuna.commons.utils.ColorCalc;
+import com.katsuna.commons.utils.ProfileReader;
+import com.katsuna.commons.utils.Shape;
 import com.katsuna.weatherDb.WeatherContentProvider;
 import com.katsuna.weatherDb.WeatherDbHandler;
 import com.katsuna.weatherwidget.AlarmReceiver;
@@ -28,6 +35,7 @@ import java.util.Calendar;
 public class WidgetCollection extends AppWidgetProvider {
 
     public static final String BACK_CLICKED = "backClicked";
+    public static final String ENERGY_MODE_CLICKED ="energy_mode";
     public static final String WEEK_CLICKED = "weekCLicked";
     public static final String DAY_CLICKED = "dayClicked";
     private PendingIntent service = null;
@@ -35,7 +43,7 @@ public class WidgetCollection extends AppWidgetProvider {
     public static final String VIEW_WEATHER_CLICKED    = "automaticWidgetForecastButtonClick";
     public static final String TIME_CLICKED    = "automaticWidgetSyncTimeClick";
     public static final String VIEW_CALENDAR_CLICKED    = "automaticWidgetCalendarButtonClick";
-    public static final String BATTERY_CLICKED    = "automaticWidgetSyncTimeClick";
+    public static final String BATTERY_CLICKED    = "automaticWidgetSyncBatteryClick";
 
 
     private static final String DEBUG_TAG = "onClicked";
@@ -44,6 +52,7 @@ public class WidgetCollection extends AppWidgetProvider {
     public static WeatherContentProvider weatherContentProvider;
     public static String ACTION_MENU_CLICKED = "MenuClicked";
     private String actionClicked ="backClicked";
+
 
 
     public static int getNumberOfWidgets(final Context context) {
@@ -103,6 +112,9 @@ public class WidgetCollection extends AppWidgetProvider {
     public void onEnabled(Context context) {
         System.out.println("On enabled called!");
         super.onEnabled(context);
+
+
+
         context.startService(new Intent(context, ClockMonitorService.class));
         context.startService(new Intent(context, BatteryMonitorService.class));
         context.startService(new Intent(context, WeatherMonitorService.class));
@@ -132,22 +144,21 @@ public class WidgetCollection extends AppWidgetProvider {
         if (TIME_CLICKED.equals(intent.getAction())) {
 //            RemoteViews rv = new RemoteViews(context.getPackageName(),
 //                    R.layout.collection_widget);
-//
 //            rv.showNext(R.id.clock_flipper);
-//
 //            AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(
 //                    intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-//                            AppWidgetManager.INVALID_APPWIDGET_ID), rv);
-
+//                    AppWidgetManager.INVALID_APPWIDGET_ID), rv);
 //            extended = true;
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CLOCK_CHOICE);
             context.startService(updateClockIntent);
-
+        }
+        else if(BATTERY_CLICKED.equals(intent.getAction())){
+            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHOICE);
+            context.startService(updateBatteryIntent);
         }
         else if (WEATHER_CLICKED.equals(intent.getAction())) {
-
-
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_WEATHER_CHOICE);
@@ -194,9 +205,6 @@ public class WidgetCollection extends AppWidgetProvider {
 //
 //            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
 
-
-
-
     protected PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
@@ -239,4 +247,18 @@ public class WidgetCollection extends AppWidgetProvider {
 
         return icon;
     }
+
+
+    private int getTheme(ColorProfile profile) {
+        int theme = R.style.CommonAppTheme;
+        if (profile == ColorProfile.CONTRAST ||
+                profile == ColorProfile.COLOR_IMPAIRMENT_AND_CONTRAST) {
+            theme = R.style.CommonAppThemeContrast;
+        }
+        return theme;
+    }
+
+
+
+
 }

@@ -150,6 +150,7 @@
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="time_date">Time and Date</string>
 
     <!-- Battery Strings -->
 
@@ -206,4 +207,6 @@
     <string name="githubButtonName">Go to GitHub</string>
     <string name="paypalButtonName">Go to PayPal</string>
     <string name="title_activity_widget">WidgetActivity</string>
+    <string name="battery_title">Battery</string>
+    <string name="default_city">Athens</string>
 </resources>

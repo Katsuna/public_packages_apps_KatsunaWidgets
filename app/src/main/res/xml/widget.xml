@@ -3,7 +3,8 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     android:initialLayout="@layout/collection_widget"
                     android:minHeight="240dp"
-                    android:minWidth="300dp"
+                    android:maxHeight="380dp"
+                    android:minWidth="375dp"
                     android:updatePeriodMillis="3000000">
 
 </appwidget-provider>

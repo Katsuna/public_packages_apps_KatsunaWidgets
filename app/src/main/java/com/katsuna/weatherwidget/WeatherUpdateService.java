@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RemoteViews;
@@ -49,7 +50,7 @@ public class WeatherUpdateService extends IntentService {
     public static final String ACTION_WIDGET_EXTENDED_BACK = "com.katsuna.weatherwidget.action.Back";
     public static final String ACTION_WIDGET_WEATHER_CHOICE = "com.katsuna.weatherwidget.action.WeatherChoice";
     public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.weatherwidget.action.ClockChoice";
-
+    public static final String ACTION_WIDGET_BATTERY_CHOICE = "com.katsuna.weatherwidget.action.BatteryChoice";
 
     public WeatherUpdateService() {
         super("WeatherUpdateService");
@@ -64,6 +65,7 @@ public class WeatherUpdateService extends IntentService {
             final String action = intent.getAction();
             System.out.println("="+action);
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
+
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
                 updateIntent.setAction(ClockUpdateService.ACTION_WEATHER_CHOICE);
                 this.startService(updateIntent);
@@ -127,6 +129,12 @@ public class WeatherUpdateService extends IntentService {
             }
             else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action)){
 
+                RemoteViews remoteViews =createRemoteViews(6);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
+            else if( ACTION_WIDGET_BATTERY_CHOICE.equals(action)){
 
                 RemoteViews remoteViews =createRemoteViews(6);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -148,8 +156,12 @@ public class WeatherUpdateService extends IntentService {
 
         Weather widgetWeather = new Weather();
         if (!sp.getString("lastToday", "").equals("")) {
+            Log.d("api call","get day forecast inside update");
+
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
+            Log.d("api call","Else last day forecast inside update");
+
             try {
                 pendingIntent2.send();
             } catch (PendingIntent.CanceledException e) {
@@ -169,6 +181,7 @@ public class WeatherUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
                 remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
                 remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
 
                 remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             }
@@ -195,9 +208,11 @@ public class WeatherUpdateService extends IntentService {
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastLongterm", "").equals("")) {
                 System.out.println("im called");
+                Log.d("api call","Api call for longTerm forecast inside update");
+
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
             } else {
-                System.out.println("im called 2");
+                System.out.println("im in else of longterm");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
@@ -236,6 +251,7 @@ public class WeatherUpdateService extends IntentService {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastShortterm", "").equals("")) {
+                Log.d("api call","Api call for shortTerm forecast inside update");
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
             } else {
                 System.out.println("im called 2");
@@ -254,7 +270,8 @@ public class WeatherUpdateService extends IntentService {
 
             remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
             remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
-            remoteViews.setTextViewText(R.id.widgetWeekWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
+            if(widgetWeather.getWindDirection()!= null)
+                remoteViews.setTextViewText(R.id.widgetWeekWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
 
             remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             int[] timeIDS = new int[] {R.id.time1, R.id.time2, R.id.time3,R.id.time4, R.id.time5,R.id.time6, R.id.time7};
@@ -278,7 +295,7 @@ public class WeatherUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
                 remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
                 remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-
+                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
                 remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             }
         }
