@@ -144,8 +144,7 @@
 
             <TextView
                 android:id="@+id/batterytext"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:maxLines="1"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -155,7 +154,7 @@
                 android:textStyle="bold"
                 android:typeface="sans"
                 android:gravity="right"
-                />
+                android:layout_width="90dp" />
         </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

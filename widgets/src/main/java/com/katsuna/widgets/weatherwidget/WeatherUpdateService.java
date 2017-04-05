@@ -216,13 +216,13 @@ public class WeatherUpdateService extends IntentService {
             remoteViews.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_now, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_week_day, getPendingSelfIntent(this, WidgetCollection.DAY_CLICKED));
-
-            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
-            remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
-            if(widgetWeather.getWindDirectionDegree() != null)
-            remoteViews.setTextViewText(R.id.widgetWeekWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
-
-            remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+//
+//            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
+//            remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
+//            if(widgetWeather.getWindDirectionDegree() != null)
+//              remoteViews.setTextViewText(R.id.widgetWeekWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
+//
+//            remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             int[] daysIDS = new int[] {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
             int[] iconsIDs = new int[] {R.id.icon1, R.id.icon2, R.id.icon3,R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7 };
             int[] tempIDs = new int[] {R.id.temp1, R.id.temp2, R.id.temp3,R.id.temp4, R.id.temp5, R.id.temp6, R.id.temp7 };
@@ -260,11 +260,11 @@ public class WeatherUpdateService extends IntentService {
             remoteViews.setOnClickPendingIntent(R.id.state_day_week, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
 
 
-            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
-            remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
-
-
-            remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+//            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
+//            remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
+//
+//
+//            remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             int[] timeIDS = new int[] {R.id.time1, R.id.time2, R.id.time3,R.id.time4, R.id.time5,R.id.time6, R.id.time7};
             int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
             int[] tempIDs = new int[] {R.id.day_temp1, R.id.day_temp2, R.id.day_temp3,R.id.day_temp4, R.id.day_temp5, R.id.day_temp6, R.id.day_temp7 };

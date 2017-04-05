@@ -1,2 +1,2 @@
-include ':widgets'
-include ':commons'
+include ':widgets',':commons'
+project (":commons").projectDir = new File("../../../frameworks/KatsunaCommon/commons")

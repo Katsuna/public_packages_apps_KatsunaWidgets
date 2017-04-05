@@ -131,7 +131,7 @@
         <ImageView
             android:id="@+id/battery_view"
             android:layout_width="92dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@drawable/battery_black"
             android:layout_below="@+id/textView2"
             android:gravity="right"
@@ -139,7 +139,7 @@
 
             <TextView
                 android:id="@+id/batterytext"
-                android:layout_width="60dp"
+                android:layout_width="90dp"
                 android:maxLines="1"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -150,7 +150,7 @@
                 android:typeface="sans"
                 android:gravity="right"
 
-                android:layout_height="50dp" />
+                android:layout_height="60dp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
