@@ -102,38 +102,46 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:baselineAligned="false"
-            android:gravity="center_vertical|center_horizontal|center">
+            android:layout_marginLeft="20dp"
+            android:gravity="left">
 
-            <TextView
-                android:id="@+id/widgetTemperatureTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/temperature"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                />
+
 
             <TextView
                 android:id="@+id/widgetExTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 °C"
-                android:textColor="@android:color/holo_blue_light"
-                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:textSize="35sp"
                 />
             <!--android:src="@drawable/ic_refresh_white_24dp"-->
-
+            <ImageView
+                android:id="@+id/widgetExIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/k48_clouds"
+                />
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:baselineAligned="false"
+        android:layout_marginLeft="20dp"
+        android:gravity="left">
 
-        <ImageView
-            android:id="@+id/widgetExIcon"
+        <TextView
+            android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/k48_clouds"
-            />
+            android:text="@string/no_data"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/widgetExDescription"
             android:layout_width="wrap_content"
@@ -150,14 +158,14 @@
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/precipitation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="Chance of rain/snow: 0 %"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/precipitation"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="2dp"-->
+            <!--android:text="Chance of rain/snow: 0 %"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="16sp" />-->
 
         <TextView
             android:id="@+id/widgetExWind"
@@ -167,12 +175,14 @@
             android:text="Wind: 0 m/s"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="false"
-        android:gravity="right" >
+        android:gravity="right"
+        android:layout_marginRight="20dp">
 
         <Button
             android:id="@+id/back"
@@ -185,9 +195,8 @@
             android:textSize="18sp"
             android:gravity="right" />
         </LinearLayout>
-
+</LinearLayout>
     </LinearLayout>
-
 
 
 </RelativeLayout>

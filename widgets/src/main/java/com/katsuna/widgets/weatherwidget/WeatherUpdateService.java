@@ -185,10 +185,12 @@ public class WeatherUpdateService extends IntentService {
                 remoteViews.setOnClickPendingIntent(R.id.state_week, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
                 remoteViews.setOnClickPendingIntent(R.id.state_day, getPendingSelfIntent(this, WidgetCollection.DAY_CLICKED));
 
+                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+
                 remoteViews.setTextViewText(R.id.widgetExTemperature, widgetWeather.getTemperature());
                 remoteViews.setTextViewText(R.id.widgetExDescription, widgetWeather.getDescription());
                 remoteViews.setTextViewText(R.id.widgetHumidity, "Humidity:"+ widgetWeather.getHumidity() + "%");
-                remoteViews.setTextViewText(R.id.precipitation, "Chance of rain/snow: "+ widgetWeather.getPrecipitation());
+//                remoteViews.setTextViewText(R.id.precipitation, "Chance of rain/snow: "+ widgetWeather.getPrecipitation());
                 if(widgetWeather.getWindDirectionDegree() != null)
                     remoteViews.setTextViewText(R.id.widgetExWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
 
