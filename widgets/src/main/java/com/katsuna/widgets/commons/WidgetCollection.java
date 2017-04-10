@@ -56,7 +56,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("Collection widget","I am n update...");
+        Log.d("Collection calendar_widget","I am n update...");
 
         for (int id : appWidgetIds) {
 
@@ -128,8 +128,10 @@ public class WidgetCollection extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
         super.onReceive(context, intent);
-        System.out.println("on Receive widget:"+ intent.getAction());
+        System.out.println("on Receive calendar_widget:"+ intent.getAction());
         if (TIME_CLICKED.equals(intent.getAction())) {
+            extended = true;
+
 //            RemoteViews rv = new RemoteViews(context.getPackageName(),
 //                    R.layout.collection_widget);
 //            rv.showNext(R.id.clock_flipper);
@@ -142,6 +144,8 @@ public class WidgetCollection extends AppWidgetProvider {
             context.startService(updateClockIntent);
         }
         else if(BATTERY_CLICKED.equals(intent.getAction())){
+            extended = true;
+
             Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
             updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHOICE);
             context.startService(updateBatteryIntent);
@@ -176,6 +180,13 @@ public class WidgetCollection extends AppWidgetProvider {
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_DAY);
             context.startService(updateWeatherIntent);
+        }
+        else if(VIEW_CALENDAR_CLICKED.equals(intent.getAction())){
+            extended = true;
+            System.out.println("im hererererere");
+            Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
+            updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
+            context.startService(updateClockIntent);
         }
 
     }

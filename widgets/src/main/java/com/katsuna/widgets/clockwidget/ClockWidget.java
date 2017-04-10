@@ -29,7 +29,7 @@ public class ClockWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("Clock widget","I am n update...");
+        Log.d("Clock calendar_widget","I am n update...");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         // ensure service is running
         context.startService(new Intent(context, ClockMonitorService.class));

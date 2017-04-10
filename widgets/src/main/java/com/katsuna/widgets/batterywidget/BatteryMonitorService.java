@@ -33,7 +33,7 @@ public class BatteryMonitorService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Log.d("Update battery widget","Update...");
+            Log.d("Update battery calendar_widget","Update...");
             if (firstTime)
             {
                 BatteryInfo batteryInfo = new BatteryInfo(intent);

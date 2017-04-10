@@ -23,50 +23,55 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
-            android:maxWidth="150dp"
+            android:maxWidth="140dp"
             />
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
         <LinearLayout
             android:layout_marginTop="5dp"
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="right"
             android:gravity="right"
             android:layout_alignParentRight="true"
+
             >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:gravity="center">
 
             <TextView
 
-                android:id="@+id/appwidget_text"
+                android:id="@+id/appwidget_text_clock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/appwidget_text"
                 android:textColor="@android:color/black"
                 android:textSize="35sp"
                 android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+
                 android:text="10:00 PM"
-                android:layout_marginLeft="10dp"
-                android:gravity="right"
+                android:gravity="center"
                 android:layout_marginRight="10dp"
-                android:layout_alignParentEnd="true" />
+               />
+
             <TextView
-                android:layout_marginLeft="10dp"
 
                 android:text="Monday 20 June"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/date"
-                android:textSize="20sp"
+                android:id="@+id/date_clock"
+                android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:textStyle="normal|bold"
                 android:layout_below="@+id/appwidget_text"
-                android:gravity="right"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp" />
         <LinearLayout
@@ -88,7 +93,7 @@
 
         </LinearLayout>
     </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -115,11 +120,6 @@
             android:textSize="24sp"
             />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginRight="30dp">
 
         <LinearLayout
             android:layout_marginLeft="10dp"
@@ -127,36 +127,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_alignParentRight="true"
+
             android:gravity="right"
             android:layout_marginRight="10dp">
-
-
-            <ImageView
-                android:id="@+id/battery_view"
-                android:layout_width="92dp"
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/battery_black"
-                android:layout_below="@+id/textView2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:gravity="right"/>
+                android:padding="10dp"
+                android:layout_marginRight="30dp">
+                <LinearLayout
 
-            <TextView
-                android:id="@+id/batterytext"
-                android:layout_height="60dp"
-                android:maxLines="1"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="4"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:typeface="sans"
-                android:gravity="right"
-                android:layout_width="90dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_alignParentRight="true"
+
+                    >
+                    <ImageView
+                        android:id="@+id/battery_view"
+                        android:layout_width="92dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/battery_black"
+                        android:layout_below="@+id/textView2"
+                        android:gravity="right"
+                        />
+
+                    <TextView
+                        android:id="@+id/batterytext"
+                        android:layout_width="90dp"
+                        android:maxLines="1"
+                        android:shadowDx="3"
+                        android:shadowDy="3"
+                        android:shadowRadius="4"
+                        android:textColor="@android:color/black"
+                        android:textSize="35sp"
+                        android:textStyle="bold"
+                        android:typeface="sans"
+                        android:gravity="right"
+
+                        android:layout_height="60dp" />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
-        </RelativeLayout>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

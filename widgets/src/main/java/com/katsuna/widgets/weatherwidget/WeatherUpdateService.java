@@ -128,7 +128,7 @@ public class WeatherUpdateService extends IntentService {
             }
             else if( ACTION_WIDGET_BATTERY_CHOICE.equals(action)){
 
-                RemoteViews remoteViews =createRemoteViews(6);
+                RemoteViews remoteViews =createRemoteViews(7);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -161,12 +161,14 @@ public class WeatherUpdateService extends IntentService {
             }
         }
 
-        if( layout == 1 || layout == 6) {
+        if( layout == 1 || layout == 6 || layout ==7) {
             if(widgetWeather.getIcon()!= null) {
                 if (layout == 1)
                     remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
                 else if (layout == 6)
                     remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
+                else if (layout == 7)
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
 
                 remoteViews.setOnClickPendingIntent(R.id.widgetRoot, getPendingSelfIntent(this, WidgetCollection.WEATHER_CLICKED));
 

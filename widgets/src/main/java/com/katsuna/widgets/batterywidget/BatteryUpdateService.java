@@ -145,7 +145,7 @@ public class BatteryUpdateService extends IntentService {
             }
             else if (ACTION_CLOCK_CHOICE.equals(action)){
 
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,2);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -153,11 +153,11 @@ public class BatteryUpdateService extends IntentService {
             else if (ACTION_BATTERY_CHOICE.equals(action)){
                 System.out.println("IM in here");
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
-                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
+                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
                 this.startService(updateIntent);
 
                 Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
                 this.startService(updateWeatherIntent);
 
                 RemoteViews remoteViews = createRemoteViews(level, isCharging,3);
@@ -190,7 +190,7 @@ public class BatteryUpdateService extends IntentService {
     }
 
     /**
-     * Creates the RemoteViews object to be shown for the widget view.
+     * Creates the RemoteViews object to be shown for the calendar_widget view.
      *
      * @param level      battery level
      * @param isCharging whether the battery has been charging
