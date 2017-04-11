@@ -11,6 +11,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.katsuna.commons.entities.ColorProfile;
+import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfileContainer;
+import com.katsuna.commons.utils.ColorCalc;
+import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.batterywidget.BatteryUpdateService;
 import com.katsuna.widgets.clockwidget.ClockMonitorService;
@@ -43,6 +48,8 @@ public class WeatherUpdateService extends IntentService {
     public static final String ACTION_WIDGET_WEATHER_CHOICE = "com.katsuna.weatherwidget.action.WeatherChoice";
     public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.weatherwidget.action.ClockChoice";
     public static final String ACTION_WIDGET_BATTERY_CHOICE = "com.katsuna.weatherwidget.action.BatteryChoice";
+    ColorProfile colorProfile;
+
 
     public WeatherUpdateService() {
         super("WeatherUpdateService");
@@ -66,7 +73,17 @@ public class WeatherUpdateService extends IntentService {
                 updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WEATHER_CHOICE);
                 this.startService(updateBatteryIntent);
 
+                setupTheme(this);
+
                 RemoteViews remoteViews =createRemoteViews(5);
+                int color1 = ColorCalc.getColor(getApplicationContext(),
+                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.forecast_close_btn, "setBackgroundColor", color2);
+
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -87,18 +104,32 @@ public class WeatherUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             } else if (ACTION_WIDGET_EXTENDED_NOW.equals(action)) {
                 RemoteViews remoteViews =createRemoteViews(2);
+
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_EXTENDED_WEEK.equals(action)){
                 RemoteViews remoteViews =createRemoteViews(3);
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_EXTENDED_DAY.equals(action)){
                 RemoteViews remoteViews =createRemoteViews(4);
+
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -136,6 +167,12 @@ public class WeatherUpdateService extends IntentService {
         }
 
 
+    }
+
+    private void setupTheme(Context context) {
+        UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
+        colorProfile = userProfileContainer.getColorProfile();
+        System.out.println("im out"+colorProfile);
     }
 
     private RemoteViews createRemoteViews(int layout) {

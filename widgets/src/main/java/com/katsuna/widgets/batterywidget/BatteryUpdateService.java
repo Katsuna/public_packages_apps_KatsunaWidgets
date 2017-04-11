@@ -14,6 +14,11 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
+import com.katsuna.commons.entities.ColorProfile;
+import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfileContainer;
+import com.katsuna.commons.utils.ColorCalc;
+import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
 import com.katsuna.widgets.commons.WidgetCollection;
@@ -37,7 +42,8 @@ public class BatteryUpdateService extends IntentService {
     public static final String ACTION_CLOCK_CHOICE =  "com.katsuna.batterywidget.action.clock_choice";
     public static final String ACTION_BATTERY_CHOICE =  "com.katsuna.batterywidget.action.battery_choice";
     public static final String ACTION_ENERGY_MODE_CHOICE =  "com.katsuna.batterywidget.action.energy_mode";;
-
+    UserProfileContainer mUserProfileContainer;
+    ColorProfile colorProfile;
     /**
      * Creates an BatteryUpdateService.
      */
@@ -161,7 +167,16 @@ public class BatteryUpdateService extends IntentService {
                 updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
                 this.startService(updateWeatherIntent);
 
+                setupTheme(this);
+
                 RemoteViews remoteViews = createRemoteViews(level, isCharging,3);
+                int color1 = ColorCalc.getColor(getApplicationContext(),
+                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.battery_close_btn, "setBackgroundColor", color2);
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -191,6 +206,11 @@ public class BatteryUpdateService extends IntentService {
         return plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB;
     }
 
+    private void setupTheme(Context context) {
+        UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
+        colorProfile = userProfileContainer.getColorProfile();
+        System.out.println("im out"+colorProfile);
+    }
     public float getBatteryLevel() {
         Intent batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);

@@ -65,8 +65,7 @@ public class ClockUpdateService extends IntentService {
 
     public ClockUpdateService() {
         super("BatteryUpdateService");
-       setupTheme(this);
-        adjustColorProfile();
+
     }
 
     CalendarView calendar;
@@ -137,9 +136,14 @@ public class ClockUpdateService extends IntentService {
                 System.out.println("in clock choice with time:"+clock[0]);
                 remoteViews.setTextViewText(R.id.appwidget_text_clock, clock[0]);
                 remoteViews.setTextViewText(R.id.date_clock, clock[1]);
-
+                setupTheme(this);
 //                adjustColorProfile(this);
-
+                int color1 = ColorCalc.getColor(getApplicationContext(),
+                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.clock_close_btn, "setBackgroundColor", color2);
                 // update the widgets
                 Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
                 updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
