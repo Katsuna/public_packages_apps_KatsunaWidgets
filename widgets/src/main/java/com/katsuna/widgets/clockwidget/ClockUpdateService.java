@@ -73,6 +73,7 @@ public class ClockUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        setupTheme(this);
 
         if (intent != null) {
             final String action = intent.getAction();
@@ -136,7 +137,6 @@ public class ClockUpdateService extends IntentService {
                 System.out.println("in clock choice with time:"+clock[0]);
                 remoteViews.setTextViewText(R.id.appwidget_text_clock, clock[0]);
                 remoteViews.setTextViewText(R.id.date_clock, clock[1]);
-                setupTheme(this);
 //                adjustColorProfile(this);
                 int color1 = ColorCalc.getColor(getApplicationContext(),
                         ColorProfileKey.ACCENT1_COLOR, colorProfile);

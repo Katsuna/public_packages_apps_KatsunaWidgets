@@ -63,6 +63,8 @@ public class WeatherUpdateService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println("="+action);
+            setupTheme(this);
+
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
 
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
@@ -73,7 +75,6 @@ public class WeatherUpdateService extends IntentService {
                 updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WEATHER_CHOICE);
                 this.startService(updateBatteryIntent);
 
-                setupTheme(this);
 
                 RemoteViews remoteViews =createRemoteViews(5);
                 int color1 = ColorCalc.getColor(getApplicationContext(),
@@ -128,7 +129,7 @@ public class WeatherUpdateService extends IntentService {
 
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
-                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+                remoteViews.setInt(R.id.day_back, "setBackgroundColor", color2);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

@@ -191,7 +191,6 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         else if(VIEW_CALENDAR_CLICKED.equals(intent.getAction())){
             extended = true;
-            System.out.println("im hererererere");
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
             context.startService(updateClockIntent);
