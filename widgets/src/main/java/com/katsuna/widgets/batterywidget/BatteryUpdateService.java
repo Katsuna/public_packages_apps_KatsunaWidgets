@@ -36,6 +36,7 @@ public class BatteryUpdateService extends IntentService {
     public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
     public static final String ACTION_CLOCK_CHOICE =  "com.katsuna.batterywidget.action.clock_choice";
     public static final String ACTION_BATTERY_CHOICE =  "com.katsuna.batterywidget.action.battery_choice";
+    public static final String ACTION_ENERGY_MODE_CHOICE =  "com.katsuna.batterywidget.action.energy_mode";;
 
     /**
      * Creates an BatteryUpdateService.
@@ -165,6 +166,20 @@ public class BatteryUpdateService extends IntentService {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
+            else if(ACTION_ENERGY_MODE_CHOICE.equals(action)){
+                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
+                this.startService(updateIntent);
+
+                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
+                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
+                this.startService(updateWeatherIntent);
+
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,4);
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
 
         }
         return START_NOT_STICKY;
@@ -211,6 +226,15 @@ public class BatteryUpdateService extends IntentService {
             System.out.println("I<M in back 3");
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
             remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
+
+        }
+        else if (backFlag ==4){
+            System.out.println("I<M in back 3");
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
+            remoteViews.setTextViewText(R.id.energy_mode_btn, "Energy Mode OFF");
+
+            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_OFF_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
         }

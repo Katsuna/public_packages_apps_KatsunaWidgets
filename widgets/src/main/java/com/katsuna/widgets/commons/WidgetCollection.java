@@ -26,6 +26,7 @@ public class WidgetCollection extends AppWidgetProvider {
     public static final String ENERGY_MODE_CLICKED ="energy_mode";
     public static final String WEEK_CLICKED = "weekCLicked";
     public static final String DAY_CLICKED = "dayClicked";
+    public static final String ENERGY_MODE_OFF_CLICKED = "energy_mode_off";
     private PendingIntent service = null;
     public static final String WEATHER_CLICKED    = "automaticWidgetSyncButtonClick";
     public static final String VIEW_WEATHER_CLICKED    = "automaticWidgetForecastButtonClick";
@@ -56,7 +57,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("Collection calendar_widget","I am n update...");
+       // Log.d("Collection calendar_widget","I am n update...");
 
         for (int id : appWidgetIds) {
 
@@ -150,6 +151,13 @@ public class WidgetCollection extends AppWidgetProvider {
             updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHOICE);
             context.startService(updateBatteryIntent);
         }
+        else if(ENERGY_MODE_CLICKED.equals(intent.getAction())){
+            extended = true;
+
+            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_CHOICE);
+            context.startService(updateBatteryIntent);
+        }
         else if (WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
@@ -188,6 +196,7 @@ public class WidgetCollection extends AppWidgetProvider {
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
             context.startService(updateClockIntent);
         }
+
 
     }
 

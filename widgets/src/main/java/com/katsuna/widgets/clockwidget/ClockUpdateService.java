@@ -65,7 +65,8 @@ public class ClockUpdateService extends IntentService {
 
     public ClockUpdateService() {
         super("BatteryUpdateService");
-
+       setupTheme(this);
+        adjustColorProfile();
     }
 
     CalendarView calendar;
@@ -137,7 +138,6 @@ public class ClockUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.appwidget_text_clock, clock[0]);
                 remoteViews.setTextViewText(R.id.date_clock, clock[1]);
 
-//                setupTheme(this);
 //                adjustColorProfile(this);
 
                 // update the widgets
@@ -210,31 +210,17 @@ public class ClockUpdateService extends IntentService {
     }
 
 
-    private void adjustColorProfile(Context context) {
-        // set action buttons background color
+    private void adjustColorProfile() {
 
-//        LayoutInflater inflater = (LayoutInflater) getApplicationContext()
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflater.inflate(R.layout.collection_widget_clock, null);
-
-
-        RemoteViews v;
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
 
         int color1 = ColorCalc.getColor(getApplicationContext(),
                 ColorProfileKey.ACCENT1_COLOR, colorProfile);
-//        Button calendarBtn =  (Button) v.findViewById(R.id.calendar_btn);
-//        Button backBtn = (Button) v.findViewById(R.id.clock_close_btn);
-        v = new RemoteViews(context.getPackageName(), R.layout.collection_widget_clock);
-        v.setInt(R.id.calendar_btn, "setBackgroundResource", color1);
-//        Shape.setRoundedBackground(calendarBtn, color1);
-//        calendarBtn.setBackgroundResource(color1);
-//
-//        int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-//                colorProfile);
-//        Shape.setRoundedBackground(backBtn, color2);
-//        backBtn.setBackgroundResource(color2);
-//        System.out.println("the colo1 is "+color1);
-//        System.out.println("the colo2 is "+color2);
+        remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+        int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                colorProfile);
+        remoteViews.setInt(R.id.clock_close_btn, "setBackgroundColor", color2);
+
 
     }
 
@@ -311,7 +297,13 @@ public class ClockUpdateService extends IntentService {
 
         rv.setViewVisibility(R.id.month_bar, numWeeks <= 1 ? View.GONE : View.VISIBLE);
         rv.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
-
+        String []clock = setTime();
+        System.out.println("in clock choice with time:"+clock[0]);
+        rv.setTextViewText(R.id.appwidget_text_calendar, clock[0]);
+        rv.setTextViewText(R.id.date_calendar, clock[1]);
+        int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                colorProfile);
+        rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         ComponentName componentName = new ComponentName(this, WidgetCollection.class);
         appWidgetManager.updateAppWidget(componentName, rv);
