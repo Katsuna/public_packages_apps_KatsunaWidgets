@@ -22,6 +22,7 @@ import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
 import com.katsuna.widgets.commons.WidgetCollection;
+import com.katsuna.widgets.utils.BatterySaverUtil;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
 /**
@@ -41,7 +42,8 @@ public class BatteryUpdateService extends IntentService {
     public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
     public static final String ACTION_CLOCK_CHOICE =  "com.katsuna.batterywidget.action.clock_choice";
     public static final String ACTION_BATTERY_CHOICE =  "com.katsuna.batterywidget.action.battery_choice";
-    public static final String ACTION_ENERGY_MODE_CHOICE =  "com.katsuna.batterywidget.action.energy_mode";;
+    public static final String ACTION_ENERGY_MODE_CHOICE =  "com.katsuna.batterywidget.action.energy_mode";
+    private static final String ACTION_ENERGY_MODE_OFF_CHOICE =  "com.katsuna.batterywidget.action.energy_mode_off";
     UserProfileContainer mUserProfileContainer;
     ColorProfile colorProfile;
     /**
@@ -191,6 +193,26 @@ public class BatteryUpdateService extends IntentService {
                 this.startService(updateWeatherIntent);
 
                 RemoteViews remoteViews = createRemoteViews(level, isCharging,4);
+                BatterySaverUtil.enable();
+
+
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
+            }
+            else if(ACTION_ENERGY_MODE_OFF_CHOICE.equals(action)){
+                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
+                this.startService(updateIntent);
+
+                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
+                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
+                this.startService(updateWeatherIntent);
+
+                RemoteViews remoteViews = createRemoteViews(level, isCharging,5);
+                BatterySaverUtil.disable();
+
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -243,18 +265,24 @@ public class BatteryUpdateService extends IntentService {
         else if (backFlag == 2)
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
         else if (backFlag ==3){
-            System.out.println("I<M in back 3");
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
             remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
         }
         else if (backFlag ==4){
-            System.out.println("I<M in back 3");
             remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
-            remoteViews.setTextViewText(R.id.energy_mode_btn, "Energy Mode OFF");
+            remoteViews.setTextViewText(R.id.energy_mode_btn, getResources().getString(R.string.energy_mode_off));
 
             remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_OFF_CLICKED));
+            remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
+
+        }
+        else if (backFlag ==5){
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
+            remoteViews.setTextViewText(R.id.energy_mode_btn, getResources().getString(R.string.energy_mode));
+
+            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
         }
@@ -313,28 +341,7 @@ public class BatteryUpdateService extends IntentService {
 
         }
 
-//        remoteViews.setViewVisibility(R.id.percent100, (level <= 100 && level > 90) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent90, (level <= 90 && level > 80) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent80, (level <= 80 && level > 70) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent70, (level <= 70 && level > 60) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent60, (level <= 60 && level > 50) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent50, (level <= 50 && level > 40) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent40, (level <= 40 && level > 30) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent30, (level <= 30 && level > 20) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent20, (level <= 20 && level > 10) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.percent10, (level <= 10 && level > 0) ?
-//                View.VISIBLE : View.INVISIBLE);
-//        remoteViews.setViewVisibility(R.id.charge_view, isCharging ?
-//                View.VISIBLE : View.INVISIBLE);
+
         remoteViews.setTextViewText(R.id.batterytext, String.valueOf(level) + "%");
 //        Intent activityIntent = new Intent(this, WidgetActivity.class);
 //        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
