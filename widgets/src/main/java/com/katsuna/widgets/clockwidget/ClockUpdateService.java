@@ -237,7 +237,10 @@ public class ClockUpdateService extends IntentService {
         boolean mini = false;
         int numWeeks = 6;
 
-
+        int color1 = ColorCalc.getColor(getApplicationContext(),
+                ColorProfileKey.ACCENT1_COLOR, colorProfile);
+        int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                colorProfile);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         RemoteViews rv = new RemoteViews(getPackageName(), R.layout.calendar_widget);
 
@@ -283,10 +286,12 @@ public class ClockUpdateService extends IntentService {
                 int cellLayoutResId = R.layout.cell_day;
                 if (isToday) {
                     cellLayoutResId = R.layout.cell_today;
+
                 } else if (inMonth) {
                     cellLayoutResId = R.layout.cell_day_this_month;
                 }
                 RemoteViews cellRv = new RemoteViews(getPackageName(), cellLayoutResId);
+
                 cellRv.setTextViewText(android.R.id.text1,
                         Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
                 if (isFirstOfMonth) {
@@ -298,15 +303,14 @@ public class ClockUpdateService extends IntentService {
             rv.addView(R.id.calendar, rowRv);
         }
 
-
+      //  rv.setInt(R.id.cell_today, "setBackgroundResource", color1);
         rv.setViewVisibility(R.id.month_bar, numWeeks <= 1 ? View.GONE : View.VISIBLE);
         rv.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
         String []clock = setTime();
         System.out.println("in clock choice with time:"+clock[0]);
         rv.setTextViewText(R.id.appwidget_text_calendar, clock[0]);
         rv.setTextViewText(R.id.date_calendar, clock[1]);
-        int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-                colorProfile);
+
         rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         ComponentName componentName = new ComponentName(this, WidgetCollection.class);

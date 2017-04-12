@@ -45,6 +45,8 @@ public class BatteryUpdateService extends IntentService {
     public static final String ACTION_ENERGY_MODE_CHOICE =  "com.katsuna.batterywidget.action.energy_mode";
     public static final String ACTION_ENERGY_MODE_OFF_CHOICE =  "com.katsuna.batterywidget.action.energy_mode_off";
 
+    private boolean battery_saveMode =false;
+
     UserProfileContainer mUserProfileContainer;
     ColorProfile colorProfile;
     /**
@@ -193,9 +195,18 @@ public class BatteryUpdateService extends IntentService {
                 updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
                 this.startService(updateWeatherIntent);
 
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,4);
-                BatterySaverUtil.enable();
+                RemoteViews remoteViews = null;
+                if(!battery_saveMode) {
+                    createRemoteViews(level, isCharging, 4);
+                    BatterySaverUtil.enable();
+                    battery_saveMode = true;
+                }
+                else{
+                    remoteViews = createRemoteViews(level, isCharging,5);
+                    BatterySaverUtil.disable();
+                    battery_saveMode = false;
 
+                }
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
