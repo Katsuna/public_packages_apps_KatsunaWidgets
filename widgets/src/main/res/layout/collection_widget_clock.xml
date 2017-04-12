@@ -55,14 +55,14 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
 
-                android:text="10:00 PM"
+                android:text="@string/default_hour"
                 android:gravity="center"
                 android:layout_marginRight="10dp"
                />
 
             <TextView
 
-                android:text="Monday 20 June"
+                android:text="@string/default_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/date_clock"
@@ -84,12 +84,14 @@
                 android:id="@+id/calendar_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="calendar"/>
+                android:layout_marginRight="5dp"
+                android:text="@string/calendar"/>
             <Button
                 android:id="@+id/clock_close_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="close"/>
+                android:layout_marginLeft="5dp"
+                android:text="@string/close"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -201,7 +203,7 @@
                 android:id="@+id/weatherTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weather"
+                android:text="@string/weather_title"
                 android:textColor="@color/bb_inActiveBottomBarItemColor"
                 android:textSize="24sp" />
             <RelativeLayout
@@ -251,7 +253,7 @@
                             android:id="@+id/widgetTemperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 °C"
+                            android:text="@string/default_temp"
                             android:textColor="@android:color/black"
                             android:textSize="25sp"
                             />
@@ -280,7 +282,7 @@
                             android:id="@+id/widgetWindcomma"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=","
+                            android:text="@string/comma"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 
@@ -289,7 +291,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="2dp"
-                            android:text="Wind: 0 m/s"
+                            android:text="@string/default_wind"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 

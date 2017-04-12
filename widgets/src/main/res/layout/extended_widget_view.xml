@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="WEATHER"
+            android:text="@string/b_weather"
             android:textColor="@color/bb_inActiveBottomBarItemColor"
             android:textSize="24sp" />
 
@@ -55,7 +55,7 @@
                 android:id="@+id/state_now"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="NOW"
+                android:text="@string/now"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -73,7 +73,7 @@
                     android:id="@+id/state_week"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="WEEK"
+                    android:text="@string/week"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -88,7 +88,7 @@
                     android:id="@+id/state_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DAY"
+                    android:text="@string/day"
                     android:textAlignment="center"
 
                     android:textColor="@android:color/black"
@@ -111,7 +111,7 @@
                 android:id="@+id/widgetExTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 °C"
+                android:text="@string/default_temp"
                 android:textColor="@android:color/black"
                 android:textSize="35sp"
                 />
@@ -154,7 +154,7 @@
             android:id="@+id/widgetHumidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Humidity: 0 %"
+            tools:text="@string/dedault_humidity"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -172,7 +172,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:text="Wind: 0 m/s"
+            android:text="@string/default_wind"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -182,14 +182,17 @@
         android:orientation="horizontal"
         android:baselineAligned="false"
         android:gravity="right"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        >
 
         <Button
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back"
+            android:text="@string/back"
             android:textAlignment="center"
+            android:padding="10dp"
 
             android:textColor="@android:color/black"
             android:textSize="18sp"

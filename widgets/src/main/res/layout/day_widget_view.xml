@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="WEATHER"
+            android:text="@string/b_weather"
             android:textColor="@color/bb_inActiveBottomBarItemColor"
             android:textSize="24sp" />
 
@@ -46,7 +46,7 @@
                     android:id="@+id/state_day_now"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="NOW"
+                    android:text="@string/now"
 
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
@@ -64,7 +64,7 @@
                     android:id="@+id/state_day_week"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="WEEK"
+                    android:text="@string/week"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="DAY"
+                    android:text="@string/day"
                     android:textAlignment="center"
 
                     android:textColor="@android:color/black"
@@ -118,7 +118,7 @@
                     android:id="@+id/time1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -132,7 +132,7 @@
                     android:id="@+id/day_temp1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -148,7 +148,7 @@
                     android:id="@+id/time2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -162,7 +162,7 @@
                     android:id="@+id/day_temp2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -179,7 +179,7 @@
                     android:id="@+id/time3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -193,7 +193,7 @@
                     android:id="@+id/day_temp3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -210,7 +210,7 @@
                     android:id="@+id/time4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -224,7 +224,7 @@
                     android:id="@+id/day_temp4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -239,7 +239,7 @@
                     android:id="@+id/time5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -253,7 +253,7 @@
                     android:id="@+id/day_temp5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -270,7 +270,7 @@
                     android:id="@+id/time6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -284,7 +284,7 @@
                     android:id="@+id/day_temp6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -301,7 +301,7 @@
                     android:id="@+id/time7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mo"
+                    android:text="@string/s_monday"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     />
@@ -315,7 +315,7 @@
                     android:id="@+id/day_temp7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0°"
+                    android:text="@string/default_s_temp"
                     android:textSize="10sp"
                     android:textColor="@android:color/black"
                     />
@@ -338,15 +338,17 @@
             android:orientation="horizontal"
             android:baselineAligned="false"
             android:gravity="right"
-            android:layout_marginRight="40dp">
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            >
 
             <Button
                 android:id="@+id/day_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back"
+                android:text="@string/back"
                 android:textAlignment="center"
-
+                android:padding="10dp"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:gravity="right"
