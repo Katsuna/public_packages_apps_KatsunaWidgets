@@ -174,7 +174,14 @@ public class BatteryUpdateService extends IntentService {
 
                 setupTheme(this);
 
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,3);
+                RemoteViews remoteViews = null; createRemoteViews(level, isCharging,3);
+                if(battery_saveMode) {
+                    remoteViews = createRemoteViews(level, isCharging, 4);
+                }
+                else{
+                    remoteViews = createRemoteViews(level, isCharging,5);
+
+                }
                 int color1 = ColorCalc.getColor(getApplicationContext(),
                         ColorProfileKey.ACCENT1_COLOR, colorProfile);
                 remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
@@ -186,7 +193,7 @@ public class BatteryUpdateService extends IntentService {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
-            else if(ACTION_ENERGY_MODE_CHOICE.equals(action)){
+            else if(ACTION_ENERGY_MODE_CHOICE.equals(action) || ACTION_ENERGY_MODE_OFF_CHOICE.equals(action)){
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
                 updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
                 this.startService(updateIntent);
@@ -197,7 +204,7 @@ public class BatteryUpdateService extends IntentService {
 
                 RemoteViews remoteViews = null;
                 if(!battery_saveMode) {
-                    createRemoteViews(level, isCharging, 4);
+                    remoteViews = createRemoteViews(level, isCharging, 4);
                     BatterySaverUtil.enable();
                     battery_saveMode = true;
                 }
@@ -212,23 +219,23 @@ public class BatteryUpdateService extends IntentService {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
-            else if(ACTION_ENERGY_MODE_OFF_CHOICE.equals(action)){
-                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
-                this.startService(updateIntent);
-
-                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
-                this.startService(updateWeatherIntent);
-
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,5);
-                BatterySaverUtil.disable();
-
-
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
+//            else if(){
+//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+//                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
+//                this.startService(updateIntent);
+//
+//                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
+//                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
+//                this.startService(updateWeatherIntent);
+//
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging,5);
+//                BatterySaverUtil.disable();
+//
+//
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
 
         }
         return START_NOT_STICKY;
