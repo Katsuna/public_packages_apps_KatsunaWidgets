@@ -101,16 +101,16 @@
 
 
 
-        <Button
-            android:id="@+id/month_label"
-            style="?android:borderlessButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:textColor="@color/foreground_full"
-            android:textSize="28sp" />
+        <!--<Button-->
+            <!--android:id="@+id/month_label"-->
+            <!--style="?android:borderlessButtonStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:fontFamily="sans-serif-condensed"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/foreground_full"-->
+            <!--android:textSize="28sp" />-->
 
 
     </LinearLayout>

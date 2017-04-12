@@ -247,8 +247,8 @@ public class ClockUpdateService extends IntentService {
         int thisMonth = cal.get(Calendar.MONTH);
 
 
-        rv.setTextViewText(R.id.month_label, DateFormat.format(
-                shortMonthName ? "MMM yy" : "MMMM yyyy", cal));
+//        rv.setTextViewText(R.id.month_label, DateFormat.format(
+//                shortMonthName ? "MMM yy" : "MMMM yyyy", cal));
 
         if (!mini) {
             cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -290,7 +290,7 @@ public class ClockUpdateService extends IntentService {
                 cellRv.setTextViewText(android.R.id.text1,
                         Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
                 if (isFirstOfMonth) {
-                    cellRv.setTextViewText(R.id.month_label, DateFormat.format("MMM", cal));
+                   // cellRv.setTextViewText(R.id.month_label, DateFormat.format("MMM", cal));
                 }
                 rowRv.addView(R.id.row_container, cellRv);
                 cal.add(Calendar.DAY_OF_MONTH, 1);

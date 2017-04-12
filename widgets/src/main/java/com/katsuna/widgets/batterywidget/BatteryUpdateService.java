@@ -43,7 +43,8 @@ public class BatteryUpdateService extends IntentService {
     public static final String ACTION_CLOCK_CHOICE =  "com.katsuna.batterywidget.action.clock_choice";
     public static final String ACTION_BATTERY_CHOICE =  "com.katsuna.batterywidget.action.battery_choice";
     public static final String ACTION_ENERGY_MODE_CHOICE =  "com.katsuna.batterywidget.action.energy_mode";
-    private static final String ACTION_ENERGY_MODE_OFF_CHOICE =  "com.katsuna.batterywidget.action.energy_mode_off";
+    public static final String ACTION_ENERGY_MODE_OFF_CHOICE =  "com.katsuna.batterywidget.action.energy_mode_off";
+
     UserProfileContainer mUserProfileContainer;
     ColorProfile colorProfile;
     /**

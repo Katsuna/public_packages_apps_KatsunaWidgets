@@ -158,6 +158,13 @@ public class WidgetCollection extends AppWidgetProvider {
             updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_CHOICE);
             context.startService(updateBatteryIntent);
         }
+        else if(ENERGY_MODE_OFF_CLICKED.equals(intent.getAction())){
+            extended = true;
+
+            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_OFF_CHOICE);
+            context.startService(updateBatteryIntent);
+        }
         else if (WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
