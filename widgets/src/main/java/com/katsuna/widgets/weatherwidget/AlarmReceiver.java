@@ -75,7 +75,12 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             }
         } else {
-          //  showLocationSettingsDialog();
+
+
+
+
+
+
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
                 LOCATION_REFRESH_DISTANCE, this);
