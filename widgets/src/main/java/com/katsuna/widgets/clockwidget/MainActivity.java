@@ -118,10 +118,10 @@ public class MainActivity extends Activity {
                             android.Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
 
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mGoogleMap.setMyLocationEnabled(true);
+//                        if (mGoogleApiClient == null) {
+//                            buildGoogleApiClient();
+//                        }
+//                        mGoogleMap.setMyLocationEnabled(true);
                     }
                 } else {
                     // permission denied, boo! Disable the
