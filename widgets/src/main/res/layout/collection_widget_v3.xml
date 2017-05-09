@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/time_root"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:weightSum="1">
 
         <TextView
             android:text="@string/time_date"
@@ -76,8 +77,17 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp" />
             </LinearLayout>
-        </LinearLayout>
 
+        </LinearLayout>
+        <Button
+            android:id="@+id/calendar_btn"
+            android:layout_width="21dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="5dp"
+
+            android:background="@drawable/f_clock"
+            android:drawablePadding="-15sp"
+            />
     </LinearLayout>
 
     <TextView
@@ -104,64 +114,39 @@
             android:textSize="24sp"
             />
 
+            <TextView
+                android:id="@+id/batterytext"
+                android:layout_width="90dp"
+                android:maxLines="1"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="4"
+                android:textColor="@android:color/black"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:gravity="right"
+
+                android:layout_height="60dp" />
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-
+            android:layout_gravity="right"
             android:gravity="right"
-            android:layout_marginRight="10dp">
-            <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginRight="30dp">
-                <LinearLayout
+            android:layout_alignParentRight="true"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:layout_alignParentRight="true"
-
-                    >
-                    <ImageView
-                        android:id="@+id/battery_view"
-                        android:layout_width="92dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/battery_black"
-                        android:layout_below="@+id/textView2"
-                        android:gravity="right"
-                        />
-
-                    <TextView
-                        android:id="@+id/batterytext"
-                        android:layout_width="90dp"
-                        android:maxLines="1"
-                        android:shadowDx="3"
-                        android:shadowDy="3"
-                        android:shadowRadius="4"
-                        android:textColor="@android:color/black"
-                        android:textSize="35sp"
-                        android:textStyle="bold"
-                        android:typeface="sans"
-                        android:gravity="right"
-
-                        android:layout_height="60dp" />
-                </LinearLayout>
-                <Button
-                    android:id="@+id/energy_mode_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/energy_mode"
-                    android:layout_marginRight="5dp"/>
-            </RelativeLayout>
-        </LinearLayout>
+            >
+        <Button
+            android:id="@+id/energy_mode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/battery_black"
+            android:gravity="right" />
+</LinearLayout>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
