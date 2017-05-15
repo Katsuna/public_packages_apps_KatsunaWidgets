@@ -16,7 +16,7 @@ public class WidgetRemoteService extends RemoteViewsService {
     private static final String TAG = WidgetRemoteService.class
             .getSimpleName();
 
-    final static int[] mLayoutIds = { R.layout.collection_widget, R.layout.collection_widget_clock, R.layout.collection_widget_battery, R.layout.collection_widget_weather };
+    final static int[] mLayoutIds = { R.layout.collection_widget_v3};
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {

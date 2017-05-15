@@ -147,6 +147,12 @@ public class WeatherUpdateService extends IntentService {
                 this.startService(updateBatteryIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
+                int color1 = ColorCalc.getColor(getApplicationContext(),
+                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
+                        colorProfile);
+                remoteViews.setInt(R.id.forecast_close_btn, "setBackgroundColor", color2);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -201,14 +207,17 @@ public class WeatherUpdateService extends IntentService {
 
         if( layout == 1 || layout == 6 || layout ==7) {
             if(widgetWeather.getIcon()!= null) {
-                if (layout == 1)
-                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
-                else if (layout == 6)
-                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
-                else if (layout == 7)
-                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
-
-                remoteViews.setOnClickPendingIntent(R.id.widgetRoot, getPendingSelfIntent(this, WidgetCollection.WEATHER_CLICKED));
+                 remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+//                else if (layout == 6)
+//                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
+//                else if (layout == 7)
+//                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
+                int color1 = ColorCalc.getColor(getApplicationContext(),
+                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+                remoteViews.setOnClickPendingIntent(R.id.forecast_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
 
                 remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
                 remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.katsuna.commons.entities.ColorProfile;
@@ -130,6 +131,7 @@ public class BatteryUpdateService extends IntentService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        setupTheme(this);
 
         if (intent != null) {
             System.out.println("IM in here");
@@ -172,7 +174,6 @@ public class BatteryUpdateService extends IntentService {
                 updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
                 this.startService(updateWeatherIntent);
 
-                setupTheme(this);
 
                 RemoteViews remoteViews = null; createRemoteViews(level, isCharging,3);
                 if(battery_saveMode) {
@@ -184,10 +185,9 @@ public class BatteryUpdateService extends IntentService {
                 }
                 int color1 = ColorCalc.getColor(getApplicationContext(),
                         ColorProfileKey.ACCENT1_COLOR, colorProfile);
+                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
                 remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
-                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-                        colorProfile);
-                remoteViews.setInt(R.id.battery_close_btn, "setBackgroundColor", color2);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -274,89 +274,82 @@ public class BatteryUpdateService extends IntentService {
      */
     private RemoteViews createRemoteViews(final int level, final boolean isCharging, int backFlag) {
         RemoteViews remoteViews = null;
-        if (backFlag == 0) {
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget);
-            remoteViews.setOnClickPendingIntent(R.id.battery_root, getPendingSelfIntent(this, WidgetCollection.BATTERY_CLICKED));
 
-        }
-        else if (backFlag == 1)
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
-        else if (backFlag == 2)
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
-        else if (backFlag ==3){
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+            int color1 = ColorCalc.getColor(getApplicationContext(),
+                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
+            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
             remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
-            remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
-        }
-        else if (backFlag ==4){
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
-            remoteViews.setTextViewText(R.id.energy_mode_btn, getResources().getString(R.string.energy_mode_off));
+
+        if (backFlag ==4){
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+            remoteViews.setTextViewTextSize(R.id.energy_mode_txt, TypedValue.COMPLEX_UNIT_SP,0);
 
             remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_OFF_CLICKED));
-            remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
         }
         else if (backFlag ==5){
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_battery);
-            remoteViews.setTextViewText(R.id.energy_mode_btn, getResources().getString(R.string.energy_mode));
+            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+            remoteViews.setTextViewTextSize(R.id.energy_mode_txt, TypedValue.COMPLEX_UNIT_SP,15);
 
             remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
-            remoteViews.setOnClickPendingIntent(R.id.battery_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
 
         }
 
 
         if (isCharging)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_charge);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.battery_charge);
 
         }
         else if (level > 0 && level <=5)
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_red_5);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_5);
         else if (level > 5 && level <=10)
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_red_10);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_10);
 
         else if (level < 10 && level <=20)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_red_20);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_20);
 
         }
         else if (level < 20 && level <=30)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_30);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_30);
 
         }
         else if (level <=30 && level <=40)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_40);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_40);
 
         }
         else if (level <40 && level <=50)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_50);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_50);
         }
         else if (level <=50 && level <=60)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_60);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_60);
         }
         else if (level < 60 && level <=70)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_70);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_70);
         }
         else if (level <=70 && level <=80)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_80);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_80);
 
         }
         else if (level > 80 && level <=90)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.ic_battery_black_90);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_90);
 
         }
         else if (level > 90 && level <=100)
         {
-            remoteViews.setImageViewResource(R.id.battery_view, R.drawable.battery_black);
+            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.battery_black);
 
         }
 
@@ -374,3 +367,4 @@ public class BatteryUpdateService extends IntentService {
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 }
+

@@ -1,115 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="left"
+    android:layout_height="wrap_content"
     android:background="@drawable/widget_back"
-    >
+    android:gravity="left"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/time_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/time_root"
-        android:layout_marginRight="10dp"
         android:weightSum="1">
 
 
         <LinearLayout
-            android:layout_marginTop="5dp"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_alignParentRight="true"
             android:layout_gravity="right"
             android:gravity="right"
-            android:layout_alignParentRight="true"
+            android:orientation="vertical"
 
             >
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:padding="10dp"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:gravity="center">
+                >
 
                 <TextView
 
                     android:id="@+id/appwidget_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:contentDescription="@string/appwidget_text"
+                    android:gravity="center"
+                    android:text="@string/default_hour"
                     android:textColor="@android:color/black"
                     android:textSize="35sp"
-                    android:textStyle="bold"
-                    android:text="@string/default_hour"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_alignParentEnd="true" />
-                <TextView
-                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold" />
 
-                    android:text="@string/default_date"
+                <TextView
+                    android:id="@+id/date"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/date"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="normal|bold"
-                    android:layout_below="@+id/appwidget_text"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp" />
+                    android:layout_below="@+id/appwidget_text"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="@string/default_date"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
 
         </LinearLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
+
             <LinearLayout
-                android:layout_marginLeft="10dp"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
 
                 android:gravity="right"
-                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
                 android:weightSum="1">
 
-                <Button
+                <ImageButton
                     android:id="@+id/calendar_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="121dp"
                     android:layout_height="90dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@android:color/transparent"
-                    android:drawablePadding="0dp"
-                    android:gravity="center"
-                    android:drawableStart="@drawable/f_clock" />
+                    android:layout_marginBottom="-1dp"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="25dp"
+                    android:scaleType="fitCenter"
+                    android:topRightRadius="10dp"
+                    android:src="@drawable/clock48" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxWidth="10000dp"
         android:orientation="horizontal"
-        >
+        android:weightSum="1">
 
 
         <LinearLayout
@@ -118,7 +114,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:baselineAligned="false"
-            android:gravity="center"
+            android:paddingLeft="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -127,24 +123,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/default_city"
                 android:textColor="@android:color/black"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:gravity="center"
                 android:orientation="horizontal"
 
-                >
+                android:weightSum="1">
 
-                <ImageView
-                    android:id="@+id/widgetIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:src="@drawable/k48_clouds" />
 
                 <TextView
                     android:id="@+id/widgetTemperature"
@@ -152,7 +141,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/default_temp"
                     android:textColor="@android:color/black"
-                    android:textSize="25sp" />
+                    android:textSize="34sp" />
+
+                <ImageView
+                    android:id="@+id/widgetIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:src="@drawable/k48_clouds"
+                    android:layout_weight="0.09" />
                 <!--android:src="@drawable/ic_refresh_white_24dp"-->
 
             </LinearLayout>
@@ -161,8 +158,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
                     android:id="@+id/widgetDescription"
@@ -194,37 +191,37 @@
         </LinearLayout>
 
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-        <LinearLayout
-            android:layout_marginLeft="10dp"
-
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
-            android:gravity="right"
-            android:layout_alignParentRight="true"
-            android:weightSum="1">
+            <LinearLayout
 
-                <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:orientation="horizontal">
+
+                <ImageButton
                     android:id="@+id/forecast_btn"
-                    android:layout_width="59dp"
-                    android:layout_height="67dp"
-                    android:drawablePaddingLeft="20dp"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/icon-cloud48"
-                     />
-        </LinearLayout>
+                    android:layout_width="121dp"
+                    android:layout_height="110dp"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_cloud48" />
+
+
+            </LinearLayout>
         </RelativeLayout>
-        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -232,7 +229,28 @@
         android:orientation="horizontal"
 
         android:weightSum="1">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
+            android:weightSum="1">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:weightSum="1">
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:id="@+id/batteryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/battery_title"
+            android:textColor="@color/common_black"
+            android:textSize="34sp"
+            />
         <LinearLayout
             android:layout_width="132dp"
             android:layout_height="wrap_content"
@@ -240,46 +258,62 @@
 
             android:weightSum="1">
 
-        <TextView
-            android:id="@+id/batterytext"
-            android:layout_width="90dp"
-            android:layout_height="60dp"
-            android:layout_weight="0.26"
-            android:gravity="right"
-            android:maxLines="1"
-            android:shadowDx="3"
-            android:shadowDy="3"
-            android:shadowRadius="4"
-            android:textColor="@android:color/black"
-            android:textSize="35sp"
 
-            android:textStyle="bold"
-            android:typeface="sans" />
-</LinearLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-        <LinearLayout
+            <TextView
+                android:id="@+id/batterytext"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="0.26"
+                android:gravity="right"
+                android:maxLines="1"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="4"
+                android:textColor="@android:color/black"
+                android:textSize="35sp"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            android:gravity="right"
-            android:layout_alignParentRight="true">
-
-            <Button
-                android:id="@+id/energy_mode_btn"
-                android:layout_width="59dp"
-                android:layout_height="67dp"
-                android:drawablePaddingLeft="20dp"
-
-                android:gravity="center"
-                android:drawableStart="@drawable/battery_black" />
-                android:gravity="right" />
+                android:textStyle="bold"
+                android:typeface="sans" />
         </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_marginLeft="10dp"
+
+                android:id="@+id/energy_mode_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/energy_mode_on"
+                android:textColor="@color/common_indigoA700"
+                android:textSize="0sp"
+                />
+</LinearLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/energy_mode_btn"
+                    android:layout_width="121dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="25dp"
+                    android:scaleType="fitCenter"
+                    android:bottomRightRadius="10dp"
+                    android:src="@drawable/battery_black" />
+
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 

@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WidgetCollection.iml" filepath="$PROJECT_DIR$/WidgetCollection.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../frameworks/KatsunaCommon/commons/commons.iml" filepath="$PROJECT_DIR$/../../../frameworks/KatsunaCommon/commons/commons.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages_apps_KatsunaWidgets.iml" filepath="$PROJECT_DIR$/packages_apps_KatsunaWidgets.iml" />
       <module fileurl="file://$PROJECT_DIR$/widgets/widgets.iml" filepath="$PROJECT_DIR$/widgets/widgets.iml" />
     </modules>
   </component>

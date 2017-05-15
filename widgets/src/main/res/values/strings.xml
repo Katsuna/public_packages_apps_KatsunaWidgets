@@ -228,4 +228,5 @@
     <string name="forecast">forecast</string>
     <string name="dedault_humidity">Humidity: 0 %</string>
     <string name="energy_mode_off">energy mode off</string>
+    <string name="energy_mode_on">Battery saver is On</string>
 </resources>

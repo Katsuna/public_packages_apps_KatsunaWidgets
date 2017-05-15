@@ -8,7 +8,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.RemoteViews;
 
+import com.katsuna.commons.entities.ColorProfile;
+import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfileContainer;
+import com.katsuna.commons.utils.ColorCalc;
+import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.batterywidget.BatteryMonitorService;
 import com.katsuna.widgets.batterywidget.BatteryUpdateService;
@@ -42,7 +48,8 @@ public class WidgetCollection extends AppWidgetProvider {
     public static String ACTION_MENU_CLICKED = "MenuClicked";
     private String actionClicked ="backClicked";
 
-
+    UserProfileContainer mUserProfileContainer;
+    ColorProfile colorProfile;
 
     public static int getNumberOfWidgets(final Context context) {
         ComponentName componentName = new ComponentName(context, ClockWidget.class);
@@ -60,6 +67,21 @@ public class WidgetCollection extends AppWidgetProvider {
        // Log.d("Collection calendar_widget","I am n update...");
 
         for (int id : appWidgetIds) {
+
+            setupTheme(context);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.collection_widget_v3);
+
+
+
+            //Coloring button
+            int color1 = ColorCalc.getColor(context,
+                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
+            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+
+            appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
+
 
 
             if (extended == false) {
@@ -101,7 +123,6 @@ public class WidgetCollection extends AppWidgetProvider {
     public void onEnabled(Context context) {
         System.out.println("On enabled called!");
         super.onEnabled(context);
-
 
 
         context.startService(new Intent(context, ClockMonitorService.class));
@@ -264,7 +285,11 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
 
-
+    private void setupTheme(Context context) {
+        UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
+        colorProfile = userProfileContainer.getColorProfile();
+        System.out.println("im out"+colorProfile);
+    }
 
 
 
