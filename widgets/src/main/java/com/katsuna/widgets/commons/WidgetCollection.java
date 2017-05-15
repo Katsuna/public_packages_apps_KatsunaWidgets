@@ -1,12 +1,17 @@
 package com.katsuna.widgets.commons;
 
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -21,6 +26,7 @@ import com.katsuna.widgets.batterywidget.BatteryUpdateService;
 import com.katsuna.widgets.clockwidget.ClockWidget;
 import com.katsuna.widgets.clockwidget.ClockMonitorService;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
+import com.katsuna.widgets.clockwidget.MainActivity;
 import com.katsuna.widgets.weatherDb.WeatherContentProvider;
 import com.katsuna.widgets.weatherDb.WeatherDbHandler;
 import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
@@ -39,6 +45,8 @@ public class WidgetCollection extends AppWidgetProvider {
     public static final String TIME_CLICKED    = "automaticWidgetSyncTimeClick";
     public static final String VIEW_CALENDAR_CLICKED    = "automaticWidgetCalendarButtonClick";
     public static final String BATTERY_CLICKED    = "automaticWidgetSyncBatteryClick";
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
 
     private static final String DEBUG_TAG = "onClicked";
