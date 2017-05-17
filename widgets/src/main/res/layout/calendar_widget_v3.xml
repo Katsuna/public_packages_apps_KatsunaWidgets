@@ -99,10 +99,10 @@
                     android:layout_marginBottom="-1dp"
                     android:layout_marginRight="-5dp"
                     android:layout_marginTop="-5dp"
-                    android:padding="25dp"
+                    android:padding="40dp"
                     android:scaleType="fitCenter"
                     android:topRightRadius="10dp"
-                    android:src="@drawable/clock48" />
+                    android:src="@drawable/ic_x_icon" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

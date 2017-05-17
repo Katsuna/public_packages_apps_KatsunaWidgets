@@ -119,15 +119,15 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/forecast_btn"
+                        android:id="@+id/back"
                         android:layout_width="121dp"
                         android:layout_height="110dp"
                         android:layout_marginBottom="-5dp"
                         android:layout_marginRight="-5dp"
                         android:layout_marginTop="-5dp"
-                        android:padding="20dp"
+                        android:padding="40dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/icon_cloud48" />
+                        android:src="@drawable/ic_x_icon" />
 
 
                 </LinearLayout>
@@ -212,9 +212,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_height="58dp">
+            android:orientation="horizontal">
 
         </LinearLayout>
 
@@ -442,38 +442,9 @@
 
 
        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_height="28dp">
-
-        </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false"
-            android:gravity="right"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="10dp"
-            >
 
-            <Button
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                android:textAlignment="center"
-                android:padding="10dp"
-
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:gravity="right"
-              />
-        </LinearLayout>
 
     </LinearLayout>
 
