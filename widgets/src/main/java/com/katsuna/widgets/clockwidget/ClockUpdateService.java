@@ -318,8 +318,8 @@ public class ClockUpdateService extends IntentService {
         rv.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
         String []clock = setTime();
         System.out.println("in clock choice with time:"+clock[0]);
-        rv.setTextViewText(R.id.appwidget_text_calendar, clock[0]);
-        rv.setTextViewText(R.id.date_calendar, clock[1]);
+        rv.setTextViewText(R.id.appwidget_text, clock[0]);
+        rv.setTextViewText(R.id.date, clock[1]);
 
         rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

@@ -229,4 +229,8 @@
     <string name="dedault_humidity">Humidity: 0 %</string>
     <string name="energy_mode_off">energy mode off</string>
     <string name="energy_mode_on">Battery saver is On</string>
+    <string name="off">off</string>
+    <string name="on">on</string>
+    <string name="battery_saver">Battery Saver</string>
+
 </resources>
