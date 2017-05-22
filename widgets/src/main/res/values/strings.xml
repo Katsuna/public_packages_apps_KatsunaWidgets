@@ -218,9 +218,9 @@
     <string name="comma">,</string>
     <string name="default_s_temp">0°</string>
     <string name="s_monday">Mo</string>
-    <string name="day">DAY</string>
-    <string name="week">WEEK</string>
-    <string name="now">NOW</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="now">Now</string>
     <string name="b_weather">WEATHER</string>
     <string name="energy_mode">energy mode</string>
     <string name="close">close</string>
