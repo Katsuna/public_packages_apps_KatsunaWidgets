@@ -44,7 +44,7 @@
                     android:gravity="center"
                     android:text="@string/default_hour"
                     android:textColor="@android:color/black"
-                    android:textSize="35sp"
+                    android:textSize="34dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:gravity="center"
                     android:text="@string/default_date"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="20dp"
                     android:textStyle="normal|bold" />
             </LinearLayout>
 
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/default_city"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
 
             <LinearLayout
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/default_temp"
                     android:textColor="@android:color/black"
-                    android:textSize="34sp" />
+                    android:textSize="34dp" />
 
                 <ImageView
                     android:id="@+id/widgetIcon"
@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/no_data"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="20dp" />
 
                 <TextView
 
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/comma"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/widgetWind"
@@ -185,7 +185,7 @@
                     android:layout_margin="2dp"
                     android:text="@string/default_wind"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -249,7 +249,7 @@
             android:layout_height="wrap_content"
             android:text="@string/battery_title"
             android:textColor="@color/common_black"
-            android:textSize="34sp"
+            android:textSize="34dp"
             />
         <LinearLayout
             android:layout_width="132dp"
@@ -270,7 +270,7 @@
                 android:shadowDy="3"
                 android:shadowRadius="4"
                 android:textColor="@android:color/black"
-                android:textSize="35sp"
+                android:textSize="34dp"
 
                 android:textStyle="bold"
                 android:typeface="sans" />

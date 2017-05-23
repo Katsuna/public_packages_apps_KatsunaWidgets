@@ -142,7 +142,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="60dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
 
@@ -161,7 +161,7 @@
                     android:id="@+id/state_day_now"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/common_grey300"
+                    android:background="@color/common_grey100"
                     android:gravity="center"
                     android:text="@string/now"
                     android:textAlignment="center"
@@ -183,7 +183,7 @@
                     android:id="@+id/state_day_week"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/common_grey300"
+                    android:background="@color/common_grey100"
                     android:gravity="center"
                     android:text="@string/week"
                     android:textAlignment="center"

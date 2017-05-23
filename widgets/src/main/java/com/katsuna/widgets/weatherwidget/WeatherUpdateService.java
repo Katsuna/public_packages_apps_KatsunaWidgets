@@ -7,7 +7,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -183,6 +188,12 @@ public class WeatherUpdateService extends IntentService {
     }
 
     private RemoteViews createRemoteViews(int layout) {
+        int color2 = ColorCalc.getColor(getApplicationContext(),
+                ColorProfileKey.ACCENT2_COLOR, colorProfile);
+//        Drawable mDrawable = getApplicationContext().getResources().getDrawable(R.drawable.ic_1495041635_minus);
+//        DrawableCompat.setTint(mDrawable, ContextCompat.getColor(getApplicationContext(), color2));
+
+
         Intent intent = new Intent(this, AlarmReceiver.class);
         //intent.setAction(ACTION_MENU_CLICKED);
         PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -230,21 +241,32 @@ public class WeatherUpdateService extends IntentService {
         else if( layout == 2) {
             if(widgetWeather.getIcon()!= null) {
                 remoteViews = new RemoteViews(getPackageName(), R.layout.extended_widget_view);
+
                 remoteViews.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
                 remoteViews.setOnClickPendingIntent(R.id.state_week, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
                 remoteViews.setOnClickPendingIntent(R.id.state_day, getPendingSelfIntent(this, WidgetCollection.DAY_CLICKED));
 
                 remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
 
-                //remoteViews.setTextViewText(R.id.widgetExTemperature, widgetWeather.getTemperature());
+                remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
+                remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+
+
                 remoteViews.setTextViewText(R.id.widgetExDescription, widgetWeather.getDescription());
                 remoteViews.setTextViewText(R.id.widgetHumidity, "Humidity:"+ widgetWeather.getHumidity() + "%");
-//                remoteViews.setTextViewText(R.id.precipitation, "Chance of rain/snow: "+ widgetWeather.getPrecipitation());
+        //       remoteViews.setTextViewText(R.id.precipitation, "Chance of rain/snow: "+ widgetWeather.getPrecipitation());
 //                if(widgetWeather.getWindDirectionDegree() != null)
 //                    remoteViews.setTextViewText(R.id.widgetExWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
 //
 //                remoteViews.setImageViewResource(R.id.widgetExIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             }
+
+            int color1 = ColorCalc.getColor(getApplicationContext(),
+                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
+            remoteViews.setInt(R.id.state_now, "setBackgroundColor", color1);
+            remoteViews.setTextColor(R.id.state_now, color2);
         }
         else if(layout == 3){
 
@@ -268,12 +290,17 @@ public class WeatherUpdateService extends IntentService {
             remoteViews.setOnClickPendingIntent(R.id.state_now, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_week_day, getPendingSelfIntent(this, WidgetCollection.DAY_CLICKED));
 
+            remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+            remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
+            remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+            remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+
             int color1 = ColorCalc.getColor(getApplicationContext(),
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
-            remoteViews.setInt(R.id.state_day_week, "setBackgroundColor", color1);
-            int color2 = ColorCalc.getColor(getApplicationContext(),
-                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
-            remoteViews.setTextColor(R.id.state_day_week, color2);
+            remoteViews.setInt(R.id.state_week, "setBackgroundColor", color1);
+//            int color2 = ColorCalc.getColor(getApplicationContext(),
+//                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
+            remoteViews.setTextColor(R.id.state_week, color2);
 
 //
 //            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
@@ -318,18 +345,19 @@ public class WeatherUpdateService extends IntentService {
             remoteViews.setOnClickPendingIntent(R.id.state_day_now, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_day_week, getPendingSelfIntent(this, WidgetCollection.WEEK_CLICKED));
 
+            remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+            remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
+            remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+            remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+
 
             int color1 = ColorCalc.getColor(getApplicationContext(),
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
             remoteViews.setInt(R.id.state_day_day, "setBackgroundColor", color1);
-            int color2 = ColorCalc.getColor(getApplicationContext(),
-                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
+//            int color2 = ColorCalc.getColor(getApplicationContext(),
+//                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
             remoteViews.setTextColor(R.id.state_day_day, color2);
-//            remoteViews.setTextViewText(R.id.widgetWeekTemperature, widgetWeather.getTemperature());
-//            remoteViews.setTextViewText(R.id.widgetWeekDescription, widgetWeather.getDescription());
-//
-//
-//            remoteViews.setImageViewResource(R.id.widgetWeekIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+
             int[] timeIDS = new int[] {R.id.time1, R.id.time2, R.id.time3,R.id.time4, R.id.time5,R.id.time6, R.id.time7};
             int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
             int[] tempIDs = new int[] {R.id.day_temp1, R.id.day_temp2, R.id.day_temp3,R.id.day_temp4, R.id.day_temp5, R.id.day_temp6, R.id.day_temp7 };
@@ -354,13 +382,6 @@ public class WeatherUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
                 remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             }
-            int color1 = ColorCalc.getColor(getApplicationContext(),
-                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
-            remoteViews.setInt(R.id.state_day_now, "setBackgroundColor", color1);
-            int color2 = ColorCalc.getColor(getApplicationContext(),
-                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
-            remoteViews.setTextColor(R.id.state_day_now, color2);
-
 
 
         }

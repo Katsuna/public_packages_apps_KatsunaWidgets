@@ -141,7 +141,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:paddingTop="2dp"
@@ -160,7 +160,7 @@
                     android:id="@+id/state_now"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/common_grey300"
+                    android:background="@color/common_grey100"
                     android:gravity="center"
                     android:text="@string/now"
                     android:textAlignment="center"
@@ -186,7 +186,6 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="24sp"
-                    android:background="@color/common_grey300"
                     android:gravity="center"
                     android:textStyle="bold"
                     />
@@ -206,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/day"
-                    android:background="@color/common_grey300"
+                    android:background="@color/common_grey100"
                     android:gravity="center"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
