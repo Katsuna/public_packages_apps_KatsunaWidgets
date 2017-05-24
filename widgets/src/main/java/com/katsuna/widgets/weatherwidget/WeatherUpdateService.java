@@ -113,7 +113,7 @@ public class WeatherUpdateService extends IntentService {
 
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
-                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+               // remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -123,7 +123,7 @@ public class WeatherUpdateService extends IntentService {
                 RemoteViews remoteViews =createRemoteViews(3);
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
-                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+             //   remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -134,7 +134,7 @@ public class WeatherUpdateService extends IntentService {
 
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
-                remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+            //    remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

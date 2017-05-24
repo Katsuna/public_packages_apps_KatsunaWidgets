@@ -25,9 +25,9 @@
     <style name="TableColumn1">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingRight">2dp</item>
         <item name="android:gravity">right</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/common_black</item>
     </style>
@@ -35,7 +35,7 @@
     <style name="TableColumn2">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/common_black</item>
     </style>
 
@@ -47,7 +47,17 @@
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@color/common_white</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+    <style name="CalendarCell2">
+        <item name="android:id">@android:id/text1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/common_black</item>
+        <item name="android:textSize">20dp</item>
     </style>
 
 

@@ -252,7 +252,7 @@ public class ClockUpdateService extends IntentService {
       //  Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
         boolean shortMonthName = false;
         boolean mini = false;
-        int numWeeks = 6;
+        int numWeeks = 5;
 
         int color1 = ColorCalc.getColor(getApplicationContext(),
                 ColorProfileKey.ACCENT1_COLOR, colorProfile);
@@ -289,6 +289,11 @@ public class ClockUpdateService extends IntentService {
             RemoteViews dayRv = new RemoteViews(getPackageName(), R.layout.cell_header);
             dayRv.setTextViewText(android.R.id.text1, weekdays[day]);
             headerRowRv.addView(R.id.row_container, dayRv);
+//            if(today == day){
+//                dayRv.setInt(android.R.id.text1, "setBackgroundColor", "@dr");
+//
+//
+//            }
         }
         rv.addView(R.id.calendar, headerRowRv);
 
@@ -328,7 +333,7 @@ public class ClockUpdateService extends IntentService {
         rv.setTextViewText(R.id.appwidget_text, clock[0]);
         rv.setTextViewText(R.id.date, clock[1]);
 
-        rv.setInt(R.id.back, "setBackgroundColor", color2);
+       // rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         ComponentName componentName = new ComponentName(this, WidgetCollection.class);
         appWidgetManager.updateAppWidget(componentName, rv);
