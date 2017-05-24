@@ -192,7 +192,10 @@ public class WeatherUpdateService extends IntentService {
                 ColorProfileKey.ACCENT2_COLOR, colorProfile);
 //        Drawable mDrawable = getApplicationContext().getResources().getDrawable(R.drawable.ic_1495041635_minus);
 //        DrawableCompat.setTint(mDrawable, ContextCompat.getColor(getApplicationContext(), color2));
-
+        int textColor;
+        if(color2 == com.katsuna.commons.R.color.common_indigoA700){
+            textColor =R.color.common_white;
+        }
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         //intent.setAction(ACTION_MENU_CLICKED);
@@ -266,7 +269,9 @@ public class WeatherUpdateService extends IntentService {
             int color1 = ColorCalc.getColor(getApplicationContext(),
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
             remoteViews.setInt(R.id.state_now, "setBackgroundColor", color1);
+
             remoteViews.setTextColor(R.id.state_now, color2);
+
         }
         else if(layout == 3){
 
