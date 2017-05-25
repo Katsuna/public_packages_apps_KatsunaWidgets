@@ -324,6 +324,10 @@ public class WeatherUpdateService extends IntentService {
 //                j++;
 
             for(int i = 0; i < 7; i++){
+                if(i==0){
+                    remoteViews.setTextColor(daysIDS[i], color2);
+                }
+                System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
                 remoteViews.setTextViewText(daysIDS[i],getDay(forecast.get(i).getDate()));
                 remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
                 remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());

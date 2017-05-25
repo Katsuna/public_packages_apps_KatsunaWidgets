@@ -265,6 +265,7 @@ public class ClockUpdateService extends IntentService {
         int today = cal.get(Calendar.DAY_OF_YEAR);
         int todayYear = cal.get(Calendar.YEAR);
         int thisMonth = cal.get(Calendar.MONTH);
+        int todayWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 
 //        rv.setTextViewText(R.id.month_label, DateFormat.format(
@@ -288,12 +289,11 @@ public class ClockUpdateService extends IntentService {
         for (int day = Calendar.SUNDAY; day <= Calendar.SATURDAY; day++) {
             RemoteViews dayRv = new RemoteViews(getPackageName(), R.layout.cell_header);
             dayRv.setTextViewText(android.R.id.text1, weekdays[day]);
+            if(todayWeek == day){
+                dayRv.setTextColor(android.R.id.text1,color2);
+            }
             headerRowRv.addView(R.id.row_container, dayRv);
-//            if(today == day){
-//                dayRv.setInt(android.R.id.text1, "setBackgroundColor", "@dr");
-//
-//
-//            }
+
         }
         rv.addView(R.id.calendar, headerRowRv);
 
