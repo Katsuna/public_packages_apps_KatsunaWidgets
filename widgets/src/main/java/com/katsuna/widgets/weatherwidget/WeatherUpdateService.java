@@ -234,8 +234,8 @@ public class WeatherUpdateService extends IntentService {
                 remoteViews.setOnClickPendingIntent(R.id.forecast_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
 
                 remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription());
-                remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+","+widgetWeather.getWind());
+//                remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
                 remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
 
                 remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
