@@ -112,7 +112,7 @@
     <!-- Time and Date-->
     <string name="time_date">Time and Date</string>
 
-    <!-- Battery title -->
+    <!-- Battery section title -->
     <string name="battery_title">Battery</string>
 
     <!-- Example city if no location is available -->
@@ -126,27 +126,61 @@
 
     <!-- Default temperature if no data is availbale -->
     <string name="default_temp" translatable="false">0 °C</string>
+
+    <!-- Weather section title-->
     <string name="weather_title">Weather</string>
+
+    <!-- wind example text -->
     <string name="default_wind">Wind: 0 m/s</string>
-    <string name="comma">,</string>
+
+
+    <string name="comma" translatable="false">,</string>
+
     <string name="default_s_temp" translatable="false">0°</string>
+
+    <!-- monday shortname example-->
     <string name="s_monday">Mo</string>
+
+    <!-- Day button text-->
     <string name="day">Day</string>
+
+    <!-- Week button text-->
     <string name="week">Week</string>
+
+    <!-- Now button text-->
     <string name="now">Now</string>
-    <string name="b_weather">WEATHER</string>
+
+    <!-- Energy mode title-->
     <string name="energy_mode">energy mode</string>
+
+    <!-- close button text-->
     <string name="close">close</string>
+
+    <!-- calendar button text-->
     <string name="calendar">calendar</string>
+
+    <!-- forecast button text-->
     <string name="forecast">forecast</string>
+
+    <!-- default humidity text-->
     <string name="dedault_humidity">Humidity: 0 %</string>
+
+    <!-- energy mode off button text-->
     <string name="energy_mode_off">energy mode off</string>
+
+    <!-- Battery saver state text-->
     <string name="energy_mode_on">Battery saver is On</string>
+
+    <!-- Battery saver off text-->
     <string name="off">off</string>
+
+    <!-- Battery saver on text-->
     <string name="on">on</string>
+
+    <!-- Battery saver text-->
     <string name="battery_saver">Battery Saver</string>
 
-
+    <!-- downloading data text-->
     <string name="downloading_data">Downloading your data</string>
 
 
