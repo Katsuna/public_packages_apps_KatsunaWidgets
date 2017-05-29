@@ -523,20 +523,6 @@ public class WeatherMonitorService extends Service implements LocationListener{
     }
 
 
-
-    public static void initMappings() {
-        if (mappingsInitialised)
-            return;
-        mappingsInitialised = true;
-        speedUnits.put("m/s", R.string.speed_unit_mps);
-        speedUnits.put("kph", R.string.speed_unit_kph);
-        speedUnits.put("mph", R.string.speed_unit_mph);
-
-        pressUnits.put("hPa", R.string.pressure_unit_hpa);
-        pressUnits.put("kPa", R.string.pressure_unit_kpa);
-        pressUnits.put("mm Hg", R.string.pressure_unit_mmhg);
-    }
-
     private String localize(SharedPreferences sp, String preferenceKey, String defaultValueKey) {
         return localize(sp, this, preferenceKey, defaultValueKey);
     }
@@ -573,69 +559,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
         return "";
     }
 
-    void getCityByLocation() {
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-
-        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.getting_location));
-            progressDialog.setCancelable(false);
-            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    try {
-                        locationManager.removeUpdates(WeatherMonitorService.this);
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            progressDialog.show();
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-            }
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            }
-        } else {
-            showLocationSettingsDialog();
-        }
-    }
-
-    private void showLocationSettingsDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle(R.string.location_settings);
-        alertDialog.setMessage(R.string.location_settings_message);
-        alertDialog.setPositiveButton(R.string.location_settings_button, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        });
-        alertDialog.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertDialog.show();
-    }
-
-
-    public void requestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCityByLocation();
-                }
-                return;
-            }
-        }
-    }
 
     @Override
     public void onLocationChanged(Location location) {

@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="temperatureUnits">
-        <item name="C">@string/setting_unit_Celsuis</item>
-        <item name="F">@string/setting_unit_Fahrenheit</item>
-        <item name="K">@string/setting_unit_Kelvin</item>
     </string-array>
     <string-array name="temperatureUnitsValues">
         <item name="C">C</item>
-        <item name="F">F</item>
-        <item name="K">K</item>
     </string-array>
     <string-array name="lengthUnits">
-        <item name="mm">@string/setting_unit_mm</item>
-        <item name="inch">@string/setting_unit_in</item>
+
     </string-array>
     <string-array name="lengthUnitsValues">
         <item name="mm">mm</item>
         <item name="inch">in</item>
     </string-array>
     <string-array name="speedUnits">
-        <item name="mps">@string/setting_unit_mps</item>
-        <item name="kph">@string/setting_unit_kph</item>
-        <item name="mph">@string/setting_unit_mph</item>
-        <item name="bft">@string/setting_unit_bft</item>
+
     </string-array>
     <string-array name="speedUnitsValues">
         <item name="mps">m/s</item>
@@ -31,12 +22,6 @@
         <item name="bft">bft</item>
     </string-array>
 
-    <string-array name="pressureUnits">
-        <item name="hpa">@string/setting_unit_hpa</item>
-        <item name="kpa">@string/setting_unit_kpa</item>
-        <item name="mmhg">@string/setting_unit_mmhg</item>
-	<item name="inhg">@string/setting_unit_inhg</item>
-    </string-array>
     <string-array name="pressureUnitsValues">
         <item name="hpa">hPa</item>
         <item name="kpa">kPa</item>
@@ -71,11 +56,7 @@
         <item name="w">&#x2192;</item>
         <item name="nw">&#x2198;</item>
     </string-array>
-    <string-array name="windDirectionFormats">
-        <item name="none">@string/wind_direction_format_none</item>
-        <item name="arrow">@string/wind_direction_format_arrows</item>
-        <item name="abbr">@string/wind_direction_format_abbreviations</item>
-    </string-array>
+
     <string-array name="windDirectionFormatValues">
         <item name="none">none</item>
         <item name="arrow">arrow</item>
@@ -83,7 +64,6 @@
     </string-array>
 
     <string-array name="refreshIntervals">
-        <item name="none">@string/settings_none</item>
         <item name="15">15 min</item>
         <item name="30">30 min</item>
         <item name="1">1 h</item>
@@ -111,12 +91,6 @@
         <item>custom</item>
     </string-array>
 
-    <string-array name="themes">
-        <item name="fresh">@string/setting_theme_fresh</item>
-        <item name="classic">@string/setting_theme_classic</item>
-        <item name="dark">@string/setting_theme_dark</item>
-        <item name="classicdark">@string/setting_theme_classic_dark</item>
-    </string-array>
     <string-array name="themesValues">
         <item name="fresh">fresh</item>
         <item name="classic">classic</item>

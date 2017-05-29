@@ -1,79 +1,48 @@
 <resources>
+
+    <!-- Name of the app -->
     <string name="app_name">WidgetCollection</string>
+
+    <!-- Api key for open weather -->
     <string name="open_weather_maps_app_id">80df67f94113c280c6fc58f2132f0660</string>
 
-    <string name="action_search">Search</string>
-    <string name="action_refresh">Refresh</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_about">About</string>
-
+    <!-- monday shortname-->
     <string name="monday">Mo</string>
+    <!-- tuesday shortname-->
     <string name="tuesday">Tu</string>
+    <!-- wednesday shortname-->
     <string name="wednesday">We</string>
+    <!-- thursday shortname-->
     <string name="thursday">Th</string>
+    <!-- friday shortname-->
     <string name="friday">Fr</string>
+    <!-- saturday shortname-->
     <string name="saturday">Sa</string>
+    <!-- sunday shortname-->
     <string name="sunday">Su</string>
 
-
-    <string name="today">Today</string>
-    <string name="tomorrow">Tomorrow</string>
-    <string name="later">Later</string>
-
+    <!-- title of weather screen -->
     <string name="wind">Wind</string>
+
+    <!-- title of weather screen -->
     <string name="pressure">Pressure</string>
     <string name="humidity">Humidity</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
 
+    <!-- Last updated weather text-->
     <string name="last_update">Last update:\n%s</string>
+
+    <!--2nd Last updated weather text format-->
     <string name="last_update_widget">\nLast update: %s</string>
 
-    <string name="search_title">Search for city</string>
-
-    <string name="downloading_data">Downloading your data ...</string>
-    <string name="getting_location">Getting your location ...</string>
-
-    <string name="error_dateFormat">DATE FORMAT ERROR</string>
-
-
-    <string name="setting_unit_Celsuis">Celsius</string>
-    <string name="setting_unit_Fahrenheit">Fahrenheit</string>
-    <string name="setting_unit_Kelvin">Kelvin</string>
-
-    <string name="setting_unit_mm">Millimeters (mm)</string>
-    <string name="setting_unit_in">Inches (in)</string>
-
-    <string name="setting_unit_hpa">hPa</string>
-    <string name="setting_unit_kpa">kPa</string>
-    <string name="setting_unit_mmhg">mm Hg</string>
-    <string name="setting_unit_inhg">in Hg</string>
-
-    <string name="speed_unit_mps">m/s</string>
-    <string name="speed_unit_kph">kph</string>
-    <string name="speed_unit_mph">mph</string>
-
-    <string name="wind_direction_format_none">No indication</string>
-    <string name="wind_direction_format_arrows">Arrows</string>
-    <string name="wind_direction_format_abbreviations">Abbreviations</string>
-
-    <string name="pressure_unit_hpa">hPa</string>
-    <string name="pressure_unit_kpa">kPa</string>
-    <string name="pressure_unit_mmhg">mm Hg</string>
-
-    <string name="setting_theme_fresh">Fresh</string>
-    <string name="setting_theme_classic">Classic</string>
-    <string name="setting_theme_dark">Fresh Dark</string>
-    <string name="setting_theme_classic_dark">Classic Dark</string>
-
+    <!-- OK button text-->
     <string name="dialog_ok">OK</string>
+
+    <!-- Cancel button text-->
     <string name="dialog_cancel">Cancel</string>
 
-    <string name="msg_err_parsing_json">Error parsing JSON.</string>
-    <string name="msg_connection_problem">There is a problem with your internet connection.</string>
-    <string name="msg_connection_not_available">Connection not available.</string>
-    <string name="msg_city_not_found">Specified city is not found.</string>
-
+    <!-- Weather icon strings non translatable -->
     <string name="weather_sunny" translatable="false">&#xf00d;</string>
     <string name="weather_clear_night" translatable="false">&#xf02e;</string>
     <string name="weather_foggy" translatable="false">&#xf014;</string>
@@ -83,70 +52,84 @@
     <string name="weather_thunder" translatable="false">&#xf01e;</string>
     <string name="weather_drizzle" translatable="false">&#xf01c;</string>
 
+    <!-- North wind direction shortname -->
     <string name="wind_direction_north">N</string>
+
+    <!-- north-northeast wind direction shortname -->
     <string name="wind_direction_north_north_east">NNE</string>
+
+    <!-- North-East direction shortname -->
     <string name="wind_direction_north_east">NE</string>
+
+    <!-- east_north_east wind direction shortname -->
     <string name="wind_direction_east_north_east">ENE</string>
+
+    <!-- East wind direction shortname -->
     <string name="wind_direction_east">E</string>
+
+    <!-- east_south_east wind direction shortname -->
     <string name="wind_direction_east_south_east">ESE</string>
+
+    <!-- south_east wind direction shortname -->
     <string name="wind_direction_south_east">SE</string>
+
+    <!-- south_south_east wind direction shortname -->
     <string name="wind_direction_south_south_east">SSE</string>
+
+    <!-- South wind direction shortname -->
     <string name="wind_direction_south">S</string>
+
+    <!-- south_south_west wind direction shortname -->
     <string name="wind_direction_south_south_west">SSW</string>
+
+    <!-- South West wind direction shortname -->
     <string name="wind_direction_south_west">SW</string>
+
+    <!-- west_south_west wind direction shortname -->
     <string name="wind_direction_west_south_west">WSW</string>
+
+    <!-- West wind direction shortname -->
     <string name="wind_direction_west">W</string>
+
+    <!-- west_north_west wind direction shortname -->
     <string name="wind_direction_west_north_west">WNW</string>
+
+    <!-- north_west wind direction shortname -->
     <string name="wind_direction_north_west">NW</string>
+
+    <!-- north_north_west wind direction shortname -->
     <string name="wind_direction_north_north_west">NNW</string>
-    <string name="msg_too_many_requests">Too many requests. Please try again.</string>
 
-    <!-- 1: temperature; 2: unit -->
-    <string name="dash_clock_status">%1$s°%2$s</string>
-    <!-- 1: temperature; 2: unit; 3: secWeather description -->
-    <string name="dash_clock_expanded_title">%1$s°%2$s - %3$s</string>
-    <!-- 1: city; 2: country; 3: wind; 4: speed units; 5: pressure; 6: pressure units; 7: humidity -->
-    <string name="dash_clock_expanded_body">%1$s, %2$s\nWind: %3$s %4$s\nPressure: %5$s %6$s\nHumidity: %7$s %%\n</string>
-    <string name="settings_title_units">Units</string>
-    <string name="settings_title_display">Display</string>
-    <string name="settings_title_data">Data</string>
-    <string name="setting_displayDecimalZeroes">Display decimal zeroes</string>
-    <string name="settings_title_location">Location</string>
-    <string name="setting_update_location_automatically">Update location in background</string>
-
-    <string name="location_settings">Location Settings</string>
-    <string name="location_settings_message">Location is not enabled. Do you wish to go to the settings menu?</string>
-    <string name="location_settings_button">Settings</string>
-    <string name="action_weather_map">Weather Map</string>
-    <string name="rain">Rain</string>
+    <!-- Temperature title -->
     <string name="temperature">Temperature</string>
-    <string name="action_graphs">Graphs</string>
-    <string name="no_data">no data</string>
-    <string name="windTitle">Wind: </string>
-    <string name="windMeasure">m/s</string>
 
-    <!-- Clock strings-->
+    <!-- text showing if no weather data available -->
+    <string name="no_data">no data</string>
+
+    <!-- Example strings-->
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="configure">Configure</string>
-    <string name="add_widget">Add widget</string>
-    <string name="title_activity_main2">Main2Activity</string>
+
+    <!-- Time and Date-->
     <string name="time_date">Time and Date</string>
 
-
-
-
-
-    <string name="title_activity_widget">WidgetActivity</string>
+    <!-- Battery title -->
     <string name="battery_title">Battery</string>
+
+    <!-- Example city if no location is available -->
     <string name="default_city">Athens</string>
-    <string name="default_hour" />
-    <string name="default_date" />
+
+    <string name="default_hour" translatable="false" />
+
+    <string name="default_date" translatable="false" />
+
     <string name="back">Back</string>
-    <string name="default_temp">0 °C</string>
+
+    <!-- Default temperature if no data is availbale -->
+    <string name="default_temp" translatable="false">0 °C</string>
     <string name="weather_title">Weather</string>
     <string name="default_wind">Wind: 0 m/s</string>
     <string name="comma">,</string>
-    <string name="default_s_temp">0°</string>
+    <string name="default_s_temp" translatable="false">0°</string>
     <string name="s_monday">Mo</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
@@ -163,26 +146,8 @@
     <string name="on">on</string>
     <string name="battery_saver">Battery Saver</string>
 
-    <string name="setting_dateFormat">Date Format</string>
-    <string name="setting_dateFormatCustom">Custom Date Format</string>
-    <string name="setting_dateFormatCustom_summary">Provide the custom SimpleDateFormat string to be used</string>
-   <string name="setting_lengthUnits">Length units</string>
-    <string name="setting_speedUnits">Speed units</string>
-    <string name="setting_tempUnits">Temperature units</string>
-   <string name="setting_showTempAsInteger">Show temperature only as an integer</string>
-   <string name="setting_pressureUnits">Pressure units</string>
-    <string name="setting_theme">Theme</string>
-    <string name="setting_auto_detect_location">Detect Location</string>
-    <string name="setting_differentiateDaysByTint">Differentiate Days with Color</string>
-    <string name="setting_refreshInterval">Background refresh interval</string>
-    <string name="setting_unit_mps">Meters per second (m/s)</string>
-    <string name="setting_unit_kph">Kilometers per hour (kph)</string>
-    <string name="setting_unit_mph">Miles per hour (mph)</string>
-    <string name="setting_unit_bft">Beaufort wind scale (bft)</string>
-    <string name="setting_wind_direction_format">Wind direction format</string>
-    <string name="settings_none">None</string>
-    <string name="setting_apiKey">API key</string>
-    <string name="setting_apiKey_summary">Custom API key for OpenWeatherMap queries</string>
+
+    <string name="downloading_data">Downloading your data</string>
 
 
 </resources>
