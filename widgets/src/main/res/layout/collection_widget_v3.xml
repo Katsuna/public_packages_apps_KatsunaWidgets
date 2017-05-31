@@ -161,38 +161,38 @@
                 android:orientation="horizontal"
                 >
 
-                <com.katsuna.widgets.utils.AutoResizeTextView
-                    android:id="@+id/widgetDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no_data"
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp" />
-            <!--<TextView-->
+                <!--<com.katsuna.widgets.utils.AutoResizeTextView-->
                     <!--android:id="@+id/widgetDescription"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:text="@string/no_data"-->
                     <!--android:textColor="@android:color/black"-->
                     <!--android:textSize="20dp" />-->
+            <TextView
+                    android:id="@+id/widgetDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
 
-                <!--<TextView-->
+                <TextView
 
-                    <!--android:id="@+id/widgetWindcomma"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/comma"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:textSize="20dp" />-->
+                    android:id="@+id/widgetWindcomma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comma"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/widgetWind"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_margin="2dp"-->
-                    <!--android:text="@string/default_wind"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:textSize="20dp" />-->
+                <TextView
+                    android:id="@+id/widgetWind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:text="@string/default_wind"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
 
             </LinearLayout>
         </LinearLayout>
