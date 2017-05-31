@@ -3,8 +3,6 @@
     <!-- Name of the app -->
     <string name="app_name">WidgetCollection</string>
 
-    <!-- Api key for open weather -->
-    <string name="open_weather_maps_app_id">80df67f94113c280c6fc58f2132f0660</string>
 
     <!-- monday shortname-->
     <string name="monday">Mo</string>
