@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <!-- Necessary keys for open weather  -->
+
+        <string name="open_weather_maps_app_id" translatable="false">80df67f94113c280c6fc58f2132f0660</string>
+
+</resources>
