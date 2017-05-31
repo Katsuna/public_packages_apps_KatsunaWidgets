@@ -107,7 +107,7 @@ public class JSONWeatherParser {
                 // No time
                 lastUpdate = "";
             } else {
-                lastUpdate = context.getString(R.string.last_update_widget, WeatherMonitorService.formatTimeWithDayIfNotToday(context, lastUpdateTimeInMillis));
+                lastUpdate = R.string.last_update + WeatherMonitorService.formatTimeWithDayIfNotToday(context, lastUpdateTimeInMillis);
             }
 
 

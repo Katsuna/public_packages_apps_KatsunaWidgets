@@ -31,10 +31,7 @@
     <string name="sunset">Sunset</string>
 
     <!-- Last updated weather text-->
-    <string name="last_update">Last update:\n%s</string>
-
-    <!--2nd Last updated weather text format-->
-    <string name="last_update_widget">\nLast update: %s</string>
+    <string name="last_update">Last update:</string>
 
     <!-- OK button text-->
     <string name="dialog_ok">OK</string>
@@ -107,7 +104,7 @@
     <string name="no_data">no data</string>
 
     <!-- Example strings-->
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
 
     <!-- Time and Date-->
     <string name="time_date">Time and Date</string>
@@ -116,7 +113,7 @@
     <string name="battery_title">Battery</string>
 
     <!-- Example city if no location is available -->
-    <string name="default_city">Athens</string>
+    <string name="default_city" translatable="false">Athens</string>
 
     <string name="default_hour" translatable="false" />
 
@@ -131,7 +128,7 @@
     <string name="weather_title">Weather</string>
 
     <!-- wind example text -->
-    <string name="default_wind">Wind: 0 m/s</string>
+    <string name="default_wind" translatable="false">Wind: 0 m/s</string>
 
 
     <string name="comma" translatable="false">,</string>
@@ -139,7 +136,7 @@
     <string name="default_s_temp" translatable="false">0°</string>
 
     <!-- monday shortname example-->
-    <string name="s_monday">Mo</string>
+    <string name="s_monday" translatable="false">Mo</string>
 
     <!-- Day button text-->
     <string name="day">Day</string>
