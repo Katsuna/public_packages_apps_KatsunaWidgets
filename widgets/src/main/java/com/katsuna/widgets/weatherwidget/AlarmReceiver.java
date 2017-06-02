@@ -30,9 +30,12 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import com.katsuna.widgets.R;
@@ -52,6 +55,12 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
     String longitude = "";
     String latitude = "";
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
+    private int apiCounter=0;
+    private int currentCounter=0;
+    private int shortCounter=0;
+    private int longCounter=0;
+
 
     LocationManager locationManager;
 
@@ -331,6 +340,13 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
                     url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&appid=" + apiKey);
                 }
+                currentCounter++;
+                apiCounter++;
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                Log.d("MainActivity", "Current Timestamp: " + format);
+
+                writeToFile("current Weather calls:"+currentCounter+" - total:"+apiCounter +"-Time:"+format,context );
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -387,6 +403,14 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
+                shortCounter++;
+                apiCounter++;
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                Log.d("MainActivity", "Current Timestamp: " + format);
+
+                writeToFile("Short Weather calls:"+currentCounter+" - total:"+apiCounter +"-Time:"+format,context );
+
                 if (urlConnection.getResponseCode() == 200) {
                     String line = null;
                     while ((line = r.readLine()) != null) {
@@ -437,7 +461,13 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 } else
                     url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
 
+                longCounter++;
+                apiCounter++;
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                Log.d("MainActivity", "Current Timestamp: " + format);
 
+                writeToFile("Long Weather calls:"+currentCounter+" - total:"+apiCounter +"-Time:"+format,context );
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
@@ -603,4 +633,18 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     recurringRefresh);
         }
     }
+
+    private void writeToFile(String data,Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
 }
+
+
