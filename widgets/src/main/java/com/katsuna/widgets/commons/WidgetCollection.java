@@ -296,7 +296,7 @@ public class WidgetCollection extends AppWidgetProvider {
     private void setupTheme(Context context) {
         UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
-        System.out.println("im out"+colorProfile);
+        System.out.println("im in finding colorProfile"+colorProfile);
     }
 
 

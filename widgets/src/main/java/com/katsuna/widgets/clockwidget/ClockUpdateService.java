@@ -177,6 +177,8 @@ public class ClockUpdateService extends IntentService {
                 System.out.println("Calendar Opened!!!!!!!!");
 
                 drawWidget();
+            }else{
+                System.out.println("IM in the else of clock");
             }
 
         }

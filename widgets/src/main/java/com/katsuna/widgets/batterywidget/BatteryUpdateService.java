@@ -250,7 +250,7 @@ public class BatteryUpdateService extends IntentService {
     private void setupTheme(Context context) {
         UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
-        System.out.println("im out"+colorProfile);
+        System.out.println("im out B"+colorProfile);
     }
     public float getBatteryLevel() {
         Intent batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
