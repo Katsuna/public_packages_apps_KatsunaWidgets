@@ -17,6 +17,7 @@ import android.widget.RemoteViews;
 
 import com.katsuna.commons.entities.ColorProfile;
 import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfile;
 import com.katsuna.commons.entities.UserProfileContainer;
 import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.commons.utils.ProfileReader;
@@ -31,6 +32,8 @@ import com.katsuna.widgets.weatherDb.WeatherContentProvider;
 import com.katsuna.widgets.weatherDb.WeatherDbHandler;
 import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
+
+
 
 public class WidgetCollection extends AppWidgetProvider {
 
@@ -58,6 +61,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
     UserProfileContainer mUserProfileContainer;
     ColorProfile colorProfile;
+    private int mTheme;
 
     public static int getNumberOfWidgets(final Context context) {
         ComponentName componentName = new ComponentName(context, ClockWidget.class);
@@ -294,11 +298,22 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
     private void setupTheme(Context context) {
-        UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
-        colorProfile = userProfileContainer.getColorProfile();
+
+
+        UserProfile userProfile = ProfileReader.getUserProfileFromKatsunaServices(context);
+        colorProfile = userProfile.colorProfile;
         System.out.println("im in finding colorProfile"+colorProfile);
+        mTheme = getTheme(colorProfile);
+       // setTheme(mTheme);
     }
 
-
+    private int getTheme(ColorProfile profile) {
+        int theme = R.style.CommonAppTheme;
+        if (profile == ColorProfile.CONTRAST ||
+                profile == ColorProfile.COLOR_IMPAIRMENT_AND_CONTRAST) {
+            theme = R.style.CommonAppThemeContrast;
+        }
+        return theme;
+    }
 
 }
