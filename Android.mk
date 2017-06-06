@@ -19,7 +19,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := KatsunaCommon
 # Include KatsunaCommon resources
 LOCAL_RESOURCE_DIR += frameworks/KatsunaCommon/commons/src/main/res
 
-LOCAL_STATIC_JAVA_LIBRARIES := android-support-v4
+LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-appcompat
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-cardview
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-design
