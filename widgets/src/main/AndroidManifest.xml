@@ -129,6 +129,8 @@
             android:name="com.katsuna.widgets.batterywidget.BatteryUpdateService"
             android:exported="false"/>
 
+        
+
     </application>
 
 </manifest>

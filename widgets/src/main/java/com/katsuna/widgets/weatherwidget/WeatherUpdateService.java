@@ -377,10 +377,11 @@ public class WeatherUpdateService extends IntentService {
 
 
             DateFormat format = new SimpleDateFormat("HH:mm");
+            DateFormat formatDay = new SimpleDateFormat("HH");
             for(int i = 0; i < 7; i++){
 
                 remoteViews.setTextViewText(timeIDS[i],format.format(forecast.get(i).getDate()));
-                remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+                remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Integer.parseInt(formatDay.format(forecast.get(i).getDate())), this));
                 remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());
             }
         }
@@ -409,15 +410,22 @@ public class WeatherUpdateService extends IntentService {
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 
+
+
+
     private int getWeatherIconId(String actualId, int hourOfDay, Context context) {
 
         int icon = 0;
         if (actualId.equals(context.getString(R.string.weather_sunny))) {
+
             if (hourOfDay >= 7 && hourOfDay < 20) {
                 icon = R.drawable.ic_weathericonssun;
             } else {
                 icon = R.drawable.ic_weathericonsnight_01;
             }
+
+
+
         } else if (actualId.equals(context.getString(R.string.weather_thunder))) {
             icon = R.drawable.ic_weathericonsthunderstorm;
 
@@ -446,6 +454,8 @@ public class WeatherUpdateService extends IntentService {
 
         return icon;
     }
+
+
 
     public String getDay(Date date){
         Calendar c = Calendar.getInstance();
