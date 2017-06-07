@@ -41,6 +41,7 @@ LOCAL_AAPT_FLAGS += --extra-packages com.roughike.bottombar
 LOCAL_AAPT_FLAGS += --extra-packages com.db.williamchart
 
 LOCAL_PACKAGE_NAME := KatsunaWidgets
+LOCAL_CERTIFICATE := platform
 
 #LOCAL_PROGUARD_FLAG_FILES := app/proguard-rules.pro
 LOCAL_PROGUARD_ENABLED := disabled
