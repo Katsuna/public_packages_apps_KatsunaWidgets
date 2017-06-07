@@ -19,7 +19,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := KatsunaCommon
 # Include KatsunaCommon resources
 LOCAL_RESOURCE_DIR += frameworks/KatsunaCommon/commons/src/main/res
 
-LOCAL_STATIC_JAVA_LIBRARIES := android-support-v4
+LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-appcompat
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-cardview
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-design
@@ -41,6 +41,7 @@ LOCAL_AAPT_FLAGS += --extra-packages com.roughike.bottombar
 LOCAL_AAPT_FLAGS += --extra-packages com.db.williamchart
 
 LOCAL_PACKAGE_NAME := KatsunaWidgets
+LOCAL_CERTIFICATE := platform
 
 #LOCAL_PROGUARD_FLAG_FILES := app/proguard-rules.pro
 LOCAL_PROGUARD_ENABLED := disabled

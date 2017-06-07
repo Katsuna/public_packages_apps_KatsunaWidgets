@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="WEATHER"
+            android:text="@string/weather_title"
             android:textColor="@color/bb_inActiveBottomBarItemColor"
             android:textSize="24sp" />
     </LinearLayout>
@@ -51,7 +51,7 @@
                 android:id="@+id/widgetTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 °C"
+                android:text="@string/default_temp"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="18sp"
                 />
