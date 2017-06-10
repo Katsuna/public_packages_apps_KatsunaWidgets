@@ -159,10 +159,12 @@ public class ClockUpdateService extends IntentService {
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
                 remoteViews.setInt(R.id.clock_close_btn, "setBackgroundColor", color2);
+
+                //Battery
                 // update the widgets
-                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
-                this.startService(updateBatteryIntent);
+//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
+//                this.startService(updateBatteryIntent);
 //!CHECK this
                 //this.startService(new Intent(this, WeatherMonitorService.class));
                 Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);

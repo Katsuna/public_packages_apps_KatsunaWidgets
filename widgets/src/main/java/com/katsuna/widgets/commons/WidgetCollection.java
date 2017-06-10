@@ -109,12 +109,12 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
                 // BATTERY WIDGET UPDATE
-                context.startService(new Intent(context, BatteryMonitorService.class));
-                // update the widgets
-                Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
-                updateBatteryIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
-                context.startService(updateBatteryIntent);
+//                context.startService(new Intent(context, BatteryMonitorService.class));
+//                // update the widgets
+//                Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
+//                updateBatteryIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
+//                context.startService(updateBatteryIntent);
 
                 // WEATHER WIDGET UPDATE
 //        Intent intent = new Intent(context, AlarmReceiver.class);
@@ -177,27 +177,27 @@ public class WidgetCollection extends AppWidgetProvider {
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CLOCK_CHOICE);
             context.startService(updateClockIntent);
         }
-        else if(BATTERY_CLICKED.equals(intent.getAction())){
-            extended = true;
-
-            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHOICE);
-            context.startService(updateBatteryIntent);
-        }
-        else if(ENERGY_MODE_CLICKED.equals(intent.getAction())){
-            extended = true;
-
-            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_CHOICE);
-            context.startService(updateBatteryIntent);
-        }
-        else if(ENERGY_MODE_OFF_CLICKED.equals(intent.getAction())){
-            extended = true;
-
-            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_OFF_CHOICE);
-            context.startService(updateBatteryIntent);
-        }
+//        else if(BATTERY_CLICKED.equals(intent.getAction())){
+//            extended = true;
+//
+//            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+//            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHOICE);
+//            context.startService(updateBatteryIntent);
+//        }
+//        else if(ENERGY_MODE_CLICKED.equals(intent.getAction())){
+//            extended = true;
+//
+//            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+//            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_CHOICE);
+//            context.startService(updateBatteryIntent);
+//        }
+//        else if(ENERGY_MODE_OFF_CLICKED.equals(intent.getAction())){
+//            extended = true;
+//
+//            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
+//            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_OFF_CHOICE);
+//            context.startService(updateBatteryIntent);
+//        }
         else if (WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
@@ -300,8 +300,13 @@ public class WidgetCollection extends AppWidgetProvider {
     private void setupTheme(Context context) {
 
 
-        UserProfile userProfile = ProfileReader.getUserProfileFromKatsunaServices(context);
-        colorProfile = userProfile.colorProfile;
+       // UserProfile userProfile =   ProfileReader.getUserProfileFromKatsunaServices(context);
+        mUserProfileContainer = ProfileReader.getKatsunaUserProfile(context);
+     //   System.out.println("the user profile is:"+context.getPackageName().toString());
+//        if(userProfile == null) {
+//            userProfile = ProfileReader.getUserProfileFromAppSettings(context);
+//        }
+        colorProfile = mUserProfileContainer.getColorProfile();
         System.out.println("im in finding colorProfile"+colorProfile);
         mTheme = getTheme(colorProfile);
        // setTheme(mTheme);

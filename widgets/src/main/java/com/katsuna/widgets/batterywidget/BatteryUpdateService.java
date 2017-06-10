@@ -68,43 +68,43 @@ public class BatteryUpdateService extends IntentService {
             final String action = intent.getAction();
             System.out.println("Im here also somehow"+action);
             if ((ACTION_BATTERY_CHANGED.equals(action ) && WidgetCollection.extended == false) ) {
-                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
-
-                final int level = newBatteryInfo.getLevel();
-                final boolean isCharging = newBatteryInfo.isCharging();
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-
-                SharedPreferences sharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(this);
-                BatteryInfo oldBatteryInfo = new BatteryInfo(sharedPreferences);
-                if (oldBatteryInfo.getLevel() != newBatteryInfo.getLevel()) {
-                    Database database = new Database(this);
-                    database.openWrite().insert(new DatabaseEntry(newBatteryInfo.getLevel()));
-                    database.close();
-                }
-
-                newBatteryInfo.saveToSharedPreferences(sharedPreferences);
-            } else if (ACTION_BATTERY_LOW.equals(action)) {
-                // TODO
-            } else if (ACTION_BATTERY_OKAY.equals(action)) {
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(1500);
-            } else if (ACTION_WIDGET_UPDATE.equals(action)) {
-                SharedPreferences sharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(this);
-                BatteryInfo batteryInfo = new BatteryInfo(sharedPreferences);
-                final int level = batteryInfo.getLevel();
-                final boolean isCharging = batteryInfo.isCharging();
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
-                final int[] widgetIds = intent.getIntArrayExtra(EXTRA_WIDGET_IDS);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(widgetIds, remoteViews);
-            }
-            else  if (ACTION_BATTERY_BACK.equals(action)) {
-                System.out.println("Im called after back clicked");
+//                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
+//
+//                final int level = newBatteryInfo.getLevel();
+//                final boolean isCharging = newBatteryInfo.isCharging();
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//
+//                SharedPreferences sharedPreferences = PreferenceManager
+//                        .getDefaultSharedPreferences(this);
+//                BatteryInfo oldBatteryInfo = new BatteryInfo(sharedPreferences);
+//                if (oldBatteryInfo.getLevel() != newBatteryInfo.getLevel()) {
+//                    Database database = new Database(this);
+//                    database.openWrite().insert(new DatabaseEntry(newBatteryInfo.getLevel()));
+//                    database.close();
+//                }
+//
+//                newBatteryInfo.saveToSharedPreferences(sharedPreferences);
+//            } else if (ACTION_BATTERY_LOW.equals(action)) {
+//                // TODO
+//            } else if (ACTION_BATTERY_OKAY.equals(action)) {
+//                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                vibrator.vibrate(1500);
+//            } else if (ACTION_WIDGET_UPDATE.equals(action)) {
+//                SharedPreferences sharedPreferences = PreferenceManager
+//                        .getDefaultSharedPreferences(this);
+//                BatteryInfo batteryInfo = new BatteryInfo(sharedPreferences);
+//                final int level = batteryInfo.getLevel();
+//                final boolean isCharging = batteryInfo.isCharging();
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
+//                final int[] widgetIds = intent.getIntArrayExtra(EXTRA_WIDGET_IDS);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(widgetIds, remoteViews);
+//            }
+//            else  if (ACTION_BATTERY_BACK.equals(action)) {
+//                System.out.println("Im called after back clicked");
 //                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
 //
 //                final int level = newBatteryInfo.getLevel();
@@ -134,91 +134,93 @@ public class BatteryUpdateService extends IntentService {
         setupTheme(this);
 
         if (intent != null) {
-            System.out.println("IM in here");
+//            System.out.println("IM in here");
+//
+//            final String action = intent.getAction();
+//            System.out.println("Started  battery service with action:"+action);
+//
+//            final int level = Math.round(getBatteryLevel());
+//            final boolean isCharging = isConnected(this);
+//
+//            if (ACTION_BATTERY_BACK.equals(action)) {
+//
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
+//            else if (ACTION_WEATHER_CHOICE.equals(action)){
+//
+//
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
+//            else if (ACTION_CLOCK_CHOICE.equals(action)){
+//
+//                RemoteViews remoteViews = createRemoteViews(level, isCharging,2);
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
+//            else if (ACTION_BATTERY_CHOICE.equals(action)){
+//                System.out.println("IM in here");
+//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+//                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
+//                this.startService(updateIntent);
+//
+//                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
+//                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
+//                this.startService(updateWeatherIntent);
+//
+//
+//                RemoteViews remoteViews = null; createRemoteViews(level, isCharging,3);
+//                if(battery_saveMode) {
+//                    remoteViews = createRemoteViews(level, isCharging, 4);
+//                }
+//                else{
+//                    remoteViews = createRemoteViews(level, isCharging,5);
+//
+//                }
+//                int color1 = ColorCalc.getColor(getApplicationContext(),
+//                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+//                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+//                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+//                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+//
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
+//            else if(ACTION_ENERGY_MODE_CHOICE.equals(action) || ACTION_ENERGY_MODE_OFF_CHOICE.equals(action)){
+//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+//                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
+//                this.startService(updateIntent);
+//
+//                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
+//                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
+//                this.startService(updateWeatherIntent);
+//
+//                RemoteViews remoteViews = null;
+//                if(!battery_saveMode) {
+//                    remoteViews = createRemoteViews(level, isCharging, 4);
+//                    BatterySaverUtil.enable();
+//                    battery_saveMode = true;
+//                }
+//                else{
+//                    remoteViews = createRemoteViews(level, isCharging,5);
+//                    BatterySaverUtil.disable();
+//                    battery_saveMode = false;
+//
+//                }
+//
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
 
-            final String action = intent.getAction();
-            System.out.println("Started  battery service with action:"+action);
 
-            final int level = Math.round(getBatteryLevel());
-            final boolean isCharging = isConnected(this);
-
-            if (ACTION_BATTERY_BACK.equals(action)) {
-
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,0);
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if (ACTION_WEATHER_CHOICE.equals(action)){
-
-
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,1);
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if (ACTION_CLOCK_CHOICE.equals(action)){
-
-                RemoteViews remoteViews = createRemoteViews(level, isCharging,2);
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if (ACTION_BATTERY_CHOICE.equals(action)){
-                System.out.println("IM in here");
-                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
-                this.startService(updateIntent);
-
-                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
-                this.startService(updateWeatherIntent);
-
-
-                RemoteViews remoteViews = null; createRemoteViews(level, isCharging,3);
-                if(battery_saveMode) {
-                    remoteViews = createRemoteViews(level, isCharging, 4);
-                }
-                else{
-                    remoteViews = createRemoteViews(level, isCharging,5);
-
-                }
-                int color1 = ColorCalc.getColor(getApplicationContext(),
-                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
-                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
-
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if(ACTION_ENERGY_MODE_CHOICE.equals(action) || ACTION_ENERGY_MODE_OFF_CHOICE.equals(action)){
-                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
-                this.startService(updateIntent);
-
-                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_BATTERY_CHOICE);
-                this.startService(updateWeatherIntent);
-
-                RemoteViews remoteViews = null;
-                if(!battery_saveMode) {
-                    remoteViews = createRemoteViews(level, isCharging, 4);
-                    BatterySaverUtil.enable();
-                    battery_saveMode = true;
-                }
-                else{
-                    remoteViews = createRemoteViews(level, isCharging,5);
-                    BatterySaverUtil.disable();
-                    battery_saveMode = false;
-
-                }
-
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
 //            else if(){
 //                Intent updateIntent = new Intent(this, ClockUpdateService.class);
 //                updateIntent.setAction(ClockUpdateService.ACTION_BATTERY_CHOICE);
@@ -265,101 +267,95 @@ public class BatteryUpdateService extends IntentService {
         return ((float)level / (float)scale) * 100.0f;
     }
 
-    /**
-     * Creates the RemoteViews object to be shown for the calendar_widget view.
-     *
-     * @param level      battery level
-     * @param isCharging whether the battery has been charging
-     * @return the RemoteViews
-     */
-    private RemoteViews createRemoteViews(final int level, final boolean isCharging, int backFlag) {
-        RemoteViews remoteViews = null;
 
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
-            int color1 = ColorCalc.getColor(getApplicationContext(),
-                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
-            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
-            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
-
-
-        if (backFlag ==4){
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
-            remoteViews.setTextViewTextSize(R.id.energy_mode_txt, TypedValue.COMPLEX_UNIT_SP,0);
-
-            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_OFF_CLICKED));
-
-        }
-        else if (backFlag ==5){
-            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
-            remoteViews.setTextViewTextSize(R.id.energy_mode_txt, TypedValue.COMPLEX_UNIT_SP,15);
-
-            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
-
-        }
-
-
-        if (isCharging)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.battery_charge);
-
-        }
-        else if (level > 0 && level <=5)
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_5);
-        else if (level > 5 && level <=10)
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_10);
-
-        else if (level < 10 && level <=20)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_20);
-
-        }
-        else if (level < 20 && level <=30)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_30);
-
-        }
-        else if (level <=30 && level <=40)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_40);
-
-        }
-        else if (level <40 && level <=50)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_50);
-        }
-        else if (level <=50 && level <=60)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_60);
-        }
-        else if (level < 60 && level <=70)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_70);
-        }
-        else if (level <=70 && level <=80)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_80);
-
-        }
-        else if (level > 80 && level <=90)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_90);
-
-        }
-        else if (level > 90 && level <=100)
-        {
-            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.battery_black);
-
-        }
-
-
-        remoteViews.setTextViewText(R.id.batterytext, String.valueOf(level) + "%");
-//        Intent activityIntent = new Intent(this, WidgetActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
-//        remoteViews.setOnClickPendingIntent(R.id.widget_view, pendingIntent);
-        return remoteViews;
-    }
+//    private RemoteViews createRemoteViews(final int level, final boolean isCharging, int backFlag) {
+//        RemoteViews remoteViews = null;
+//
+//            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+//            int color1 = ColorCalc.getColor(getApplicationContext(),
+//                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
+//            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+//            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+//            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+//            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
+//
+//
+//        if (backFlag ==4){
+//            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+//            remoteViews.setTextViewTextSize(R.id.energy_mode_txt, TypedValue.COMPLEX_UNIT_SP,0);
+//
+//            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_OFF_CLICKED));
+//
+//        }
+//        else if (backFlag ==5){
+//            remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+//            remoteViews.setTextViewTextSize(R.id.energy_mode_txt, TypedValue.COMPLEX_UNIT_SP,15);
+//
+//            remoteViews.setOnClickPendingIntent(R.id.energy_mode_btn, getPendingSelfIntent(this, WidgetCollection.ENERGY_MODE_CLICKED));
+//
+//        }
+//
+//
+//        if (isCharging)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.battery_charge);
+//
+//        }
+//        else if (level > 0 && level <=5)
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_5);
+//        else if (level > 5 && level <=10)
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_10);
+//
+//        else if (level < 10 && level <=20)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_red_20);
+//
+//        }
+//        else if (level < 20 && level <=30)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_30);
+//
+//        }
+//        else if (level <=30 && level <=40)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_40);
+//
+//        }
+//        else if (level <40 && level <=50)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_50);
+//        }
+//        else if (level <=50 && level <=60)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_60);
+//        }
+//        else if (level < 60 && level <=70)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_70);
+//        }
+//        else if (level <=70 && level <=80)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_80);
+//
+//        }
+//        else if (level > 80 && level <=90)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.ic_battery_black_90);
+//
+//        }
+//        else if (level > 90 && level <=100)
+//        {
+//            remoteViews.setImageViewResource(R.id.energy_mode_btn, R.drawable.battery_black);
+//
+//        }
+//
+//
+//        remoteViews.setTextViewText(R.id.batterytext, String.valueOf(level) + "%");
+////        Intent activityIntent = new Intent(this, WidgetActivity.class);
+////        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
+////        remoteViews.setOnClickPendingIntent(R.id.widget_view, pendingIntent);
+//        return remoteViews;
+//    }
 
     protected PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, WidgetCollection.class);
