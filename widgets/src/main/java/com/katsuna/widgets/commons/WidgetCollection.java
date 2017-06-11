@@ -54,6 +54,8 @@ public class WidgetCollection extends AppWidgetProvider {
 
     private static final String DEBUG_TAG = "onClicked";
     public static boolean extended = false;
+    public static boolean calendar = false;
+
     public static WeatherDbHandler wDBHandler;
     public static WeatherContentProvider weatherContentProvider;
     public static String ACTION_MENU_CLICKED = "MenuClicked";
@@ -96,7 +98,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
 
-            if (extended == false) {
+            if (extended == false &&calendar == false) {
                 super.onUpdate(context, appWidgetManager, appWidgetIds);
                 // CLOCK WIDGET UPDATE
                 // ensure service is running
@@ -213,6 +215,7 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         else if (BACK_CLICKED.equals(intent.getAction())){
             extended = false;
+            calendar = false;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
             updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_BACK);
             context.startService(updateWeatherIntent);
@@ -230,7 +233,7 @@ public class WidgetCollection extends AppWidgetProvider {
             context.startService(updateWeatherIntent);
         }
         else if(VIEW_CALENDAR_CLICKED.equals(intent.getAction())){
-            extended = true;
+            calendar = true;
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
             context.startService(updateClockIntent);
