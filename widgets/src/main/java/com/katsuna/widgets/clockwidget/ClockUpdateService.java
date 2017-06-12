@@ -86,7 +86,7 @@ public class ClockUpdateService extends IntentService {
 
 
 
-            if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false) {
+            if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false && WidgetCollection.calendar == false) {
                 System.out.println("CLOCK CALLED in");
 
 
@@ -111,6 +111,7 @@ public class ClockUpdateService extends IntentService {
 
 
             }
+
             else if( ACTION_WEATHER_CHOICE.equals(action)){
                 System.out.println("CLOCK Weather Opened!!!!!!!!");
 
@@ -127,22 +128,22 @@ public class ClockUpdateService extends IntentService {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
-            else if( ACTION_BATTERY_CHOICE.equals(action)){
-                System.out.println("CLOCK battery Opened!!!!!!!!");
-
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
-                String []clock = setTime();
-                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.TIME_CLICKED));
-
-                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-                remoteViews.setTextViewText(R.id.date, clock[1]);
-
-
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action)){
+//            else if( ACTION_BATTERY_CHOICE.equals(action)){
+//                System.out.println("CLOCK battery Opened!!!!!!!!");
+//
+//                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+//                String []clock = setTime();
+//                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.TIME_CLICKED));
+//
+//                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+//                remoteViews.setTextViewText(R.id.date, clock[1]);
+//
+//
+//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                appWidgetManager.updateAppWidget(componentName, remoteViews);
+//            }
+            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action) ||(((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.calendar == true))){
                 System.out.println("CLOCK clock Opened!!!!!!!!");
 
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
@@ -159,10 +160,12 @@ public class ClockUpdateService extends IntentService {
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
                 remoteViews.setInt(R.id.clock_close_btn, "setBackgroundColor", color2);
+
+                //Battery
                 // update the widgets
-                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
-                this.startService(updateBatteryIntent);
+//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
+//                this.startService(updateBatteryIntent);
 //!CHECK this
                 //this.startService(new Intent(this, WeatherMonitorService.class));
                 Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);

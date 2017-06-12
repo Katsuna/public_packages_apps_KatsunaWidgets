@@ -100,9 +100,10 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
-                this.startService(updateBatteryIntent);
+                //Battery
+//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
+//                this.startService(updateBatteryIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -147,9 +148,11 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
-                this.startService(updateBatteryIntent);
+                //Battery
+
+//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
+//                this.startService(updateBatteryIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
                 int color1 = ColorCalc.getColor(getApplicationContext(),

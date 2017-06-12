@@ -4,13 +4,13 @@
     <item>
         <shape>
             <!--<padding android:bottom="10dp" android:top="10dp" android:left="10dp" android:right="10dp"></padding>-->
-            <solid android:color="@android:color/transparent" />
+            <solid android:color="@color/common_grey50" />
         </shape>
     </item>
 
     <item>
         <shape >
-            <solid android:color="@color/whiteTrans" />
+            <solid android:color="@color/common_grey50" />
             <corners android:radius="4dp" />
         </shape>
     </item>

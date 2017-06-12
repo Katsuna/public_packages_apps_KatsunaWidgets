@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.katsuna.commons.entities.ColorProfile;
 import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfile;
 import com.katsuna.commons.entities.UserProfileContainer;
 import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.commons.utils.ProfileReader;
@@ -37,7 +38,22 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkLocationPermission();
+        //setupTheme();
         finish();
+    }
+
+    private void setupTheme() {
+
+
+        UserProfile userProfile = new UserProfile();
+        userProfile =   ProfileReader.getUserProfileFromKatsunaServices(this);
+        //   System.out.println("the user profile is:"+context.getPackageName().toString());
+//        if(userProfile == null) {
+//            userProfile = ProfileReader.getUserProfileFromAppSettings(context);
+//        }
+        colorProfile = userProfile.colorProfile;
+        System.out.println("im in finding colorProfile"+colorProfile);
+        // setTheme(mTheme);
     }
 
     private void showGPSDisabledAlertToUser(){
