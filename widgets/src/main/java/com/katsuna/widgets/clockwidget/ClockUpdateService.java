@@ -84,13 +84,8 @@ public class ClockUpdateService extends IntentService {
             final String action = intent.getAction();
             System.out.println("CLOCK CALLED:"+action);
 
-
-
             if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false && WidgetCollection.calendar == false) {
-                System.out.println("CLOCK CALLED in");
-
-
-
+                System.out.println("CLOCK CALLED in 1st if");
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
                 String []clock = setTime();
                 remoteViews.setOnClickPendingIntent(R.id.calendar_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
@@ -111,75 +106,10 @@ public class ClockUpdateService extends IntentService {
 
 
             }
-
-            else if( ACTION_WEATHER_CHOICE.equals(action)){
-                System.out.println("CLOCK Weather Opened!!!!!!!!");
-
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_weather);
-                String []clock = setTime();
-                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.TIME_CLICKED));
-
-                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-                remoteViews.setTextViewText(R.id.date, clock[1]);
-
-
-
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-//            else if( ACTION_BATTERY_CHOICE.equals(action)){
-//                System.out.println("CLOCK battery Opened!!!!!!!!");
-//
-//                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
-//                String []clock = setTime();
-//                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.TIME_CLICKED));
-//
-//                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-//                remoteViews.setTextViewText(R.id.date, clock[1]);
-//
-//
-//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                appWidgetManager.updateAppWidget(componentName, remoteViews);
-//            }
-            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action) ||(((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.calendar == true))){
-                System.out.println("CLOCK clock Opened!!!!!!!!");
-
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_clock);
-                String []clock = setTime();
-                remoteViews.setOnClickPendingIntent(R.id.calendar_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
-                remoteViews.setOnClickPendingIntent(R.id.clock_close_btn, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
-                System.out.println("in clock choice with time:"+clock[0]);
-                remoteViews.setTextViewText(R.id.appwidget_text_clock, clock[0]);
-                remoteViews.setTextViewText(R.id.date_clock, clock[1]);
-//                adjustColorProfile(this);
-                int color1 = ColorCalc.getColor(getApplicationContext(),
-                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
-                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-                        colorProfile);
-                remoteViews.setInt(R.id.clock_close_btn, "setBackgroundColor", color2);
-
-                //Battery
-                // update the widgets
-//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_CLOCK_CHOICE);
-//                this.startService(updateBatteryIntent);
-//!CHECK this
-                //this.startService(new Intent(this, WeatherMonitorService.class));
-                Intent updateWeatherIntent = new Intent(this, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_CLOCK_CHOICE);
-                this.startService(updateWeatherIntent);
-
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if(ACTION_WIDGET_CALENDAR_VIEW.equals(action)){
-                System.out.println("Calendar Opened!!!!!!!!");
-
+            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action) ||(((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action) || ACTION_WIDGET_CALENDAR_VIEW.equals(action) )&& WidgetCollection.calendar == true))){
+                System.out.println("calendar clock Opened!!!!!!!!");
                 drawWidget();
+
             }else{
                 System.out.println("IM in the else of clock");
             }

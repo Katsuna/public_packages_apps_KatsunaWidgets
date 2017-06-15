@@ -148,8 +148,7 @@
                     android:id="@+id/widgetIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:tint="@color/white"
-                    android:src="@drawable/k48_clouds"
+                    android:src="@drawable/ic_weathericonsthunderstorm"
                     android:layout_weight="0.09" />
                 <!--android:src="@drawable/ic_refresh_white_24dp"-->
 

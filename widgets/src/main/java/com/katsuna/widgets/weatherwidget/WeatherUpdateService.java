@@ -72,13 +72,13 @@ public class WeatherUpdateService extends IntentService {
 
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
 
-                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-                updateIntent.setAction(ClockUpdateService.ACTION_WEATHER_CHOICE);
-                this.startService(updateIntent);
-
-                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WEATHER_CHOICE);
-                this.startService(updateBatteryIntent);
+//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+//                updateIntent.setAction(ClockUpdateService.ACTION_WEATHER_CHOICE);
+//                this.startService(updateIntent);
+//
+//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
+//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WEATHER_CHOICE);
+//                this.startService(updateBatteryIntent);
 
 
                 RemoteViews remoteViews =createRemoteViews(5);
@@ -100,10 +100,6 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-                //Battery
-//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
-//                this.startService(updateBatteryIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -133,9 +129,7 @@ public class WeatherUpdateService extends IntentService {
             else if (ACTION_WIDGET_EXTENDED_DAY.equals(action)){
                 RemoteViews remoteViews =createRemoteViews(4);
 
-                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-                        colorProfile);
-            //    remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -148,11 +142,6 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-                //Battery
-
-//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_BACK);
-//                this.startService(updateBatteryIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
                 int color1 = ColorCalc.getColor(getApplicationContext(),
@@ -165,20 +154,7 @@ public class WeatherUpdateService extends IntentService {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
-            else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action)){
 
-                RemoteViews remoteViews =createRemoteViews(6);
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
-            else if( ACTION_WIDGET_BATTERY_CHOICE.equals(action)){
-
-                RemoteViews remoteViews =createRemoteViews(7);
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
-            }
         }
 
 

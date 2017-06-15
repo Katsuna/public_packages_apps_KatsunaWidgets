@@ -118,10 +118,6 @@ public class WidgetCollection extends AppWidgetProvider {
 //                updateBatteryIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
 //                context.startService(updateBatteryIntent);
 
-                // WEATHER WIDGET UPDATE
-//        Intent intent = new Intent(context, AlarmReceiver.class);
-//        intent.setAction(ACTION_MENU_CLICKED);
-//        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, appWidgetIds[0], intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
                 context.startService(new Intent(context, WeatherMonitorService.class));
@@ -168,38 +164,11 @@ public class WidgetCollection extends AppWidgetProvider {
         if (TIME_CLICKED.equals(intent.getAction())) {
             extended = true;
 
-//            RemoteViews rv = new RemoteViews(context.getPackageName(),
-//                    R.layout.collection_widget);
-//            rv.showNext(R.id.clock_flipper);
-//            AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(
-//                    intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-//                    AppWidgetManager.INVALID_APPWIDGET_ID), rv);
-//            extended = true;
+
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CLOCK_CHOICE);
             context.startService(updateClockIntent);
         }
-//        else if(BATTERY_CLICKED.equals(intent.getAction())){
-//            extended = true;
-//
-//            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-//            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_BATTERY_CHOICE);
-//            context.startService(updateBatteryIntent);
-//        }
-//        else if(ENERGY_MODE_CLICKED.equals(intent.getAction())){
-//            extended = true;
-//
-//            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-//            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_CHOICE);
-//            context.startService(updateBatteryIntent);
-//        }
-//        else if(ENERGY_MODE_OFF_CLICKED.equals(intent.getAction())){
-//            extended = true;
-//
-//            Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-//            updateBatteryIntent.setAction(BatteryUpdateService.ACTION_ENERGY_MODE_OFF_CHOICE);
-//            context.startService(updateBatteryIntent);
-//        }
         else if (WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
