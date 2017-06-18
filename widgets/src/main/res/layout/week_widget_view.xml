@@ -161,7 +161,7 @@
                     android:id="@+id/state_now"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/common_grey100"
+                    android:background="@color/common_grey300"
                     android:gravity="center"
                     android:text="@string/now"
                     android:textAlignment="center"
@@ -182,7 +182,7 @@
                     android:id="@+id/state_week"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableBottom="@drawable/ic_1495041635_minus"
+                    android:drawableBottom="@drawable/ic_1495041635_minus_holo"
                     android:text="@string/week"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -206,10 +206,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/day"
-                    android:background="@color/common_grey100"
+                    android:drawableBottom="@drawable/ic_1495041635_minus"
+                    android:background="@color/common_grey300"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/common_grey600"
                     android:textSize="24sp" />
             </LinearLayout>
 
