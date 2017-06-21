@@ -105,7 +105,7 @@
     <string name="appwidget_text" translatable="false">EXAMPLE</string>
 
     <!-- Time and Date-->
-    <string name="time_date">Time and Date</string>
+    <string name="time_date">TIME AND DATE</string>
 
     <!-- Battery section title -->
     <string name="battery_title">Battery</string>
@@ -123,7 +123,7 @@
     <string name="default_temp" translatable="false">0 °C</string>
 
     <!-- Weather section title-->
-    <string name="weather_title">Weather</string>
+    <string name="weather_title">WEATHER</string>
 
     <!-- wind example text -->
     <string name="default_wind" translatable="false">Wind: 0 m/s</string>

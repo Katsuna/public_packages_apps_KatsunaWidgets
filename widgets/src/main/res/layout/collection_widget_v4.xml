@@ -9,13 +9,15 @@
 
     <LinearLayout
         android:id="@+id/time_root"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="1">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_grey100"
+            >
 
             <LinearLayout
 
@@ -23,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
 
-                android:gravity="left"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -33,7 +35,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/time_date"
                     android:textSize="20dp"
-                    android:scaleType="fitCenter"
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:drawableLeft="@drawable/ic_widgeticons_timedate"
                    />
             </LinearLayout>
@@ -107,7 +110,8 @@
         android:weightSum="1">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/common_grey100">
 
             <LinearLayout
 
@@ -115,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
 
-                android:gravity="left"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -123,7 +127,8 @@
                     android:id="@+id/weatherHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/time_date"
+                    android:text="@string/weather_title"
+                    android:gravity="center"
                     android:textSize="20dp"
                     android:scaleType="fitCenter"
                     android:drawableLeft="@drawable/ic_widgeticons_weather"
