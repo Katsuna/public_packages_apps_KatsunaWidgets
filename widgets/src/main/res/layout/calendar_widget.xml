@@ -24,9 +24,35 @@
         android:id="@+id/time_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="1">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="40dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_x_icon" />
+
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,33 +104,7 @@
 
         </LinearLayout>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <ImageButton
-                    android:id="@+id/back"
-                    android:layout_width="121dp"
-                    android:layout_height="110dp"
-                    android:layout_marginBottom="-5dp"
-                    android:layout_marginRight="-5dp"
-                    android:layout_marginTop="-5dp"
-                    android:padding="40dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_x_icon" />
-
-            </LinearLayout>
-        </RelativeLayout>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

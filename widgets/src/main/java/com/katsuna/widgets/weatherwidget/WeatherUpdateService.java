@@ -400,7 +400,7 @@ public class WeatherUpdateService extends IntentService {
             if (hourOfDay >= 7 && hourOfDay < 20) {
                 icon = R.drawable.ic_weathericonssun;
             } else {
-                icon = R.drawable.ic_weathericonsnight_01;
+                icon = R.drawable.ic_weathericonsnight;
             }
 
 

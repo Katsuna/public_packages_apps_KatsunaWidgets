@@ -63,7 +63,7 @@
                         android:id="@+id/widgetIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:tint="@color/white"
+                        
                         android:src="@drawable/k48_clouds"
                         android:layout_weight="0.09" />
                     <!--android:src="@drawable/ic_refresh_white_24dp"-->
@@ -264,8 +264,6 @@
                    android:id="@+id/icon1"
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
-                   android:padding="5dp"
-                   android:tint="@color/white"
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -297,7 +295,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   android:tint="@color/white"
+                   
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -330,7 +328,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   android:tint="@color/white"
+                   
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -363,7 +361,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   android:tint="@color/white"
+                   
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -396,7 +394,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   android:tint="@color/white"
+                   
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -429,7 +427,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   android:tint="@color/white"
+                   
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -462,7 +460,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   android:tint="@color/white"
+                   
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
