@@ -255,10 +255,9 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
-                    android:tint="@color/white"
                     android:src="@drawable/k48_clouds"
                     />
                 <TextView
@@ -287,7 +286,7 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
                     
@@ -320,10 +319,9 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
-                    android:tint="@color/white"
                     android:src="@drawable/k48_clouds"
                     />
                 <TextView
@@ -353,10 +351,9 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
-                    android:tint="@color/white"
                     android:src="@drawable/k48_clouds"
                     />
                 <TextView
@@ -384,10 +381,9 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
-                    android:tint="@color/white"
                     android:src="@drawable/k48_clouds"
                     />
                 <TextView
@@ -417,10 +413,9 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
-                    android:tint="@color/white"
                     android:src="@drawable/k48_clouds"
                     />
                 <TextView
@@ -450,10 +445,9 @@
                     />
                 <ImageView
                     android:id="@+id/day_icon7"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="5dp"
-                    android:tint="@color/white"
                     android:src="@drawable/k48_clouds"
                     />
                 <TextView
