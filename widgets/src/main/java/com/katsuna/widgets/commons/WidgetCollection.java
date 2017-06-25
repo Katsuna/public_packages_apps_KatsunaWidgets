@@ -83,18 +83,18 @@ public class WidgetCollection extends AppWidgetProvider {
         for (int id : appWidgetIds) {
 
             setupTheme(context);
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.collection_widget_v3);
-
-
-
-            //Coloring button
-            int color1 = ColorCalc.getColor(context,
-                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
-            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
-
-            appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
+//            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.collection_widget_v4);
+//
+//
+//
+//            //Coloring button
+//            int color1 = ColorCalc.getColor(context,
+//                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
+//            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+//            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+//            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+//
+//            appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
 
 
 
@@ -108,16 +108,6 @@ public class WidgetCollection extends AppWidgetProvider {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
                 context.startService(updateIntent);
-
-
-                // BATTERY WIDGET UPDATE
-//                context.startService(new Intent(context, BatteryMonitorService.class));
-//                // update the widgets
-//                Intent updateBatteryIntent = new Intent(context, BatteryUpdateService.class);
-//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WIDGET_UPDATE);
-//                updateBatteryIntent.putExtra(BatteryUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
-//                context.startService(updateBatteryIntent);
-
 
 
                 context.startService(new Intent(context, WeatherMonitorService.class));
@@ -179,7 +169,7 @@ public class WidgetCollection extends AppWidgetProvider {
         else if (VIEW_WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
             Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_NOW);
+            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_EXTENDED_DAY);
             context.startService(updateWeatherIntent);
         }
         else if (BACK_CLICKED.equals(intent.getAction())){

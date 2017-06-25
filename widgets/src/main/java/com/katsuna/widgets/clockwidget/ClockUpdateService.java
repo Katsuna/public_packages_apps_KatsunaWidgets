@@ -86,19 +86,19 @@ public class ClockUpdateService extends IntentService {
 
             if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false && WidgetCollection.calendar == false) {
                 System.out.println("CLOCK CALLED in 1st if");
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v3);
+                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
                 String []clock = setTime();
-                remoteViews.setOnClickPendingIntent(R.id.calendar_btn, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
+                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
 
                 remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
                 remoteViews.setTextViewText(R.id.date, clock[1]);
 
                 //Coloring button
-                int color1 = ColorCalc.getColor(getApplicationContext(),
-                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
-                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+//                int color1 = ColorCalc.getColor(getApplicationContext(),
+//                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
+//                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
+//                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+//                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -267,6 +267,7 @@ public class ClockUpdateService extends IntentService {
         System.out.println("in clock choice with time:"+clock[0]);
         rv.setTextViewText(R.id.appwidget_text, clock[0]);
         rv.setTextViewText(R.id.date, clock[1]);
+        rv.setInt(R.id.back, "setBackgroundColor", color1);
 
        // rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
