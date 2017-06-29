@@ -219,44 +219,7 @@ public class WidgetCollection extends AppWidgetProvider {
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
-
-    private int getWeatherIconId(String actualId, int hourOfDay, Context context) {
-
-        int icon = 0;
-        if (actualId.equals(context.getString(R.string.weather_sunny))) {
-            if (hourOfDay >= 7 && hourOfDay < 20) {
-                icon = R.drawable.k48_sun;
-            } else {
-                icon = R.drawable.k48_sun;
-            }
-        } else if (actualId.equals(context.getString(R.string.weather_thunder))) {
-            icon = R.drawable.k48_heavyrain;
-
-        }
-        else if (actualId.equals(context.getString(R.string.weather_drizzle))) {
-            icon = R.drawable.k48_light_rain;
-
-        }
-        else if(actualId.equals(context.getString(R.string.weather_foggy))){
-            icon = R.drawable.k48_fog;
-
-        }
-        else if(actualId.equals(context.getString(R.string.weather_cloudy))){
-            icon = R.drawable.k48_clouds;
-
-        }
-        else if(actualId.equals(context.getString(R.string.weather_snowy))){
-            icon = R.drawable.k48_heavysnow;
-
-        }
-        else if(actualId.equals(context.getString(R.string.weather_rainy))){
-            icon = R.drawable.k48_heavyrain;
-
-        }
-
-        return icon;
-    }
-
+    
 
 
     private void setupTheme(Context context) {
