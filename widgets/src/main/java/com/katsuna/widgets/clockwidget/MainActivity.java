@@ -104,6 +104,7 @@ public class MainActivity extends Activity {
                         .create()
                         .show();
             } else {
+
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},

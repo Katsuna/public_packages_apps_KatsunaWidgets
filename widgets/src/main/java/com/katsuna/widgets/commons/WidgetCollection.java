@@ -109,12 +109,18 @@ public class WidgetCollection extends AppWidgetProvider {
                 updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
                 context.startService(updateIntent);
 
-
-                context.startService(new Intent(context, WeatherMonitorService.class));
-                Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-                updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
-                context.startService(updateWeatherIntent);
+                if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    context.startService(new Intent(context, WeatherMonitorService.class));
+                    Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+                    updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+                    updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
+                    context.startService(updateWeatherIntent);
+                }
+                else{
+                    RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                    appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
+                }
             }
         }
     }
@@ -126,8 +132,10 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
         context.startService(new Intent(context, ClockMonitorService.class));
-        context.startService(new Intent(context, BatteryMonitorService.class));
-        context.startService(new Intent(context, WeatherMonitorService.class));
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            context.startService(new Intent(context, WeatherMonitorService.class));
+        }
 
 
     }
@@ -140,7 +148,6 @@ public class WidgetCollection extends AppWidgetProvider {
         if (getNumberOfWidgets(context) == 0) {
             // stop monitoring if there are no more widgets on screen
             context.stopService(new Intent(context, ClockMonitorService.class));
-            context.stopService(new Intent(context, BatteryMonitorService.class));
             context.stopService(new Intent(context, WeatherMonitorService.class));
 
         }

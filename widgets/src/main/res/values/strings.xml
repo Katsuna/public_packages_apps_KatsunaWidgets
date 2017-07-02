@@ -177,6 +177,10 @@
 
     <!-- downloading data text-->
     <string name="downloading_data">Downloading your data</string>
+    <!--Text on button for adding location permission -->
+    <string name="permission_button">Add Permission</string>
+    <!-- text in screen when no location permission is granted-->
+    <string name="no_permission_text">No Location Permission is granted</string>
 
 
 </resources>

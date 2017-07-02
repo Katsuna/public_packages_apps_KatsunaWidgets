@@ -15,7 +15,7 @@ public class ClockMonitorService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_TIME_TICK.equals(intent.getAction()) || Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())
                     || Intent.ACTION_TIME_CHANGED.equals(intent.getAction())) {
-                System.out.println("This is what called now");
+                System.out.println("ClockMonitor service called");
                 Intent updateIntent = new Intent(context, ClockUpdateService.class);
                 updateIntent.setAction(ClockUpdateService.ACTION_CLOCK_CHANGED);
                 context.startService(updateIntent);

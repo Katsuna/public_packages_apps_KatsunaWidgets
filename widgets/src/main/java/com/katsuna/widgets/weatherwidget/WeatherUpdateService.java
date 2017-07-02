@@ -95,7 +95,7 @@ public class WeatherUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_UPDATE.equals(action)) {
-
+                System.out.println("Im in wearther update widget else");
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
