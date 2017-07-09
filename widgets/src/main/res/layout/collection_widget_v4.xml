@@ -16,8 +16,9 @@
         android:weightSum="1">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/common_grey100"
+            android:layout_height="48dp"
+
+            android:background="@color/common_grey300"
             >
 
             <LinearLayout
@@ -36,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/time_date"
                     android:textSize="20dp"
+                    android:layout_margin="14dp"
                     android:gravity="center"
                     android:textAlignment="center"
                     android:drawableLeft="@drawable/ic_widgeticons_timedate"
@@ -66,12 +68,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_margin="16dp"
                     android:contentDescription="@string/appwidget_text"
                     android:text="@string/default_hour"
                     android:textColor="@android:color/black"
-                    android:textSize="34dp"
+                    android:textSize="36dp"
                     />
 
                 <TextView
@@ -81,11 +82,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/appwidget_text"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_margin="16dp"
                     android:text="@string/default_date"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
+                    android:fontFamily="@android:medium"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -110,8 +111,8 @@
         android:weightSum="1">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:background="@color/common_grey100">
+            android:layout_height="48dp"
+            android:background="@color/common_grey300">
 
             <LinearLayout
 
