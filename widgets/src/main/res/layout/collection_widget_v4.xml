@@ -16,7 +16,7 @@
         android:weightSum="1">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="54dp"
 
             android:background="@color/common_grey300"
             >
@@ -35,9 +35,10 @@
                     android:id="@+id/calendar_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:text="@string/time_date"
                     android:textSize="20dp"
-                    android:layout_margin="14dp"
+                    android:layout_margin="16dp"
                     android:gravity="center"
                     android:textAlignment="center"
                     android:drawableLeft="@drawable/ic_widgeticons_timedate"
@@ -82,11 +83,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/appwidget_text"
-                    android:layout_margin="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/default_date"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
-                    android:fontFamily="@android:medium"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -111,13 +113,13 @@
         android:weightSum="1">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:background="@color/common_grey300">
 
             <LinearLayout
 
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_alignParentLeft="true"
 
                 android:gravity="center"
@@ -131,7 +133,7 @@
                     android:text="@string/weather_title"
                     android:gravity="center"
                     android:textSize="20dp"
-                    android:scaleType="fitCenter"
+                    android:layout_margin="16dp"
                     android:drawableLeft="@drawable/ic_widgeticons_weather"
                     />
             </LinearLayout>
@@ -151,6 +153,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_city"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
 
@@ -169,6 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_temp"
+                    android:layout_margin="16dp"
                     android:textColor="@android:color/black"
                     android:textSize="34dp" />
 
@@ -176,6 +182,10 @@
                     android:id="@+id/widgetIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+
                     android:src="@drawable/ic_weathericonsclouds"
                     android:layout_weight="0.09" />
                 <!--android:src="@drawable/ic_refresh_white_24dp"-->
@@ -194,6 +204,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/no_data"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:textColor="@android:color/black"
                     android:maxLines="2"
                     android:textSize="20dp" />
