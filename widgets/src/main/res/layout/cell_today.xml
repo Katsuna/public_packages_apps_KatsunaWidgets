@@ -18,11 +18,14 @@
     android:layout_height="27dp"
     android:layout_marginLeft="12dp"
     android:layout_marginRight="12dp"
+
     android:background="@drawable/rounded_textview"
 
     >
 
 <TextView
     style="@style/CalendarCell"
-    android:textColor="@color/common_white" />
+    android:textColor="@color/common_white"
+    android:textStyle="bold"
+    />
     </LinearLayout>

@@ -3,15 +3,25 @@
 
     <item>
         <shape>
+
             <!--<padding android:bottom="10dp" android:top="10dp" android:left="10dp" android:right="10dp"></padding>-->
             <solid android:color="@color/common_grey50" />
+            <corners
+                android:bottomRightRadius="6dp"
+                android:bottomLeftRadius="6dp"
+                android:topLeftRadius="6dp"
+                android:topRightRadius="6dp"/>
         </shape>
     </item>
 
     <item>
         <shape >
             <solid android:color="@color/common_grey50" />
-            <corners android:radius="4dp" />
+            <corners
+                android:bottomRightRadius="6dp"
+                android:bottomLeftRadius="6dp"
+                android:topLeftRadius="6dp"
+                android:topRightRadius="6dp"/>
         </shape>
     </item>
 

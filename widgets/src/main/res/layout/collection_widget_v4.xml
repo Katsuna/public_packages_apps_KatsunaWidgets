@@ -101,7 +101,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
+        android:background="#1E000000"
+        />
 
     <LinearLayout
         android:id="@+id/weatherRoot"

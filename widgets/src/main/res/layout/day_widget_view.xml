@@ -19,7 +19,7 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/common_grey100"
+            android:background="@color/common_grey300"
             >
 
             <RelativeLayout
@@ -33,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/weather_title"
+                    android:layout_margin="16dp"
                     android:textAlignment="center"
                     android:textSize="20dp"
                     android:layout_weight="1"
@@ -48,11 +49,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="12dp"
                     android:padding="10dp"
                     android:drawableLeft="@drawable/ic_x_icon"
                     android:text="@string/close"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/rounded_button"/>
 
             </RelativeLayout>
         </RelativeLayout>
@@ -78,6 +81,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_city"
+                    android:layout_margin="16dp"
+
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
 
@@ -96,11 +101,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/default_temp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:textColor="@android:color/black"
                         android:textSize="34sp" />
 
                     <ImageView
                         android:id="@+id/widgetIcon"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/k48_clouds"
@@ -121,6 +130,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/no_data"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:textColor="@android:color/black"
                         android:maxLines="2"
                         android:textSize="18sp" />
@@ -151,7 +163,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:background="#1E000000"
+
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,7 +227,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:background="#1E000000"
+            />
 
         <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
