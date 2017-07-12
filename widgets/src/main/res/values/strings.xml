@@ -5,19 +5,19 @@
 
 
     <!-- monday shortname-->
-    <string name="monday">Mo</string>
+    <string name="monday">Mon</string>
     <!-- tuesday shortname-->
-    <string name="tuesday">Tu</string>
+    <string name="tuesday">Tue</string>
     <!-- wednesday shortname-->
-    <string name="wednesday">We</string>
+    <string name="wednesday">Wed</string>
     <!-- thursday shortname-->
-    <string name="thursday">Th</string>
+    <string name="thursday">Thu</string>
     <!-- friday shortname-->
-    <string name="friday">Fr</string>
+    <string name="friday">Fri</string>
     <!-- saturday shortname-->
-    <string name="saturday">Sa</string>
+    <string name="saturday">Sat</string>
     <!-- sunday shortname-->
-    <string name="sunday">Su</string>
+    <string name="sunday">Sun</string>
 
     <!-- title of weather screen -->
     <string name="wind">Wind</string>
@@ -134,7 +134,7 @@
     <string name="default_s_temp" translatable="false">0°</string>
 
     <!-- monday shortname example-->
-    <string name="s_monday" translatable="false">Mo</string>
+    <string name="s_monday" translatable="false">Mon</string>
 
     <!-- Day button text-->
     <string name="day">Day</string>
