@@ -19,7 +19,7 @@
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:background="@color/common_grey300"
             >
 
@@ -31,6 +31,7 @@
 
                 android:weightSum="1">
                 <TextView
+                    android:layout_margin="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/weather_title"
@@ -41,7 +42,9 @@
                     android:drawableLeft="@drawable/ic_widgeticons_weather"
                     android:layout_alignBaseline="@+id/back"
                     android:layout_alignBottom="@+id/back"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:drawablePadding="12dp"
+                    android:fontFamily="sans-serif-medium"/>
 
                 <Button
                     android:id="@+id/back"
@@ -51,10 +54,13 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="12dp"
                     android:drawableLeft="@drawable/ic_x_icon"
-                    android:padding="10dp"
                     android:text="@string/close"
                     android:textSize="20dp"
-                    android:background="@drawable/rounded_button"/>
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="@drawable/rounded_button"
+                    android:drawablePadding="12dp"
+                    />
 
             </RelativeLayout>
         </RelativeLayout>
@@ -81,8 +87,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_city"
+                    android:layout_margin="12dp"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20dp"
+                    android:fontFamily="sans-serif-medium"/>
 
 
                 <LinearLayout
@@ -100,13 +108,18 @@
                         android:layout_height="wrap_content"
                         android:text="@string/default_temp"
                         android:textColor="@android:color/black"
-                        android:textSize="34sp" />
+                        android:textSize="34dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        />
 
                     <ImageView
                         android:id="@+id/widgetIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        
+                        android:layout_marginBottom="12dp"
                         android:src="@drawable/k48_clouds"
                         android:layout_weight="0.09" />
                     <!--android:src="@drawable/ic_refresh_white_24dp"-->
@@ -127,7 +140,12 @@
                         android:text="@string/no_data"
                         android:textColor="@android:color/black"
                         android:maxLines="2"
-                        android:textSize="18sp" />
+                        android:textSize="20dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        />
 
                     <!--<TextView-->
 
@@ -187,7 +205,7 @@
                     android:text="@string/week"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="24sp"
+                    android:textSize="20dp"
                     android:gravity="center"
                     android:textStyle="bold"
                     />
@@ -212,7 +230,7 @@
                     android:gravity="center"
                     android:textAlignment="center"
                     android:textColor="@color/common_grey600"
-                    android:textSize="24sp" />
+                    android:textSize="20dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -246,7 +264,9 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:orientation="horizontal">
+           android:orientation="horizontal"
+           android:layout_margin="12dp"
+           >
            <LinearLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -463,7 +483,7 @@
                    android:layout_width="50dp"
                    android:layout_height="50dp"
                    android:padding="5dp"
-                   
+                   android:fontFamily="sans-serif-medium"
                    android:src="@drawable/k48_clouds"
                    />
                <TextView
@@ -473,6 +493,7 @@
                    android:text="@string/default_s_temp"
                    android:textSize="15dp"
                    android:textColor="@android:color/black"
+                   android:fontFamily="sans-serif-medium"
                    />
            </LinearLayout>
 
