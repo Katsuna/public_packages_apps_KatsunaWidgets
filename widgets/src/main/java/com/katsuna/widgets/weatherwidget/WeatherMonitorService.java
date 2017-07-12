@@ -622,7 +622,6 @@ public class WeatherMonitorService extends Service implements LocationListener{
         @Override
         protected void updateMainUI() {
             updateTodayWeatherUI();
-            updateLastUpdateTime();
         }
     }
 
@@ -704,20 +703,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
         return now.getTimeInMillis();
     }
 
-    private void updateLastUpdateTime() {
-        updateLastUpdateTime(
-                PreferenceManager.getDefaultSharedPreferences(this).getLong("lastUpdate", -1)
-        );
-    }
 
-    private void updateLastUpdateTime(long timeInMillis) {
-        if (timeInMillis < 0) {
-            // No time
-            lastUpdate.setText("");
-        } else {
-            lastUpdate.setText(getString(R.string.last_update, formatTimeWithDayIfNotToday(this, timeInMillis)));
-        }
-    }
 
     public static String formatTimeWithDayIfNotToday(Context context, long timeInMillis) {
         Calendar now = Calendar.getInstance();
@@ -734,12 +720,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
         }
     }
 
-    private int getTheme(String themePref) {
-        switch (themePref) {
-            default:
-                return R.style.AppTheme;
-        }
-    }
+
 
     public boolean isStandaloneWidget(){
         for (PackageInfo pack : getPackageManager().getInstalledPackages(PackageManager.GET_PROVIDERS)) {
