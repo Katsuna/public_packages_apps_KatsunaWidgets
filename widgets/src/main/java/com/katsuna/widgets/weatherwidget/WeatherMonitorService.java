@@ -640,10 +640,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
             return "forecast";
         }
 
-        @Override
-        protected void updateMainUI() {
-            //updateLongTermWeatherUI();
-        }
+
     }
 
     class ProvideCityNameTask extends GenericRequestTask {

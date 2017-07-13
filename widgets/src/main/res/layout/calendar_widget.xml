@@ -27,10 +27,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="1">
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="54dp"
-            android:background="@color/common_grey300"
+            android:background="@drawable/upper_corners"
             >
 
             <RelativeLayout
