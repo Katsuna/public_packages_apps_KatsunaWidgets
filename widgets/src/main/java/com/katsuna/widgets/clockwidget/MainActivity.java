@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         checkLocationPermission();
         //setupTheme();
-        finish();
     }
 
     private void setupTheme() {
@@ -99,6 +98,8 @@ public class MainActivity extends Activity {
                                 ActivityCompat.requestPermissions(MainActivity.this,
                                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                                         MY_PERMISSIONS_REQUEST_LOCATION );
+
+
                             }
                         })
                         .create()
@@ -110,6 +111,7 @@ public class MainActivity extends Activity {
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION );
             }
+            finish();
         }
     }
 

@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/default_temp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:textColor="@android:color/black"
@@ -114,7 +114,7 @@
 
                     <ImageView
                         android:id="@+id/widgetIcon"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/k48_clouds"
@@ -176,7 +176,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
 
@@ -254,7 +254,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_margin="11dp"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
