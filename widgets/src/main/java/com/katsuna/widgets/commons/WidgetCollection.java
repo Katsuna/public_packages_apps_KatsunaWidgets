@@ -118,6 +118,8 @@ public class WidgetCollection extends AppWidgetProvider {
                     context.startService(updateWeatherIntent);
                 }
                 else{
+                    System.out.println("Im in update and i don't have permission");
+
                     RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
                     appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
                 }
@@ -134,7 +136,12 @@ public class WidgetCollection extends AppWidgetProvider {
         context.startService(new Intent(context, ClockMonitorService.class));
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+            System.out.println("Im in enabled and i have permission");
+
             context.startService(new Intent(context, WeatherMonitorService.class));
+        }
+        else{
+            System.out.println("Im in enabled and i don't have permission");
         }
 
 

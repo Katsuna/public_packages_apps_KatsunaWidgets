@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -144,9 +145,8 @@ public class WeatherUpdateService extends IntentService {
 
 
                 RemoteViews remoteViews =createRemoteViews(1);
-                int color1 = ColorCalc.getColor(getApplicationContext(),
-                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
-                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
+
+
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
                 remoteViews.setInt(R.id.forecast_close_btn, "setBackgroundColor", color2);
@@ -200,7 +200,15 @@ public class WeatherUpdateService extends IntentService {
 
         if( layout == 1 || layout == 6 || layout ==7) {
             if(widgetWeather.getIcon()!= null) {
-                 remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
+                }
+                else{
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.no_permission_layout);
+
+                }
+
 
                 remoteViews.setOnClickPendingIntent(R.id.weatherRoot, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
 

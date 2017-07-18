@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -85,8 +86,18 @@ public class ClockUpdateService extends IntentService {
             System.out.println("CLOCK CALLED:"+action);
 
             if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false && WidgetCollection.calendar == false) {
+
+
                 System.out.println("CLOCK CALLED in 1st if");
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
+                RemoteViews remoteViews = null;
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
+                }
+                else{
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.no_permission_layout);
+
+                }
                 String []clock = setTime();
                 remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
 
