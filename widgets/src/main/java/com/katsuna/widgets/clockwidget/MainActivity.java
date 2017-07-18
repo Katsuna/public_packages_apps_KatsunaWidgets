@@ -24,6 +24,8 @@ import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.commons.utils.Shape;
 import com.katsuna.widgets.R;
+import com.katsuna.widgets.commons.PermissionActivity;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 public class MainActivity extends Activity {
 
@@ -37,7 +39,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkLocationPermission();
+        finish();
+        Intent activityIntent = new Intent(getApplicationContext(),PermissionActivity.class);
+        getApplicationContext().startActivity(activityIntent);
+        //checkLocationPermission();
         //setupTheme();
     }
 

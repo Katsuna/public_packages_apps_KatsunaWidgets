@@ -61,6 +61,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.katsuna.widgets.commons.PermissionActivity">
+
+        </activity>
+
         <!--<receiver android:name="com.katsuna.widgets.clockwidget.ClockWidget">-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
