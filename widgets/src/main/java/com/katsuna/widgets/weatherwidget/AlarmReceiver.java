@@ -399,8 +399,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 URL url = null;
                 if (!latitude.equals("")) {
                     url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&&appid=" + apiKey);
-                } else
-                    url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
+
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
@@ -422,7 +421,12 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     editor.putString("lastShortterm", result);
                     editor.apply();
                 } else {
-                    // Connection problem
+                    Log.d("Connection problem", "fail Response");
+                }
+                } else {
+
+                  //  url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -459,8 +463,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
                 if (!latitude.equals("")) {
                     url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
-                } else
-                    url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
 
                 longCounter++;
                 apiCounter++;
@@ -483,6 +485,10 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     editor.apply();
                 } else {
                     // Connection problem
+                }
+                } else {
+                    //TODO weather from preferennces
+                 //   url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

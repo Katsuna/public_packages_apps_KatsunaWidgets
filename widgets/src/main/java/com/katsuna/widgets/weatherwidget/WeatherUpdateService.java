@@ -142,7 +142,7 @@ public class WeatherUpdateService extends IntentService {
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
-
+                System.out.println("I'm in here and things go crazuy-------------------------------------------------------------------------#######");
 
                 RemoteViews remoteViews =createRemoteViews(1);
 
@@ -199,6 +199,14 @@ public class WeatherUpdateService extends IntentService {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
                     remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
+                    remoteViews.setOnClickPendingIntent(R.id.weatherRoot, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
+
+                    remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+                    remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
+                    //remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+                    remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+
+                    remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
                 }
                 else{
                     remoteViews = new RemoteViews(getPackageName(), R.layout.no_permission_layout);
@@ -206,14 +214,7 @@ public class WeatherUpdateService extends IntentService {
                 }
 
 
-                remoteViews.setOnClickPendingIntent(R.id.weatherRoot, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
 
-                remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
-                //remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
-
-                remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
             }
         }
         else if( layout == 2) {
