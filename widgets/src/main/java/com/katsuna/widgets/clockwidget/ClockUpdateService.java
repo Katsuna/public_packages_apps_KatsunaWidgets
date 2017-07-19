@@ -55,8 +55,7 @@ public class ClockUpdateService extends IntentService {
 
     public static final String EXTRA_WIDGET_IDS = "clockwidget.extra.WIDGET_IDS";
 
-    public static final String ACTION_WIDGET_EXTENDED_CLOCK = "com.katsuna.weatherwidget.action.Clock";
-    public static final String ACTION_WEATHER_CHOICE = "com.katsuna.batterywidget.action.weather_choice";
+
     public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.batterywidget.action.clock_choice";
     public static final String ACTION_WIDGET_EXTENDED_BACK = "com.katsuna.clockwidget.action.Back";
     public static final String ACTION_WIDGET_CALENDAR_VIEW = "com.katsuna.clockwidget.action.Calendar";
