@@ -77,22 +77,22 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+
+
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
             }
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             }
-        } else {
-
-
-
 
 
 
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
-                LOCATION_REFRESH_DISTANCE, this);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+//                LOCATION_REFRESH_DISTANCE, this);
         getLastBestLocation();
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
@@ -335,11 +335,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     Log.d("api call","From api day forecast inside alarm with lat:"+latitude+"long:"+longitude);
 
                     url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&appid=" + apiKey);
-                } else {
-                    Log.d("api call","From api day forecast inside alarm default citty call");
 
-                    url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&appid=" + apiKey);
-                }
                 currentCounter++;
                 apiCounter++;
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
@@ -362,6 +358,11 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     WeatherMonitorService.saveLastUpdateTime(sp);
                 } else {
                     // Connection problem
+                }
+                } else {
+                    Log.d("api call","No permissions for call or no location");
+                        //default city url
+                  //  url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&appid=" + apiKey);
                 }
             } catch (IOException e) {
                 // No connection
@@ -496,18 +497,16 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
 
     private void getLastBestLocation() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        Location locationGPS = null;
+        Location locationNet = null;
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         }
-        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        else if ( ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
 
         long GPSLocationTime = 0;
         if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }

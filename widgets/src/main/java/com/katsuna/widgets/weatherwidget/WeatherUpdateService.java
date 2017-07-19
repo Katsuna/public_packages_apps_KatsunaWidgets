@@ -146,10 +146,6 @@ public class WeatherUpdateService extends IntentService {
 
                 RemoteViews remoteViews =createRemoteViews(1);
 
-
-                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-                        colorProfile);
-                remoteViews.setInt(R.id.forecast_close_btn, "setBackgroundColor", color2);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
