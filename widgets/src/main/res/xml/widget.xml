@@ -5,6 +5,8 @@
                     android:minHeight="240dp"
                     android:maxHeight="680dp"
                     android:minWidth="375dp"
-                    android:updatePeriodMillis="3000000">
+                    android:previewImage="@drawable/home_widget_icon"
+
+    >
 
 </appwidget-provider>

@@ -38,16 +38,15 @@ import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 public class WidgetCollection extends AppWidgetProvider {
 
     public static final String BACK_CLICKED = "backClicked";
-    public static final String ENERGY_MODE_CLICKED ="energy_mode";
+    public static final String ADD_PERMISSION_CLICKED ="addPermissions";
     public static final String WEEK_CLICKED = "weekCLicked";
     public static final String DAY_CLICKED = "dayClicked";
-    public static final String ENERGY_MODE_OFF_CLICKED = "energy_mode_off";
     private PendingIntent service = null;
     public static final String WEATHER_CLICKED    = "automaticWidgetSyncButtonClick";
     public static final String VIEW_WEATHER_CLICKED    = "automaticWidgetForecastButtonClick";
     public static final String TIME_CLICKED    = "automaticWidgetSyncTimeClick";
     public static final String VIEW_CALENDAR_CLICKED    = "automaticWidgetCalendarButtonClick";
-    public static final String BATTERY_CLICKED    = "automaticWidgetSyncBatteryClick";
+
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -55,6 +54,8 @@ public class WidgetCollection extends AppWidgetProvider {
     private static final String DEBUG_TAG = "onClicked";
     public static boolean extended = false;
     public static boolean calendar = false;
+    public static boolean enabled = false;
+
 
     public static WeatherDbHandler wDBHandler;
     public static WeatherContentProvider weatherContentProvider;
@@ -121,6 +122,8 @@ public class WidgetCollection extends AppWidgetProvider {
                     System.out.println("Im in update and i don't have permission");
 
                     RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                    remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
+
                     appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
                 }
             }
@@ -210,6 +213,10 @@ public class WidgetCollection extends AppWidgetProvider {
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
             context.startService(updateClockIntent);
+        }
+        else if(ADD_PERMISSION_CLICKED.equals(intent.getAction())){
+            Intent activityIntent = new Intent(context, PermissionActivity.class);
+            context.startActivity(activityIntent);
         }
 
 

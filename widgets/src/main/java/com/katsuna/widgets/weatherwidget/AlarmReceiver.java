@@ -513,6 +513,10 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
             locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
+        else{
+            return;
+        }
+
 
         long GPSLocationTime = 0;
         if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }

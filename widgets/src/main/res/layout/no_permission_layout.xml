@@ -156,12 +156,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/no_permission_text"/>
          <Button
              android:id="@+id/addPermissionBtn"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="@string/permission_button"
+             android:textAllCaps="false"
+             android:padding="10dp"
+             android:layout_margin="12dp"
+             android:textColor="@color/common_indigoA700"
+             android:background="@drawable/rounded_permission_button"
+
              />
         </LinearLayout>
 
