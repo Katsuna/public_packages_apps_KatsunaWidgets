@@ -64,6 +64,11 @@
         <activity
             android:name="com.katsuna.widgets.commons.PermissionActivity">
 
+            <intent-filter>
+                <action android:name="com.katsuna.widgets.permissions" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
 
         <!--<receiver android:name="com.katsuna.widgets.clockwidget.ClockWidget">-->

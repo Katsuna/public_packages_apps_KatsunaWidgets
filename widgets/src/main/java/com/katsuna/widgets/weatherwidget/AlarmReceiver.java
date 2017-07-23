@@ -38,7 +38,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.katsuna.commons.utils.DeviceUtils;
 import com.katsuna.widgets.R;
+import com.katsuna.widgets.commons.PermissionActivity;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static com.katsuna.widgets.weatherwidget.WeatherMonitorService.MY_PERMISSIONS_ACCESS_FINE_LOCATION;
@@ -75,6 +77,14 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         String action = intent.getStringExtra("action");
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+
+        if (DeviceUtils.isUserSetupComplete(context)) {
+            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+                Intent activityIntent = new Intent(context, PermissionActivity.class);
+                context.startActivity(activityIntent);
+            }
+        }
+
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
