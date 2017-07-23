@@ -178,9 +178,8 @@
     <!-- downloading data text-->
     <string name="downloading_data">Downloading your data</string>
     <!--Text on button for adding location permission -->
-    <string name="permission_button">Grand Permissions</string>
+    <string name="permission_button">Grant Permissions</string>
     <!-- text in screen when no location permission is granted-->
-    <string name="no_permission_text">Please click on the button below to access weather data.</string>
-
+    <string name="no_permission_text">Please click on the button below to allow access to weather data.</string>
 
 </resources>
