@@ -33,4 +33,4 @@ local.properties
 *.swp
 app/libs/
 app/src/main/res/drawable/
-
+build/
