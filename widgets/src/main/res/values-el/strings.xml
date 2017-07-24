@@ -109,7 +109,7 @@
   <!-- downloading data text-->
   <string name="downloading_data">Λήψη των δεδομένων σας</string>
   <!--Text on button for adding location permission -->
-  <string name="permission_button">Grant Permissions</string>
+  <string name="permission_button">Παραχώρησε δικαιώματα</string>
   <!-- text in screen when no location permission is granted-->
-  <string name="no_permission_text">Please click on the button below to allow access to weather data.</string>
+  <string name="no_permission_text">Παρακαλώ πατήστε στο παρακάτω κουμπί για πρόσβαση σε δεδομένα καιρού.</string>
 </resources>
