@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Name of the app -->
-    <string name="app_name">Widgets</string>
+    <string name="app_name">Time and Weather</string>
 
 
     <!-- monday shortname-->

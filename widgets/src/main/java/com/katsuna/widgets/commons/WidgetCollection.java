@@ -24,7 +24,6 @@ import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.batterywidget.BatteryMonitorService;
 import com.katsuna.widgets.batterywidget.BatteryUpdateService;
-import com.katsuna.widgets.clockwidget.ClockWidget;
 import com.katsuna.widgets.clockwidget.ClockMonitorService;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
 import com.katsuna.widgets.clockwidget.MainActivity;
@@ -66,16 +65,16 @@ public class WidgetCollection extends AppWidgetProvider {
     ColorProfile colorProfile;
     private int mTheme;
 
-    public static int getNumberOfWidgets(final Context context) {
-        ComponentName componentName = new ComponentName(context, ClockWidget.class);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        int[] activeWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
-        if (activeWidgetIds != null) {
-            return activeWidgetIds.length;
-        } else {
-            return 0;
-        }
-    }
+//    public static int getNumberOfWidgets(final Context context) {
+//        ComponentName componentName = new ComponentName(context, ClockWidget.class);
+//        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//        int[] activeWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+//        if (activeWidgetIds != null) {
+//            return activeWidgetIds.length;
+//        } else {
+//            return 0;
+//        }
+//    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -84,18 +83,7 @@ public class WidgetCollection extends AppWidgetProvider {
         for (int id : appWidgetIds) {
 
             setupTheme(context);
-//            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.collection_widget_v4);
-//
-//
-//
-//            //Coloring button
-//            int color1 = ColorCalc.getColor(context,
-//                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
-//            remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-//            remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-//            remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
-//
-//            appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
+
 
 
 
@@ -155,12 +143,12 @@ public class WidgetCollection extends AppWidgetProvider {
         super.onDeleted(context, widgetIds);
         System.out.println("On remove called");
 
-        if (getNumberOfWidgets(context) == 0) {
+       // if (getNumberOfWidgets(context) == 0) {
             // stop monitoring if there are no more widgets on screen
             context.stopService(new Intent(context, ClockMonitorService.class));
             context.stopService(new Intent(context, WeatherMonitorService.class));
 
-        }
+     //   }
     }
 
     @Override
