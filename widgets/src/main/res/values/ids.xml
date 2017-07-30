@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="weatherRootNoData" type="id">weatherRootNoData</item>
+    <item name="weatherRootCurrent" type="id">weatherRootCurrent</item>
+    <item name="weatherRootContainer" type="id">weatherRootContainer</item>
+</resources>

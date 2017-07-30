@@ -99,7 +99,7 @@
     <string name="temperature">Temperature</string>
 
     <!-- text showing if no weather data available -->
-    <string name="no_data">no data</string>
+    <string name="no_data">Weather is loading...</string>
 
     <!-- Example strings-->
     <string name="appwidget_text" translatable="false">EXAMPLE</string>

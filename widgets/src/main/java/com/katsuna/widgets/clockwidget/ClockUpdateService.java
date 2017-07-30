@@ -105,12 +105,7 @@ public class ClockUpdateService extends IntentService {
                 remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
                 remoteViews.setTextViewText(R.id.date, clock[1]);
 
-                //Coloring button
-//                int color1 = ColorCalc.getColor(getApplicationContext(),
-//                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
-//                remoteViews.setInt(R.id.calendar_btn, "setBackgroundColor", color1);
-//                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-//                remoteViews.setInt(R.id.energy_mode_btn, "setBackgroundColor", color1);
+
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

@@ -35,12 +35,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import com.katsuna.commons.utils.DeviceUtils;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.commons.PermissionActivity;
+import com.katsuna.widgets.weatherDb.Weather;
+import com.katsuna.widgets.weatherParser.JSONWeatherParser;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static com.katsuna.widgets.weatherwidget.WeatherMonitorService.MY_PERMISSIONS_ACCESS_FINE_LOCATION;
@@ -50,6 +54,12 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
     public static final int REQUEST_CODE_CURRENT = 12345;
     public static final int REQUEST_CODE_FORECAST = 23456;
     public static final int REQUEST_CODE_LONG_FORECAST = 34567;
+    public static final String LONG_FORECAST = "long_forecast";
+    public static final String SHORT_FORECAST = "short_forecast";
+    public static final String CURRENT = "current";
+
+
+
     private static final String DEFAULT_CITY = "Athens";
     private static final long LOCATION_REFRESH_TIME = 3600 * 1000 * 3;
     private static final float LOCATION_REFRESH_DISTANCE = 1000;
@@ -74,7 +84,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
         System.out.println("I m here");
 
-        String action = intent.getStringExtra("action");
+        String action = intent.getAction();
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
@@ -127,16 +137,13 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             System.out.println("I m else alarm" + action);
             if (action != null) {
                 switch (action) {
-                    case "current":
-                        System.out.println(">:" + action);
+                    case CURRENT:
                         getCurrentWeather();
                         break;
-                    case "forecast":
-                        System.out.println(">:2" + action);
-
+                    case SHORT_FORECAST:
                         getShortWeather();
                         break;
-                    case "long_forecast":
+                    case LONG_FORECAST:
                         getLongWeather();
                         break;
                 }
@@ -167,6 +174,17 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 //            }
             new GetWeatherTask().execute();
         } else {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+            if(!sp.getString("lastShortterm", "").equals("")){
+
+                List<Weather> forecast = new ArrayList<>();
+                forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), context);
+                System.out.println("CurrentWeather from prefs"+sp.getString("lastShortterm", ""));
+            }
+            else {
+               // failed = true;
+            }
             failed = true;
         }
         SharedPreferences.Editor editor =

@@ -15,6 +15,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 
 import com.katsuna.commons.entities.ColorProfile;
@@ -36,6 +39,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.katsuna.widgets.weatherwidget.AlarmReceiver.CURRENT;
+import static com.katsuna.widgets.weatherwidget.AlarmReceiver.LONG_FORECAST;
+import static com.katsuna.widgets.weatherwidget.AlarmReceiver.SHORT_FORECAST;
 
 
 public class WeatherUpdateService extends IntentService {
@@ -185,6 +192,7 @@ public class WeatherUpdateService extends IntentService {
 
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
+            intent.setAction(CURRENT);
             Log.d("api call","Else last day forecast inside update");
 
             try {
@@ -198,15 +206,21 @@ public class WeatherUpdateService extends IntentService {
             if(widgetWeather.getIcon()!= null) {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
+                    RemoteViews rv = new RemoteViews(getPackageName(), R.layout.current_weather);
                     remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
                     remoteViews.setOnClickPendingIntent(R.id.weatherRoot, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
 
-                    remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-                    remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
+                    rv.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+                    rv.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
                     //remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-                    remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+                    rv.setTextViewText(R.id.city, widgetWeather.getCity());
 
-                    remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+                    rv.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+                    remoteViews.removeAllViews(R.id.weatherRootNoData);
+                    remoteViews.removeAllViews(R.id.weatherRootContainer);
+
+                    remoteViews.addView(R.id.weatherRootContainer, rv);
+
                 }
                 else{
                     remoteViews = new RemoteViews(getPackageName(), R.layout.no_permission_layout);
@@ -218,6 +232,7 @@ public class WeatherUpdateService extends IntentService {
 
 
             }
+
         }
         else if( layout == 2) {
             if(widgetWeather.getIcon()!= null) {
@@ -262,6 +277,8 @@ public class WeatherUpdateService extends IntentService {
 
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
             } else {
+                intent.setAction(LONG_FORECAST);
+
                 System.out.println("im in else of longterm");
                 try {
                     pendingIntent2.send();
@@ -323,6 +340,8 @@ public class WeatherUpdateService extends IntentService {
                 Log.d("api call","Api call for shortTerm forecast inside update");
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
             } else {
+                intent.setAction(SHORT_FORECAST);
+
                 System.out.println("im called 2");
                 try {
                     pendingIntent2.send();

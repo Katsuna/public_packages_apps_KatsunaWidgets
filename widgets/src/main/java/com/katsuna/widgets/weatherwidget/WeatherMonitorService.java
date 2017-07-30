@@ -50,6 +50,10 @@ import com.katsuna.widgets.utils.UnitConvertor;
 import com.katsuna.widgets.weatherDb.Weather;
 
 import static android.app.AlarmManager.INTERVAL_HALF_HOUR;
+import static android.app.AlarmManager.INTERVAL_HOUR;
+import static com.katsuna.widgets.weatherwidget.AlarmReceiver.CURRENT;
+import static com.katsuna.widgets.weatherwidget.AlarmReceiver.LONG_FORECAST;
+import static com.katsuna.widgets.weatherwidget.AlarmReceiver.SHORT_FORECAST;
 
 
 public class WeatherMonitorService extends Service implements LocationListener{
@@ -161,10 +165,10 @@ public class WeatherMonitorService extends Service implements LocationListener{
         // Construct an intent that will execute the AlarmReceiver
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
         // Create a PendingIntent to be triggered when the alarm goes off
-        intent.putExtra("action","current");
+        intent.setAction(CURRENT);
 
-        final PendingIntent pIntent = PendingIntent.getBroadcast(this, AlarmReceiver.REQUEST_CODE_CURRENT,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent pIntent = PendingIntent.getBroadcast(this, 0,
+                intent, 0);
 //        try {
 //            pIntent.send();
 //        } catch (PendingIntent.CanceledException e) {
@@ -176,38 +180,37 @@ public class WeatherMonitorService extends Service implements LocationListener{
         // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
         // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                INTERVAL_HALF_HOUR , pIntent);
+                INTERVAL_HOUR , pIntent);
 
 
         //*************Forecast***************//
         Intent intentForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intentForecast.putExtra("action","forecast");
+        intentForecast.setAction(SHORT_FORECAST);
 
         // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent fIntent = PendingIntent.getBroadcast(this, AlarmReceiver.REQUEST_CODE_FORECAST,
-                intentForecast, PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent fIntent = PendingIntent.getBroadcast(this, 0,
+                intentForecast, 0);
 
         // Setup periodic alarm every 5 seconds
         AlarmManager alarmFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
         // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
         alarmFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                AlarmManager.INTERVAL_HOUR *3, fIntent);
+                INTERVAL_HOUR *3, fIntent);
 
 
         //*******long forecast**********//
         Intent intentLongForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intentLongForecast.putExtra("action","long_forecast");
+        intentLongForecast.setAction(LONG_FORECAST);
         // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent lIntent = PendingIntent.getBroadcast(this, AlarmReceiver.REQUEST_CODE_LONG_FORECAST,
-                intentLongForecast, PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent lIntent = PendingIntent.getBroadcast(this, 0,
+                intentLongForecast, 0);
 
-        // Setup periodic alarm every 5 seconds
         AlarmManager alarmLongFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
         // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
         alarmLongFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                AlarmManager.INTERVAL_DAY, pIntent);
+                AlarmManager.INTERVAL_DAY, lIntent);
     }
 
 
