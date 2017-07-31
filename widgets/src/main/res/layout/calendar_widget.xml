@@ -49,6 +49,8 @@
                     android:gravity="center"
                     android:drawableLeft="@drawable/ic_widgeticons_timedate"
                     android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="true"
+
                     android:layout_alignParentStart="true"
                     android:drawablePadding="12dp"
                     android:textAlignment="center"

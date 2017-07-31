@@ -97,7 +97,6 @@ public class ClockUpdateService extends IntentService {
                     remoteViews = new RemoteViews(getPackageName(), R.layout.no_permission_layout);
                     remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(this, WidgetCollection.ADD_PERMISSION_CLICKED));
 
-
                 }
                 String []clock = setTime();
                 remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
