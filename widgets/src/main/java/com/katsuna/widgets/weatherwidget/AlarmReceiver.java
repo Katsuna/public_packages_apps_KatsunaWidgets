@@ -148,7 +148,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                         break;
                 }
             } else {
-                System.out.println("Im in get weather current else");
                 getWeather();
             }
 
