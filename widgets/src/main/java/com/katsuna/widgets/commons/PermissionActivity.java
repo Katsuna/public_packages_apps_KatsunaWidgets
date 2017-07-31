@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
 import com.katsuna.commons.utils.Log;
+import com.katsuna.widgets.clockwidget.ClockUpdateService;
+import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
+import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
 
 public class PermissionActivity extends Activity {
@@ -50,7 +53,10 @@ public class PermissionActivity extends Activity {
                 Log.d(TAG, "onRequestPermissionsResult permissions accepted: " + grantResults.length);
                 if(hasPermissions(this, PERMISSIONS)) {
                     permissionsGranted = true;
-
+                   // this.startService(new Intent(this, WeatherMonitorService.class));
+                    Intent updateIntent = new Intent(this, WeatherUpdateService.class);
+                    updateIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+                    this.startService(updateIntent);
                 }
 
                 break;
