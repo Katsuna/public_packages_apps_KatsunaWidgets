@@ -80,15 +80,6 @@ public class WeatherUpdateService extends IntentService {
 
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
 
-//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-//                updateIntent.setAction(ClockUpdateService.ACTION_WEATHER_CHOICE);
-//                this.startService(updateIntent);
-//
-//                Intent updateBatteryIntent = new Intent(this, BatteryUpdateService.class);
-//                updateBatteryIntent.setAction(BatteryUpdateService.ACTION_WEATHER_CHOICE);
-//                this.startService(updateBatteryIntent);
-
-
                 RemoteViews remoteViews =createRemoteViews(5);
                 int color1 = ColorCalc.getColor(getApplicationContext(),
                         ColorProfileKey.ACCENT1_COLOR, colorProfile);
@@ -103,10 +94,9 @@ public class WeatherUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_UPDATE.equals(action)) {
-                //* propable sollution? **
-//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-//                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
-//                this.startService(updateIntent);
+                Intent updateIntent = new Intent(this, ClockUpdateService.class);
+                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
+                this.startService(updateIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
@@ -143,12 +133,11 @@ public class WeatherUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_EXTENDED_BACK.equals(action)){
-                this.startService(new Intent(this, ClockMonitorService.class));
+                //this.startService(new Intent(this, ClockMonitorService.class));
                 // update the widgets
                 Intent updateIntent = new Intent(this, ClockUpdateService.class);
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
-                System.out.println("I'm in here and things go crazuy-------------------------------------------------------------------------#######");
 
                 RemoteViews remoteViews =createRemoteViews(1);
 

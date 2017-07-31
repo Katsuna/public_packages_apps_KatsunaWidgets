@@ -116,8 +116,30 @@ public class ClockUpdateService extends IntentService {
                 System.out.println("calendar clock Opened!!!!!!!!");
                 drawWidget();
 
-            }else{
+            }else if(WidgetCollection.extended == false && WidgetCollection.calendar == false){
                 System.out.println("IM in the else of clock");
+                RemoteViews remoteViews = null;
+
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.collection_widget_v4);
+                }
+                else{
+                    remoteViews = new RemoteViews(getPackageName(), R.layout.no_permission_layout);
+                    remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(this, WidgetCollection.ADD_PERMISSION_CLICKED));
+
+                }
+                String []clock = setTime();
+                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
+
+                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+                remoteViews.setTextViewText(R.id.date, clock[1]);
+
+
+
+                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
 
         }
