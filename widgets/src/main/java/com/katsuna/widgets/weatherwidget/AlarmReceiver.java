@@ -88,12 +88,12 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
-        if (DeviceUtils.isUserSetupComplete(context)) {
-            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-                Intent activityIntent = new Intent(context, PermissionActivity.class);
-                context.startActivity(activityIntent);
-            }
-        }
+//        if (DeviceUtils.isUserSetupComplete(context)) {
+//            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+//                Intent activityIntent = new Intent(context, PermissionActivity.class);
+//                context.startActivity(activityIntent);
+//            }
+//        }
 
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
