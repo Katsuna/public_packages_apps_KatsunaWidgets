@@ -75,7 +75,7 @@ public class WeatherUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            System.out.println("="+action);
+            //System.out.println("="+action);
             setupTheme(this);
 
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
@@ -154,7 +154,7 @@ public class WeatherUpdateService extends IntentService {
     private void setupTheme(Context context) {
         UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
-        System.out.println("im out"+colorProfile);
+        //System.out.println("im out"+colorProfile);
     }
 
     private RemoteViews createRemoteViews(int layout) {
@@ -176,12 +176,12 @@ public class WeatherUpdateService extends IntentService {
 
         Weather widgetWeather = new Weather();
         if (!sp.getString("lastToday", "").equals("")) {
-            Log.d("api call","get day forecast inside update");
+            //Log.d("api call","get day forecast inside update");
 
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
             intent.setAction(CURRENT);
-            Log.d("api call","Else last day forecast inside update");
+            //Log.d("api call","Else last day forecast inside update");
 
             try {
                 pendingIntent2.send();
@@ -260,14 +260,14 @@ public class WeatherUpdateService extends IntentService {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastLongterm", "").equals("")) {
-                System.out.println("im called");
-                Log.d("api call","Api call for longTerm forecast inside update");
+                //System.out.println("im called");
+                //Log.d("api call","Api call for longTerm forecast inside update");
 
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
             } else {
                 intent.setAction(LONG_FORECAST);
 
-                System.out.println("im in else of longterm");
+                //System.out.println("im in else of longterm");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
@@ -314,7 +314,7 @@ public class WeatherUpdateService extends IntentService {
                 if(i==0){
                     remoteViews.setTextColor(daysIDS[i], color2);
                 }
-                System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
+                //System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
                 remoteViews.setTextViewText(daysIDS[i],getDay(forecast.get(i).getDate()));
                 remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
                 remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());
@@ -325,12 +325,12 @@ public class WeatherUpdateService extends IntentService {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastShortterm", "").equals("")) {
-                Log.d("api call","Api call for shortTerm forecast inside update");
+                //Log.d("api call","Api call for shortTerm forecast inside update");
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
             } else {
                 intent.setAction(SHORT_FORECAST);
 
-                System.out.println("im called 2");
+                //System.out.println("im called 2");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {

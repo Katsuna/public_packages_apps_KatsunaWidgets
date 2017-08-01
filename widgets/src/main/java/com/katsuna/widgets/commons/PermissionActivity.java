@@ -36,10 +36,8 @@ public class PermissionActivity extends Activity {
 
     private void checkPermissions() {
         if (!hasPermissions(this, PERMISSIONS)) {
-            Log.d(TAG, "missing permissions " );
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         } else {
-            Log.d(TAG, "permissions granted!" );
 
             closeActivity(true);
         }
@@ -50,7 +48,6 @@ public class PermissionActivity extends Activity {
         boolean permissionsGranted = false;
         switch (requestCode) {
             case PERMISSION_ALL: {
-                Log.d(TAG, "onRequestPermissionsResult permissions accepted: " + grantResults.length);
                 if(hasPermissions(this, PERMISSIONS)) {
                     permissionsGranted = true;
                     Intent clockIntent = new Intent(this, ClockUpdateService.class);
@@ -64,7 +61,6 @@ public class PermissionActivity extends Activity {
                 break;
             }
         }
-        Log.e(TAG, "onRequestPermissionsResult finishing");
         closeActivity(permissionsGranted);
     }
 
@@ -81,7 +77,6 @@ public class PermissionActivity extends Activity {
     }
 
     private void closeActivity(boolean permissionsGranted) {
-        Log.d(TAG, "closing Activity: " + permissionsGranted);
         Intent intent = new Intent();
         intent.putExtra("permissionsGranted", permissionsGranted);
         setResult(RESULT_OK, intent);

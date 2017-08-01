@@ -145,7 +145,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        System.out.println("im at start");
+        //System.out.println("im at start");
 
 
         scheduleWeatherAlarm();
@@ -507,7 +507,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
             e.printStackTrace();
             return ParseResult.JSON_EXCEPTION;
         }
-        System.out.println("ive been pressed!!!!!!!!!!!!333!");
+        //System.out.println("ive been pressed!!!!!!!!!!!!333!");
         return ParseResult.OK;
     }
 
@@ -572,7 +572,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
         } catch (SecurityException e) {
             Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
         }
-        Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
+        //Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
         new WeatherMonitorService.ProvideCityNameTask(this, this, progressDialog).execute("coords", Double.toString(latitude), Double.toString(longitude));
@@ -662,7 +662,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
         @Override
         protected ParseResult parseResponse(String response) {
-            Log.i("RESULT", response.toString());
+            ////Log.i("RESULT", response.toString());
             try {
                 JSONObject reader = new JSONObject(response);
 
