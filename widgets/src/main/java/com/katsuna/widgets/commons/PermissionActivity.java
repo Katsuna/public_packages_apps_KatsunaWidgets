@@ -53,6 +53,9 @@ public class PermissionActivity extends Activity {
                 Log.d(TAG, "onRequestPermissionsResult permissions accepted: " + grantResults.length);
                 if(hasPermissions(this, PERMISSIONS)) {
                     permissionsGranted = true;
+                    Intent clockIntent = new Intent(this, ClockUpdateService.class);
+                    clockIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
+                    this.startService(clockIntent);
                     Intent updateIntent = new Intent(this, WeatherUpdateService.class);
                     updateIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
                     this.startService(updateIntent);
