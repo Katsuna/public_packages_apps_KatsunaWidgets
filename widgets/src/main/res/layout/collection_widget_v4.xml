@@ -122,7 +122,7 @@
 
             <LinearLayout
 
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_alignParentLeft="true"
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/weather_title"
                     android:textAllCaps="true"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:textSize="20dp"
                     android:layout_margin="12dp"
                     android:drawableLeft="@drawable/ic_widgeticons_weather"
@@ -148,7 +148,7 @@
 <LinearLayout
     android:id="@id/weatherRootContainer"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
         <LinearLayout
             android:id="@id/weatherRootNoData"
@@ -185,7 +185,7 @@
                     />
             </LinearLayout>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no_data"
                 android:textSize="20dp"
