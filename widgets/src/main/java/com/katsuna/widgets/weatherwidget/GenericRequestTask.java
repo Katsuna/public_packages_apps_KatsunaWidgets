@@ -67,7 +67,7 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
         if (response.isEmpty()) {
             try {
                 URL url = provideURL(coords);
-                Log.i("URL", url.toString());
+                //Log.i("URL", url.toString());
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 if (urlConnection.getResponseCode() == 200) {
                     InputStreamReader inputStreamReader = new InputStreamReader(urlConnection.getInputStream());
@@ -81,19 +81,19 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
                     close(r);
                     urlConnection.disconnect();
                     // Background work finished successfully
-                    Log.i("Task", "done successfully");
+                    //Log.i("Task", "done successfully");
                     output.taskResult = TaskResult.SUCCESS;
                     // Save date/time for latest successful result
                     service.saveLastUpdateTime(PreferenceManager.getDefaultSharedPreferences(context));
                 }
                 else if (urlConnection.getResponseCode() == 429) {
                     // Too many requests
-                    Log.i("Task", "too many requests");
+                    //Log.i("Task", "too many requests");
                     output.taskResult = TaskResult.TOO_MANY_REQUESTS;
                 }
                 else {
                     // Bad response from server
-                    Log.i("Task", "bad response " + urlConnection.getResponseCode());
+                    //Log.i("Task", "bad response " + urlConnection.getResponseCode());
                     output.taskResult = TaskResult.BAD_RESPONSE;
                 }
             } catch (IOException e) {

@@ -107,7 +107,7 @@ public class WidgetCollection extends AppWidgetProvider {
                     context.startService(updateWeatherIntent);
                 }
                 else{
-                    System.out.println("Im in update and i don't have permission");
+                    //System.out.println("Im in update and i don't have permission");
 
                     RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
                     remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
@@ -120,19 +120,19 @@ public class WidgetCollection extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        System.out.println("On enabled called!");
+        //System.out.println("On enabled called!");
         super.onEnabled(context);
 
 
         context.startService(new Intent(context, ClockMonitorService.class));
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            System.out.println("Im in enabled and i have permission");
+            //System.out.println("Im in enabled and i have permission");
 
             context.startService(new Intent(context, WeatherMonitorService.class));
         }
         else{
-            System.out.println("Im in enabled and i don't have permission");
+            //System.out.println("Im in enabled and i don't have permission");
         }
 
 
@@ -141,7 +141,7 @@ public class WidgetCollection extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] widgetIds) {
         super.onDeleted(context, widgetIds);
-        System.out.println("On remove called");
+        //System.out.println("On remove called");
 
        // if (getNumberOfWidgets(context) == 0) {
             // stop monitoring if there are no more widgets on screen
@@ -155,7 +155,7 @@ public class WidgetCollection extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
         super.onReceive(context, intent);
-        System.out.println("on Receive calendar_widget:"+ intent.getAction());
+        //System.out.println("on Receive calendar_widget:"+ intent.getAction());
         if (TIME_CLICKED.equals(intent.getAction())) {
             extended = true;
 
@@ -236,12 +236,12 @@ public class WidgetCollection extends AppWidgetProvider {
 
        // UserProfile userProfile =   ProfileReader.getUserProfileFromKatsunaServices(context);
         mUserProfileContainer = ProfileReader.getKatsunaUserProfile(context);
-     //   System.out.println("the user profile is:"+context.getPackageName().toString());
+     //   //System.out.println("the user profile is:"+context.getPackageName().toString());
 //        if(userProfile == null) {
 //            userProfile = ProfileReader.getUserProfileFromAppSettings(context);
 //        }
         colorProfile = mUserProfileContainer.getColorProfile();
-        System.out.println("im in finding colorProfile"+colorProfile);
+        //System.out.println("im in finding colorProfile"+colorProfile);
         mTheme = getTheme(colorProfile);
        // setTheme(mTheme);
     }

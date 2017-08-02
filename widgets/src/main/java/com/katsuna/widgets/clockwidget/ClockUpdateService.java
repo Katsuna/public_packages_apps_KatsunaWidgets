@@ -82,12 +82,12 @@ public class ClockUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            System.out.println("CLOCK CALLED:"+action);
+            //System.out.println("CLOCK CALLED:"+action);
 
             if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false && WidgetCollection.calendar == false) {
 
 
-                System.out.println("CLOCK CALLED in 1st if");
+                //System.out.println("CLOCK CALLED in 1st if");
                 RemoteViews remoteViews = null;
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -113,11 +113,11 @@ public class ClockUpdateService extends IntentService {
 
             }
             else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action) ||(((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action) || ACTION_WIDGET_CALENDAR_VIEW.equals(action) )&& WidgetCollection.calendar == true))){
-                System.out.println("calendar clock Opened!!!!!!!!");
+                //System.out.println("calendar clock Opened!!!!!!!!");
                 drawWidget();
 
             }else if(WidgetCollection.extended == false && WidgetCollection.calendar == false){
-                System.out.println("IM in the else of clock");
+                //System.out.println("IM in the else of clock");
                 RemoteViews remoteViews = null;
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -180,7 +180,7 @@ public class ClockUpdateService extends IntentService {
         String clockUI = String.format("%d:%d%d %s",hours,m1,m2,time);
         clock[0] = clockUI;
         clock[1] = today;
-        Log.d("Clock Alarm: ", String.format("%d:%d -> %d %d: %d %d %s date: %s", hours, minutes, h1, h2, m1, m2,time,today));
+        //Log.d("Clock Alarm: ", String.format("%d:%d -> %d %d: %d %d %s date: %s", hours, minutes, h1, h2, m1, m2,time,today));
         return clock;
     }
 
@@ -188,7 +188,7 @@ public class ClockUpdateService extends IntentService {
     private void setupTheme(Context context) {
         UserProfileContainer  userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
-        System.out.println("im out"+colorProfile);
+        //System.out.println("im out"+colorProfile);
     }
 
 
@@ -209,7 +209,7 @@ public class ClockUpdateService extends IntentService {
     private void drawWidget() {
 
 
-        System.out.println("im inside draw calendar");
+        //System.out.println("im inside draw calendar");
       //  AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         Resources res = getApplicationContext().getResources();
       //  Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
@@ -292,7 +292,7 @@ public class ClockUpdateService extends IntentService {
         rv.setViewVisibility(R.id.month_bar, numWeeks <= 1 ? View.GONE : View.VISIBLE);
         rv.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(this, WidgetCollection.BACK_CLICKED));
         String []clock = setTime();
-        System.out.println("in clock choice with time:"+clock[0]);
+        //System.out.println("in clock choice with time:"+clock[0]);
         rv.setTextViewText(R.id.appwidget_text, clock[0]);
         rv.setTextViewText(R.id.date, clock[1]);
         rv.setInt(R.id.back, "setBackgroundColor", color1);

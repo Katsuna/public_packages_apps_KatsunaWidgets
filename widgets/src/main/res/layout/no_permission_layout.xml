@@ -37,7 +37,8 @@
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/time_date"
                     android:textSize="20dp"
-                    android:layout_margin="16dp"
+                    android:textAllCaps="true"
+                    android:layout_margin="12dp"
                     android:gravity="center"
                     android:textAlignment="center"
                     android:drawableLeft="@drawable/ic_widgeticons_timedate"
@@ -136,10 +137,11 @@
                     android:text="@string/weather_title"
                     android:gravity="center"
                     android:textSize="20dp"
-                    android:layout_margin="16dp"
+                    android:layout_margin="12dp"
                     android:drawableLeft="@drawable/ic_widgeticons_weather"
                     android:drawablePadding="12dp"
                     android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="true"
                     />
             </LinearLayout>
         </RelativeLayout>
