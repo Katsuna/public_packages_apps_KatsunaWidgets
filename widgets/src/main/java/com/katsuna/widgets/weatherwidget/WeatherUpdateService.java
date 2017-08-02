@@ -29,6 +29,7 @@ import com.katsuna.widgets.R;
 import com.katsuna.widgets.batterywidget.BatteryUpdateService;
 import com.katsuna.widgets.clockwidget.ClockMonitorService;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
+import com.katsuna.widgets.commons.PermissionActivity;
 import com.katsuna.widgets.commons.WidgetCollection;
 import com.katsuna.widgets.weatherDb.Weather;
 import com.katsuna.widgets.weatherParser.JSONWeatherParser;
@@ -62,6 +63,8 @@ public class WeatherUpdateService extends IntentService {
     public static final String ACTION_WIDGET_CLOCK_CHOICE = "com.katsuna.weatherwidget.action.ClockChoice";
     public static final String ACTION_WIDGET_BATTERY_CHOICE = "com.katsuna.weatherwidget.action.BatteryChoice";
     ColorProfile colorProfile;
+    String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION};
+
 
 
     public WeatherUpdateService() {
@@ -139,11 +142,13 @@ public class WeatherUpdateService extends IntentService {
                 updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                 this.startService(updateIntent);
 
-                RemoteViews remoteViews =createRemoteViews(1);
+                if(PermissionActivity.hasPermissions(getApplicationContext(), PERMISSIONS)) {
+                    RemoteViews remoteViews = createRemoteViews(1);
 
-                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
+                    ComponentName componentName = new ComponentName(this, WidgetCollection.class);
+                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                    appWidgetManager.updateAppWidget(componentName, remoteViews);
+                }
             }
 
         }
