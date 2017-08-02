@@ -60,7 +60,7 @@ public class BatteryInfo {
         technology = intent.getStringExtra(EXTRA_TECHNOLOGY);
     }
 
-    public BatteryInfo(final SharedPreferences sharedPreferences) {
+     public BatteryInfo(final SharedPreferences sharedPreferences) {
         status = sharedPreferences.getInt(EXTRA_STATUS, 0);
         health = sharedPreferences.getInt(EXTRA_HEALTH, 0);
         present = sharedPreferences.getBoolean(EXTRA_PRESENT, false);

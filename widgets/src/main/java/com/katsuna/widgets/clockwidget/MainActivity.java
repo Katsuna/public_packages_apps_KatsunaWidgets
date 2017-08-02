@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 //            userProfile = ProfileReader.getUserProfileFromAppSettings(context);
 //        }
         colorProfile = userProfile.colorProfile;
-        System.out.println("im in finding colorProfile"+colorProfile);
+      //  System.out.println("im in finding colorProfile"+colorProfile);
         // setTheme(mTheme);
     }
 

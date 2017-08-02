@@ -265,7 +265,7 @@ public class WeatherUpdateService extends IntentService {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastLongterm", "").equals("")) {
-                //System.out.println("im called");
+             //   System.out.println("im called");
                 //Log.d("api call","Api call for longTerm forecast inside update");
 
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);

@@ -66,7 +66,7 @@ public class BatteryUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            System.out.println("Im here also somehow"+action);
+      //      System.out.println("Im here also somehow"+action);
             if ((ACTION_BATTERY_CHANGED.equals(action ) && WidgetCollection.extended == false) ) {
 //                BatteryInfo newBatteryInfo = new BatteryInfo(intent);
 //
@@ -252,7 +252,7 @@ public class BatteryUpdateService extends IntentService {
     private void setupTheme(Context context) {
         UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
-        System.out.println("im out B"+colorProfile);
+      //  System.out.println("im out B"+colorProfile);
     }
     public float getBatteryLevel() {
         Intent batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));

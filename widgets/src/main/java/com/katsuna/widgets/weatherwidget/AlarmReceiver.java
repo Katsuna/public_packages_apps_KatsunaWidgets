@@ -312,7 +312,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         try {
             locationManager.removeUpdates(this);
         } catch (SecurityException e) {
-            Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
+            //Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
         }
         //Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
@@ -611,13 +611,13 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                         editor.commit();
 
                     } catch (JSONException e){
-                        Log.e(TAG, "An error occurred while reading the JSON object", e);
+                        //Log.e(TAG, "An error occurred while reading the JSON object", e);
                     }
                 } else {
-                    Log.e(TAG, "Error: Response code " + urlConnection.getResponseCode());
+                  //  Log.e(TAG, "Error: Response code " + urlConnection.getResponseCode());
                 }
             } catch (IOException e) {
-                Log.e(TAG, "Connection error", e);
+                //Log.e(TAG, "Connection error", e);
             }
             return null;
         }
@@ -677,7 +677,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             outputStreamWriter.close();
         }
         catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+            //Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 

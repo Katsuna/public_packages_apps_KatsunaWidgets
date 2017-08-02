@@ -133,12 +133,12 @@ public class JSONWeatherParser {
                 widgetWeather.setWindDirectionDegree(Double.valueOf(reader.optJSONObject("wind").getString("deg")));
             else
                 widgetWeather.setWindDirectionDegree(null);
-            Log.e("JSONException Data", result);
+            //Log.e("JSONException Data", result);
 
 
             return widgetWeather;
         } catch (JSONException e) {
-            Log.e("JSONException Data", result);
+           // Log.e("JSONException Data", result);
             e.printStackTrace();
             return new Weather();
         }
@@ -200,7 +200,7 @@ public class JSONWeatherParser {
 
             return forecast;
         } catch (JSONException e) {
-            Log.e("JSONException Data long", result);
+            //Log.e("JSONException Data long", result);
             e.printStackTrace();
             return forecast;
         }
@@ -269,7 +269,7 @@ public class JSONWeatherParser {
 
             return forecast;
         } catch (JSONException e) {
-            Log.e("JSONException Data long", result);
+            //Log.e("JSONException Data long", result);
             e.printStackTrace();
             return forecast;
         }

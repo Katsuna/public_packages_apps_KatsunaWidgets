@@ -97,7 +97,7 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
                     output.taskResult = TaskResult.BAD_RESPONSE;
                 }
             } catch (IOException e) {
-                Log.e("IOException Data", response);
+                //Log.e("IOException Data", response);
                 e.printStackTrace();
                 // Exception while reading data from url connection
                 output.taskResult = TaskResult.IO_EXCEPTION;
@@ -197,7 +197,7 @@ public abstract class GenericRequestTask extends AsyncTask<String, String, TaskO
                 x.close();
             }
         } catch (IOException e) {
-            Log.e("IOException Data", "Error occurred while closing stream");
+            //Log.e("IOException Data", "Error occurred while closing stream");
         }
     }
 

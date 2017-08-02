@@ -335,7 +335,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
             if (windObj.has("deg")) {
                 todayWeather.setWindDirectionDegree(windObj.getDouble("deg"));
             } else {
-                Log.e("parseTodayJson", "No wind direction available");
+                //Log.e("parseTodayJson", "No wind direction available");
                 todayWeather.setWindDirectionDegree(null);
             }
             todayWeather.setPressure(main.getString("pressure"));
@@ -364,7 +364,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
             editor.commit();
 
         } catch (JSONException e) {
-            Log.e("JSONException Data", result);
+            //Log.e("JSONException Data", result);
             e.printStackTrace();
             return ParseResult.JSON_EXCEPTION;
         }
@@ -503,7 +503,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
             editor.putString("lastLongterm", result);
             editor.commit();
         } catch (JSONException e) {
-            Log.e("JSONException Data", result);
+            //Log.e("JSONException Data", result);
             e.printStackTrace();
             return ParseResult.JSON_EXCEPTION;
         }
@@ -570,7 +570,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
         try {
             locationManager.removeUpdates(this);
         } catch (SecurityException e) {
-            Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
+            //Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
         }
         //Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
         double latitude = location.getLatitude();
@@ -668,7 +668,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
                 final String code = reader.optString("cod");
                 if ("404".equals(code)) {
-                    Log.e("Geolocation", "No city found");
+                    //Log.e("Geolocation", "No city found");
                     return ParseResult.CITY_NOT_FOUND;
                 }
 
@@ -682,7 +682,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
                 saveLocation(city + country);
 
             } catch (JSONException e) {
-                Log.e("JSONException Data", response);
+                //Log.e("JSONException Data", response);
                 e.printStackTrace();
                 return ParseResult.JSON_EXCEPTION;
             }
@@ -727,7 +727,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
             ProviderInfo[] providers = pack.providers;
             if (providers != null) {
                 for (ProviderInfo provider : providers) {
-                    Log.d("Example", "provider: " + provider.authority);
+                    //Log.d("Example", "provider: " + provider.authority);
                 }
             }
         }

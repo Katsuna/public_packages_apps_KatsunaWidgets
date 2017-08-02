@@ -35,7 +35,7 @@ public class BatteryMonitorService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(WidgetCollection.extended == false) {
-                Log.d("Update battery calendar_widget", "Update...");
+                //Log.d("Update battery calendar_widget", "Update...");
                 if (firstTime) {
                     BatteryInfo batteryInfo = new BatteryInfo(intent);
                     Intent updateIntent = new Intent(context, BatteryUpdateService.class);

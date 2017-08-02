@@ -77,7 +77,7 @@ public class WeatherDbHandler  extends SQLiteOpenHelper {
 
     // Adding new trajectory Data
     public void addCurrentWeatherRecord(WeatherData weather, int weatherId) {
-        Log.d("Sqli","kanw add kati stin basi");
+        //Log.d("Sqli","kanw add kati stin basi");
         SQLiteDatabase db = this.getWritableDatabase();
         Date date = new Date();
         String time = new Timestamp(date.getTime()).toString();
@@ -99,7 +99,7 @@ public class WeatherDbHandler  extends SQLiteOpenHelper {
 
 
     public void addCurrentWeatherRecord(SecWeather secWeather, int weatherId) {
-        Log.d("Sqli","kanw add kati stin basi");
+      //  Log.d("Sqli","kanw add kati stin basi");
         SQLiteDatabase db = this.getWritableDatabase();
         Date date = new Date();
         String time = new Timestamp(date.getTime()).toString();
@@ -198,7 +198,7 @@ public class WeatherDbHandler  extends SQLiteOpenHelper {
 
             cursor.moveToFirst();
             String newId = cursor.getString(1); // + 1;
-            System.out.println("I read from db:"+cursor.getString(1)+","+cursor.getString(2)+","+cursor.getString(3)+","+cursor.getString(4)+","+cursor.getString(5)+","+cursor.getString(6));
+      //      System.out.println("I read from db:"+cursor.getString(1)+","+cursor.getString(2)+","+cursor.getString(3)+","+cursor.getString(4)+","+cursor.getString(5)+","+cursor.getString(6));
             cursor.close();
             return wdata;
         }

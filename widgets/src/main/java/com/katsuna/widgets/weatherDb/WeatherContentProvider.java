@@ -126,7 +126,7 @@ public class WeatherContentProvider extends ContentProvider {
         int uriType = sURIMatcher.match(uri);
         SQLiteDatabase sqlDB = weatherDb.getWritableDatabase();
         long id = 0;
-        System.out.println("-----"+uriType+"-"+uri.toString());
+     //   System.out.println("-----"+uriType+"-"+uri.toString());
         switch (uriType) {
             case CURRENT:
                 id = sqlDB.insert(WeatherTable.TABLE_WEATHER, null, values);
@@ -276,7 +276,7 @@ public class WeatherContentProvider extends ContentProvider {
 
         } else {
             // Insert code here to do something with the results
-            System.out.println("----------"+ mCursor.getString(1)+","+mCursor.getString(2));
+        //    System.out.println("----------"+ mCursor.getString(1)+","+mCursor.getString(2));
         }
 
         return null;
