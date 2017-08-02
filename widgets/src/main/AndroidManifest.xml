@@ -43,9 +43,11 @@
                 android:resource="@xml/widget" />
 
         </receiver>
-        <receiver android:name="com.katsuna.widgets.weatherwidget.WifiReceiver" >
-            <intent-filter android:priority="100">
-                <action android:name="android.net.wifi.STATE_CHANGE" />
+        <receiver android:name="com.katsuna.widgets.weatherwidget.WifiReceiver"
+            android:enabled="true" android:label="com.katsuna.widgets.weatherwidget.WifiReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
             </intent-filter>
         </receiver>
         <!--<receiver android:name=".WeatherWidget" >-->
