@@ -26,39 +26,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="1">
+        >
+
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="54dp"
             android:background="@drawable/upper_corners"
             >
 
-            <RelativeLayout
+            <LinearLayout
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
 
                 android:weightSum="1">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:layout_height="wrap_content"
                     android:text="@string/time_date"
                     android:textSize="20dp"
                     android:layout_margin="12dp"
-                    android:gravity="center"
                     android:drawableLeft="@drawable/ic_widgeticons_timedate"
                     android:fontFamily="sans-serif-medium"
                     android:textAllCaps="true"
+                    android:gravity="left"
 
                     android:layout_alignParentStart="true"
                     android:drawablePadding="12dp"
-                    android:textAlignment="center"
                     />
 
                 <Button
                     android:id="@+id/back"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.4"
                     android:layout_height="32dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
@@ -66,13 +69,14 @@
                     android:background="@drawable/rounded_button"
                     android:drawableLeft="@drawable/ic_x_icon"
                     android:drawablePadding="12dp"
+                    android:gravity="right"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="@string/close"
                     android:textAllCaps="false"
                     android:textSize="20dp" />
 
-            </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
