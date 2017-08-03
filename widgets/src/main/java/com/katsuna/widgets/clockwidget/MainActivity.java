@@ -39,9 +39,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        finish();
+
         Intent activityIntent = new Intent(getApplicationContext(),PermissionActivity.class);
         getApplicationContext().startActivity(activityIntent);
+        finish();
         //checkLocationPermission();
         //setupTheme();
     }

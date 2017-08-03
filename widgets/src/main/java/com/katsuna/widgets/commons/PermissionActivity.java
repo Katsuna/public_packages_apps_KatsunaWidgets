@@ -38,6 +38,7 @@ public class PermissionActivity extends Activity {
         if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         } else {
+         //   finish();
 
             closeActivity(true);
         }
