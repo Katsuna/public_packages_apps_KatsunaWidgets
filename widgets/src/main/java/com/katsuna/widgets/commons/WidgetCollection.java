@@ -22,8 +22,7 @@ import com.katsuna.commons.entities.UserProfileContainer;
 import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
-import com.katsuna.widgets.batterywidget.BatteryMonitorService;
-import com.katsuna.widgets.batterywidget.BatteryUpdateService;
+
 import com.katsuna.widgets.clockwidget.ClockMonitorService;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
 import com.katsuna.widgets.clockwidget.MainActivity;
@@ -88,6 +87,8 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
             if (extended == false &&calendar == false) {
+                System.out.println("Im on widget onUpdate");
+
                 super.onUpdate(context, appWidgetManager, appWidgetIds);
                 // CLOCK WIDGET UPDATE
                 // ensure service is running
@@ -141,10 +142,10 @@ public class WidgetCollection extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] widgetIds) {
         super.onDeleted(context, widgetIds);
-        //System.out.println("On remove called");
+        System.out.println("Remove service");
 
-       // if (getNumberOfWidgets(context) == 0) {
-            // stop monitoring if there are no more widgets on screen
+// if (getNumberOfWidgets(context) == 0) {
+// stop monitoring if there are no more widgets on screen
             context.stopService(new Intent(context, ClockMonitorService.class));
             context.stopService(new Intent(context, WeatherMonitorService.class));
 

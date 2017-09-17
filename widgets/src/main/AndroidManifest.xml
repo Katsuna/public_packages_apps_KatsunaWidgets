@@ -121,9 +121,6 @@
 
 <!--    Battery staff -->
 
-        <service
-            android:name="com.katsuna.widgets.batterywidget.BatteryMonitorService"
-            android:exported="false"/>
 
         <service
             android:name="com.katsuna.widgets.batterywidget.BatteryUpdateService"

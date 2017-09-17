@@ -34,7 +34,6 @@ import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.commons.utils.Shape;
 import com.katsuna.widgets.R;
-import com.katsuna.widgets.batterywidget.BatteryUpdateService;
 import com.katsuna.widgets.commons.WidgetCollection;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
@@ -83,11 +82,12 @@ public class ClockUpdateService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             //System.out.println("CLOCK CALLED:"+action);
+            System.out.println("Im on clockUpdate service with action="+action);
 
             if ((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action))&& WidgetCollection.extended == false && WidgetCollection.calendar == false) {
 
 
-                //System.out.println("CLOCK CALLED in 1st if");
+                System.out.println("CLOCK CALLED in 1st if");
                 RemoteViews remoteViews = null;
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -113,11 +113,11 @@ public class ClockUpdateService extends IntentService {
 
             }
             else if( ACTION_WIDGET_CLOCK_CHOICE.equals(action) ||(((ACTION_CLOCK_CHANGED.equals(action) || ACTION_WIDGET_UPDATE.equals(action) || ACTION_WIDGET_CALENDAR_VIEW.equals(action) )&& WidgetCollection.calendar == true))){
-                //System.out.println("calendar clock Opened!!!!!!!!");
+                System.out.println("calendar clock Opened!!!!!!!!");
                 drawWidget();
 
             }else if(WidgetCollection.extended == false && WidgetCollection.calendar == false){
-                //System.out.println("IM in the else of clock");
+                System.out.println("IM in the else of clock");
                 RemoteViews remoteViews = null;
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)

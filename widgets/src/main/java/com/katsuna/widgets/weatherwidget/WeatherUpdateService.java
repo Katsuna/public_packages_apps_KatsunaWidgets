@@ -26,7 +26,6 @@ import com.katsuna.commons.entities.UserProfileContainer;
 import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.commons.utils.ProfileReader;
 import com.katsuna.widgets.R;
-import com.katsuna.widgets.batterywidget.BatteryUpdateService;
 import com.katsuna.widgets.clockwidget.ClockMonitorService;
 import com.katsuna.widgets.clockwidget.ClockUpdateService;
 import com.katsuna.widgets.commons.PermissionActivity;
@@ -78,7 +77,7 @@ public class WeatherUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            //System.out.println("="+action);
+            System.out.println("Im on weatherUpdate service with action="+action);
             setupTheme(this);
 
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
@@ -159,7 +158,6 @@ public class WeatherUpdateService extends IntentService {
     private void setupTheme(Context context) {
         UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
-        //System.out.println("im out"+colorProfile);
     }
 
     private RemoteViews createRemoteViews(int layout) {
@@ -181,12 +179,15 @@ public class WeatherUpdateService extends IntentService {
 
         Weather widgetWeather = new Weather();
         if (!sp.getString("lastToday", "").equals("")) {
-            //Log.d("api call","get day forecast inside update");
+            Log.d("api call","get day forecast inside update");
 
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
             intent.setAction(CURRENT);
-            //Log.d("api call","Else last day forecast inside update");
+            pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            System.out.println("current forecast without saved");
+
+            Log.d("api call","Else last day forecast inside update");
 
             try {
                 pendingIntent2.send();
@@ -271,8 +272,9 @@ public class WeatherUpdateService extends IntentService {
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
             } else {
                 intent.setAction(LONG_FORECAST);
+                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                //System.out.println("im in else of longterm");
+                System.out.println("long forecast without saved");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
@@ -334,8 +336,9 @@ public class WeatherUpdateService extends IntentService {
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
             } else {
                 intent.setAction(SHORT_FORECAST);
+                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                //System.out.println("im called 2");
+                System.out.println("short forecast without saved");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {

@@ -83,12 +83,11 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         this.context = context;
 
         //System.out.println("I m here");
-
         String action = intent.getAction();
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
-//        if (DeviceUtils.isUserSetupComplete(context)) {
+//        if (DeviceUtils.isUserSetupcd App Complete(context)) {
 //            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
 //                Intent activityIntent = new Intent(context, PermissionActivity.class);
 //                context.startActivity(activityIntent);
@@ -104,7 +103,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
             }
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             }
 
@@ -120,6 +119,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             String interval = sp.getString("refreshInterval", "1");
+            System.out.println("REFRESH INTERVAL IS: "+ interval);
             if (!interval.equals("0")) {
                 getWeather();
             }
@@ -130,7 +130,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             String interval = sp.getString("refreshInterval", "1");
             if (!interval.equals("0") &&
-                    (sp.getBoolean("backgroundRefreshFailed", false) || isUpdateLocation())) {
+                    (sp.getBoolean("backgroundRefreshFailed", false) )) {
                 getWeather();
             }
         } else {
@@ -257,10 +257,10 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private boolean isUpdateLocation() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getBoolean("updateLocationAutomatically", false);
-    }
+//    private boolean isUpdateLocation() {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        return preferences.getBoolean("updateLocationAutomatically", false);
+//    }
 
     private void saveLocation(String result) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -479,7 +479,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             String result = "";
             try {
 
-           //     //System.out.println("long term weather call");
+                System.out.println("long term weather call");
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
                 if (language.equals("cs")) {
@@ -495,7 +495,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 apiCounter++;
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
-                //Log.d("MainActivity", "Current Timestamp: " + format);
+                Log.d("MainActivity", "Current Timestamp: " + format);
 
                 writeToFile("Long Weather calls:"+currentCounter+" - total:"+apiCounter +"-Time:"+format,context );
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -563,112 +563,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             }
         }
     }
-    public class GetCityNameTask extends AsyncTask<String, String, Void> {
-        private static final String TAG = "GetCityNameTask";
 
-        @Override
-        protected Void doInBackground(String... params) {
-            String lat = params[0];
-            String lon = params[1];
-
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-            String language = Locale.getDefault().getLanguage();
-            if(language.equals("cs")) {
-                language = "cz";
-            }
-            String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-
-            try {
-
-
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=&lat=" + lat + "&lon=" + lon + "&lang="+ language +"&appid=" + apiKey);
-                //Log.d(TAG, "Request: " + url.toString());
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                if (urlConnection.getResponseCode() == 200) {
-                    BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    String result = "";
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        result += line + "\n";
-                    }
-                    //Log.d(TAG, "JSON Result: " + result);
-                    try {
-                        JSONObject reader = new JSONObject(result);
-                        String city = reader.getString("name");
-                        String country = "";
-                        JSONObject countryObj = reader.optJSONObject("sys");
-                        if (countryObj != null) {
-                            country = ", " + countryObj.getString("country");
-                        }
-                        //Log.d(TAG, "City: " + city + country);
-                        String lastCity = PreferenceManager.getDefaultSharedPreferences(context).getString("city", "");
-                        String currentCity = city + country;
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("city", currentCity);
-                        editor.putBoolean("cityChanged", !currentCity.equals(lastCity));
-                        editor.commit();
-
-                    } catch (JSONException e){
-                        //Log.e(TAG, "An error occurred while reading the JSON object", e);
-                    }
-                } else {
-                  //  Log.e(TAG, "Error: Response code " + urlConnection.getResponseCode());
-                }
-            } catch (IOException e) {
-                //Log.e(TAG, "Connection error", e);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            new GetWeatherTask().execute();
-            new GetLongTermWeatherTask().execute();
-        }
-    }
-
-    private static long intervalMillisForRecurringAlarm(String intervalPref) {
-        int interval = Integer.parseInt(intervalPref);
-        switch (interval) {
-            case 0:
-                return 0; // special case for cancel
-            case 15:
-                return AlarmManager.INTERVAL_FIFTEEN_MINUTES;
-            case 30:
-                return AlarmManager.INTERVAL_HALF_HOUR;
-            case 1:
-                return AlarmManager.INTERVAL_HOUR;
-            case 12:
-                return AlarmManager.INTERVAL_HALF_DAY;
-            case 24:
-                return AlarmManager.INTERVAL_DAY;
-            default: // cases 2 and 6 (or any number of hours)
-                return interval * 3600000;
-        }
-    }
-
-    public static void setRecurringAlarm(Context context) {
-        //System.out.println("I ve been called recurring");
-        String intervalPref = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString("refreshInterval", "1");
-        Intent refresh = new Intent(context, AlarmReceiver.class);
-        PendingIntent recurringRefresh = PendingIntent.getBroadcast(context,
-                0, refresh, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarms = (AlarmManager) context.getSystemService(
-                Context.ALARM_SERVICE);
-        long intervalMillis = intervalMillisForRecurringAlarm(intervalPref);
-        if (intervalMillis == 0) {
-            // Cancel previous alarm
-            alarms.cancel(recurringRefresh);
-        } else {
-            alarms.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + intervalMillis,
-                    intervalMillis,
-                    recurringRefresh);
-        }
-    }
 
     private void writeToFile(String data,Context context) {
         try {
