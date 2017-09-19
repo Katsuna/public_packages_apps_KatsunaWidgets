@@ -158,7 +158,7 @@ public class ClockUpdateService extends IntentService {
         handler.post(r);
     }
 
-    public String [] setTime() {
+    public static String [] setTime() {
         String []clock;
         clock = new String[2];
         Date now = new Date();

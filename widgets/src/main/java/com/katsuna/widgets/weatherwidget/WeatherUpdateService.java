@@ -101,6 +101,13 @@ public class WeatherUpdateService extends IntentService {
 //                this.startService(updateIntent);
 
                 RemoteViews remoteViews =createRemoteViews(1);
+
+                String []clock = ClockUpdateService.setTime();
+                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
+
+                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+                remoteViews.setTextViewText(R.id.date, clock[1]);
+
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -110,7 +117,11 @@ public class WeatherUpdateService extends IntentService {
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
                // remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+                String []clock = ClockUpdateService.setTime();
+                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
 
+                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+                remoteViews.setTextViewText(R.id.date, clock[1]);
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -120,6 +131,7 @@ public class WeatherUpdateService extends IntentService {
                 int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
                         colorProfile);
              //   remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
+
 
                 ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -143,6 +155,12 @@ public class WeatherUpdateService extends IntentService {
 
                 if(PermissionActivity.hasPermissions(getApplicationContext(), PERMISSIONS)) {
                     RemoteViews remoteViews = createRemoteViews(1);
+
+                    String []clock = ClockUpdateService.setTime();
+                    remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
+
+                    remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
+                    remoteViews.setTextViewText(R.id.date, clock[1]);
 
                     ComponentName componentName = new ComponentName(this, WidgetCollection.class);
                     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -316,9 +334,11 @@ public class WeatherUpdateService extends IntentService {
 
 //            if (!isSameDate(forecast.get(0).getDate()))
 //                j++;
+            Calendar calendar = Calendar.getInstance();
+            int day = calendar.get(Calendar.DAY_OF_WEEK);
 
             for(int i = 0; i < 7; i++){
-                if(i==0){
+                if(i+1==day){
                     remoteViews.setTextColor(daysIDS[i], color2);
                 }
                 //System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
