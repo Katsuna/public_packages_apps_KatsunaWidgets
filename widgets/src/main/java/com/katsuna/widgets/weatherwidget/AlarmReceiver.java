@@ -82,7 +82,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
-        //System.out.println("I m here");
+        ////System.out.println("I m here");
         String action = intent.getAction();
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
@@ -115,11 +115,11 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         getLastBestLocation();
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            //System.out.println("I m boot");
+            ////System.out.println("I m boot");
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             String interval = sp.getString("refreshInterval", "1");
-            System.out.println("REFRESH INTERVAL IS: "+ interval);
+            //System.out.println("REFRESH INTERVAL IS: "+ interval);
             if (!interval.equals("0")) {
                 getWeather();
             }
@@ -134,7 +134,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 getWeather();
             }
         } else {
-            //System.out.println("I m else alarm" + action);
+            ////System.out.println("I m else alarm" + action);
             if (action != null) {
                 switch (action) {
                     case CURRENT:
@@ -179,7 +179,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
                 List<Weather> forecast = new ArrayList<>();
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), context);
-                //System.out.println("CurrentWeather from prefs"+sp.getString("lastShortterm", ""));
+                ////System.out.println("CurrentWeather from prefs"+sp.getString("lastShortterm", ""));
             }
             else {
                // failed = true;
@@ -231,7 +231,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
     private void getWeather() {
         //Log.d("Alarm", "Recurring alarm; requesting download service.");
-        //System.out.println("Recurring alarm; requesting download service.");
+        ////System.out.println("Recurring alarm; requesting download service.");
         boolean failed;
         if (isNetworkAvailable()) {
             failed = false;
@@ -317,7 +317,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         //Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
-        //System.out.println("location changed lat:"+location.getLatitude() +" long:"+ location.getLongitude());
+        ////System.out.println("location changed lat:"+location.getLatitude() +" long:"+ location.getLongitude());
         //Log.i("onLocationChanged","location changed lat:"+location.getLatitude() +" long:"+ location.getLongitude());
 
 //        new ProvideCityNameTask(this, this, progressDialog).execute("coords", Double.toString(latitude), Double.toString(longitude));
@@ -348,7 +348,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         protected Void doInBackground(String... params) {
             String result = "";
             try {
-               // //System.out.println("day weather call");
+               // ////System.out.println("day weather call");
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
@@ -415,7 +415,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             String result = "";
             try {
 
-             //   //System.out.println("short term weather call");
+             //   ////System.out.println("short term weather call");
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
@@ -479,7 +479,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
             String result = "";
             try {
 
-                System.out.println("long term weather call");
+                //System.out.println("long term weather call");
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();
                 if (language.equals("cs")) {
@@ -495,7 +495,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 apiCounter++;
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
-                Log.d("MainActivity", "Current Timestamp: " + format);
+//                Log.d("MainActivity", "Current Timestamp: " + format);
 
                 writeToFile("Long Weather calls:"+currentCounter+" - total:"+apiCounter +"-Time:"+format,context );
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

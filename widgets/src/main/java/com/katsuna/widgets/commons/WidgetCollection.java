@@ -87,7 +87,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
             if (extended == false &&calendar == false) {
-                System.out.println("Im on widget onUpdate");
+//                System.out.println("Im on widget onUpdate");
 
                 super.onUpdate(context, appWidgetManager, appWidgetIds);
                 // CLOCK WIDGET UPDATE
@@ -142,7 +142,7 @@ public class WidgetCollection extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] widgetIds) {
         super.onDeleted(context, widgetIds);
-        System.out.println("Remove service");
+//        System.out.println("Remove service");
 
 // if (getNumberOfWidgets(context) == 0) {
 // stop monitoring if there are no more widgets on screen

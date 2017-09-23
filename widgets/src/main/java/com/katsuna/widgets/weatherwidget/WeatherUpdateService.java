@@ -77,7 +77,7 @@ public class WeatherUpdateService extends IntentService {
 
         if (intent != null) {
             final String action = intent.getAction();
-            System.out.println("Im on weatherUpdate service with action="+action);
+            //System.out.println("Im on weatherUpdate service with action="+action);
             setupTheme(this);
 
             if( ACTION_WIDGET_WEATHER_CHOICE.equals(action)){
@@ -197,15 +197,15 @@ public class WeatherUpdateService extends IntentService {
 
         Weather widgetWeather = new Weather();
         if (!sp.getString("lastToday", "").equals("")) {
-            Log.d("api call","get day forecast inside update");
+            //Log.d("api call","get day forecast inside update");
 
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
             intent.setAction(CURRENT);
             pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            System.out.println("current forecast without saved");
+            //System.out.println("current forecast without saved");
 
-            Log.d("api call","Else last day forecast inside update");
+            //Log.d("api call","Else last day forecast inside update");
 
             try {
                 pendingIntent2.send();
@@ -284,15 +284,15 @@ public class WeatherUpdateService extends IntentService {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastLongterm", "").equals("")) {
-             //   System.out.println("im called");
-                //Log.d("api call","Api call for longTerm forecast inside update");
+             //   //System.out.println("im called");
+                ////Log.d("api call","Api call for longTerm forecast inside update");
 
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
             } else {
                 intent.setAction(LONG_FORECAST);
                 pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                System.out.println("long forecast without saved");
+                //System.out.println("long forecast without saved");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
@@ -341,7 +341,7 @@ public class WeatherUpdateService extends IntentService {
                 if(i+1==day){
                     remoteViews.setTextColor(daysIDS[i], color2);
                 }
-                //System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
+                ////System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
                 remoteViews.setTextViewText(daysIDS[i],getDay(forecast.get(i).getDate()));
                 remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
                 remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());
@@ -352,13 +352,13 @@ public class WeatherUpdateService extends IntentService {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastShortterm", "").equals("")) {
-                //Log.d("api call","Api call for shortTerm forecast inside update");
+                ////Log.d("api call","Api call for shortTerm forecast inside update");
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
             } else {
                 intent.setAction(SHORT_FORECAST);
                 pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                System.out.println("short forecast without saved");
+                //System.out.println("short forecast without saved");
                 try {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
