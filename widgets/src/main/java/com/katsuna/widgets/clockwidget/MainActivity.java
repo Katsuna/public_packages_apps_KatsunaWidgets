@@ -40,7 +40,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Intent activityIntent = new Intent(getApplicationContext(),PermissionActivity.class);
+        //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         getApplicationContext().startActivity(activityIntent);
         finish();
         //checkLocationPermission();

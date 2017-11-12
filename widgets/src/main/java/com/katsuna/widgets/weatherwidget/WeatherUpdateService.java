@@ -212,6 +212,11 @@ public class WeatherUpdateService extends IntentService {
             } catch (PendingIntent.CanceledException e) {
                 e.printStackTrace();
             }
+            if (!sp.getString("lastToday", "").equals("")) {
+                //Log.d("api call","get day forecast inside update");
+
+                widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
+            }
         }
 
         if( layout == 1 || layout == 6 || layout ==7) {
