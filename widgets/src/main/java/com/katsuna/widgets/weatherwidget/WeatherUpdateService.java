@@ -217,6 +217,10 @@ public class WeatherUpdateService extends IntentService {
 
                 widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
             }
+            else{
+                remoteViews = new RemoteViews(getPackageName(), R.layout.no_weather_data);
+
+            }
         }
 
         if( layout == 1 || layout == 6 || layout ==7) {
@@ -228,6 +232,7 @@ public class WeatherUpdateService extends IntentService {
                     remoteViews.setOnClickPendingIntent(R.id.weatherRoot, getPendingSelfIntent(this, WidgetCollection.VIEW_WEATHER_CLICKED));
 
                     rv.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+
                     rv.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
                     //remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
                     rv.setTextViewText(R.id.city, widgetWeather.getCity());
@@ -303,6 +308,12 @@ public class WeatherUpdateService extends IntentService {
                 } catch (PendingIntent.CanceledException e) {
                     e.printStackTrace();
                 }
+                if (!sp.getString("lastLongterm", "").equals("")) {
+                    //   //System.out.println("im called");
+                    ////Log.d("api call","Api call for longTerm forecast inside update");
+
+                    forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
+                }
             }
 
             remoteViews = new RemoteViews(getPackageName(), R.layout.week_widget_view);
@@ -368,6 +379,10 @@ public class WeatherUpdateService extends IntentService {
                     pendingIntent2.send();
                 } catch (PendingIntent.CanceledException e) {
                     e.printStackTrace();
+                }
+                if (!sp.getString("lastShortterm", "").equals("")) {
+                    ////Log.d("api call","Api call for shortTerm forecast inside update");
+                    forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
                 }
             }
 

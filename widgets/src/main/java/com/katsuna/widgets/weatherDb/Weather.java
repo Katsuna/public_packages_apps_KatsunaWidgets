@@ -121,6 +121,11 @@ public class Weather {
 
 
     public String getWind() {
+        if(wind != null) {
+            if (wind.charAt(0) == '.') {
+                wind = "0" + wind;
+            }
+        }
         return wind;
     }
 
