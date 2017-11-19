@@ -99,7 +99,7 @@ public class WeatherUpdateService extends IntentService {
 //                Intent updateIntent = new Intent(this, ClockUpdateService.class);
 //                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
 //                this.startService(updateIntent);
-
+                System.out.println("Update called");
                 RemoteViews remoteViews =createRemoteViews(1);
 
                 String []clock = ClockUpdateService.setTime();
@@ -314,6 +314,9 @@ public class WeatherUpdateService extends IntentService {
 
                     forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
                 }
+                else{
+                    System.out.println("I HAVEN'T ANY DATA");
+                }
             }
 
             remoteViews = new RemoteViews(getPackageName(), R.layout.week_widget_view);
@@ -352,16 +355,18 @@ public class WeatherUpdateService extends IntentService {
 //                j++;
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_WEEK);
-
-            for(int i = 0; i < 7; i++){
-                if(i+1==day){
-                    remoteViews.setTextColor(daysIDS[i], color2);
+            System.out.println("the day is:"+ day+"forecaste"+forecast.size());
+            if(forecast.size()>0) {
+                for (int i = 0; i < 7; i++) {
+                    if (i + 1 == day) {
+                        remoteViews.setTextColor(daysIDS[i], color2);
+                    }
+                    ////System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
+                    remoteViews.setTextViewText(daysIDS[i], getDay(forecast.get(i).getDate()));
+                    remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+                    remoteViews.setTextViewText(tempIDs[i], forecast.get(i).getTemperature());
+                    j++;
                 }
-                ////System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
-                remoteViews.setTextViewText(daysIDS[i],getDay(forecast.get(i).getDate()));
-                remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
-                remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());
-                j++;
             }
         }
         else if(layout == 4){
@@ -383,6 +388,9 @@ public class WeatherUpdateService extends IntentService {
                 if (!sp.getString("lastShortterm", "").equals("")) {
                     ////Log.d("api call","Api call for shortTerm forecast inside update");
                     forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
+                }
+                else{
+                    System.out.println("I HAVEN'T ANY 2");
                 }
             }
 
@@ -412,11 +420,15 @@ public class WeatherUpdateService extends IntentService {
 
             DateFormat format = new SimpleDateFormat("HH:mm");
             DateFormat formatDay = new SimpleDateFormat("HH");
-            for(int i = 0; i < 7; i++){
+            System.out.println("forecast:"+forecast.size());
+            if( forecast.size() > 0) {
+                for (int i = 0; i < 7; i++) {
+                    System.out.println("forecast:" + forecast.size() + "time is:" + forecast.get(i).getDate());
 
-                remoteViews.setTextViewText(timeIDS[i],format.format(forecast.get(i).getDate()));
-                remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Integer.parseInt(formatDay.format(forecast.get(i).getDate())), this));
-                remoteViews.setTextViewText(tempIDs[i],forecast.get(i).getTemperature());
+                    remoteViews.setTextViewText(timeIDS[i], format.format(forecast.get(i).getDate()));
+                    remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Integer.parseInt(formatDay.format(forecast.get(i).getDate())), this));
+                    remoteViews.setTextViewText(tempIDs[i], forecast.get(i).getTemperature());
+                }
             }
         }
         else if (layout == 5){

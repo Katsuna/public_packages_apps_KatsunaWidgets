@@ -87,7 +87,6 @@ public class WidgetCollection extends AppWidgetProvider {
 
 
             if (extended == false &&calendar == false) {
-//                System.out.println("Im on widget onUpdate");
 
                 super.onUpdate(context, appWidgetManager, appWidgetIds);
                 // CLOCK WIDGET UPDATE
@@ -156,7 +155,7 @@ public class WidgetCollection extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
         super.onReceive(context, intent);
-        //System.out.println("on Receive calendar_widget:"+ intent.getAction());
+//        System.out.println("on Receive widget:"+ intent.getAction());
         if (TIME_CLICKED.equals(intent.getAction())) {
             extended = true;
 

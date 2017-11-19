@@ -51,9 +51,7 @@ import static com.katsuna.widgets.weatherwidget.WeatherMonitorService.MY_PERMISS
 
 
 public class AlarmReceiver extends BroadcastReceiver implements LocationListener {
-    public static final int REQUEST_CODE_CURRENT = 12345;
-    public static final int REQUEST_CODE_FORECAST = 23456;
-    public static final int REQUEST_CODE_LONG_FORECAST = 34567;
+
     public static final String LONG_FORECAST = "long_forecast";
     public static final String SHORT_FORECAST = "short_forecast";
     public static final String CURRENT = "current";
@@ -87,12 +85,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
-//        if (DeviceUtils.isUserSetupcd App Complete(context)) {
-//            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-//                Intent activityIntent = new Intent(context, PermissionActivity.class);
-//                context.startActivity(activityIntent);
-//            }
-//        }
 
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -134,7 +126,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 getWeather();
             }
         } else {
-            ////System.out.println("I m else alarm" + action);
+            System.out.println("I m in alarm" + action);
             if (action != null) {
                 switch (action) {
                     case CURRENT:
@@ -257,10 +249,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-//    private boolean isUpdateLocation() {
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//        return preferences.getBoolean("updateLocationAutomatically", false);
-//    }
 
     private void saveLocation(String result) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -314,13 +302,9 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         } catch (SecurityException e) {
             //Log.e("LocationManager", "Error while trying to stop listening for location updates. This is probably a permissions issue", e);
         }
-        //Log.i("LOCATION (" + location.getProvider().toUpperCase() + ")", location.getLatitude() + ", " + location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
-        ////System.out.println("location changed lat:"+location.getLatitude() +" long:"+ location.getLongitude());
-        //Log.i("onLocationChanged","location changed lat:"+location.getLatitude() +" long:"+ location.getLongitude());
 
-//        new ProvideCityNameTask(this, this, progressDialog).execute("coords", Double.toString(latitude), Double.toString(longitude));
     }
 
     @Override
@@ -348,7 +332,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         protected Void doInBackground(String... params) {
             String result = "";
             try {
-               // ////System.out.println("day weather call");
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 String language = Locale.getDefault().getLanguage();

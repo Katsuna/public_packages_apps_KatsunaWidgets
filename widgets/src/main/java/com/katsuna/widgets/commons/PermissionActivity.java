@@ -57,6 +57,8 @@ public class PermissionActivity extends Activity {
                     Intent updateIntent = new Intent(this, WeatherUpdateService.class);
                     updateIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
                     this.startService(updateIntent);
+//                    this.startService(new Intent(this, WeatherMonitorService.class));
+
                 }
 
                 break;

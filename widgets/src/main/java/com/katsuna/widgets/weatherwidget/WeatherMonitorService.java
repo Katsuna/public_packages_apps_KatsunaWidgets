@@ -169,11 +169,11 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
         final PendingIntent pIntent = PendingIntent.getBroadcast(this, 0,
                 intent, 0);
-//        try {
-//            pIntent.send();
-//        } catch (PendingIntent.CanceledException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            pIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
 
         long firstMillist = System.currentTimeMillis();
         AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
@@ -187,9 +187,16 @@ public class WeatherMonitorService extends Service implements LocationListener{
         Intent intentForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
         intentForecast.setAction(SHORT_FORECAST);
 
+
         // Create a PendingIntent to be triggered when the alarm goes off
         final PendingIntent fIntent = PendingIntent.getBroadcast(this, 0,
                 intentForecast, 0);
+
+        try {
+            fIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
 
         // Setup periodic alarm every 5 seconds
         AlarmManager alarmFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
@@ -198,19 +205,25 @@ public class WeatherMonitorService extends Service implements LocationListener{
         alarmFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
                 INTERVAL_HOUR *3, fIntent);
 
-
         //*******long forecast**********//
         Intent intentLongForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
         intentLongForecast.setAction(LONG_FORECAST);
         // Create a PendingIntent to be triggered when the alarm goes off
         final PendingIntent lIntent = PendingIntent.getBroadcast(this, 0,
                 intentLongForecast, 0);
+        try {
+            lIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
 
         AlarmManager alarmLongFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
         // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
         alarmLongFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
                 AlarmManager.INTERVAL_DAY, lIntent);
+
+        //preloadWeather();
     }
 
 
