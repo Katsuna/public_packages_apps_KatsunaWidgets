@@ -96,10 +96,7 @@ public class WeatherUpdateService extends IntentService {
                 appWidgetManager.updateAppWidget(componentName, remoteViews);
             }
             else if (ACTION_WIDGET_UPDATE.equals(action)) {
-//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-//                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
-//                this.startService(updateIntent);
-                System.out.println("Update called");
+
                 RemoteViews remoteViews =createRemoteViews(1);
 
                 String []clock = ClockUpdateService.setTime();

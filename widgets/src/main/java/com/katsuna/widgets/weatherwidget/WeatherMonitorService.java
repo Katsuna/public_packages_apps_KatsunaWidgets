@@ -145,10 +145,10 @@ public class WeatherMonitorService extends Service implements LocationListener{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        //System.out.println("im at start");
 
 
         scheduleWeatherAlarm();
+
 
       //  AlarmReceiver.setRecurringAlarm(this);
 

@@ -146,9 +146,9 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         }
 
 
-        Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-        updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-        context.startService(updateWeatherIntent);
+//        Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+//        updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+//        context.startService(updateWeatherIntent);
     }
 
 
@@ -343,7 +343,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 URL url = null;
                 if (!latitude.equals("")) {
                     //Log.d("api call","From api day forecast inside alarm with lat:"+latitude+"long:"+longitude);
-
                     url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&appid=" + apiKey);
 
                 currentCounter++;
@@ -351,7 +350,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
                 //Log.d("MainActivity", "Current Timestamp: " + format);
-
                 writeToFile("current Weather calls:"+currentCounter+" - total:"+apiCounter +"-Time:"+format,context );
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -366,6 +364,11 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     editor.putString("lastToday", result);
                     editor.apply();
                     WeatherMonitorService.saveLastUpdateTime(sp);
+
+                    Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+                    updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+                    context.startService(updateWeatherIntent);
+
                 } else {
                     // Connection problem
                 }
