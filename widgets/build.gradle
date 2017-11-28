@@ -70,3 +70,11 @@ apply plugin: 'org.greenrobot.greendao'
 dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
 }
+
+dependencies {
+    compile 'com.google.firebase:firebase-core:11.0.4'
+}
+dependencies {
+    compile 'com.google.firebase:firebase-crash:11.0.4'
+}
+apply plugin: 'com.google.gms.google-services'
