@@ -160,84 +160,92 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
     public void scheduleWeatherAlarm() {
 
+        WeatherJobService jobService = new WeatherJobService();
+//        jobService.schedule(this);
+        preloadWeather(jobService);
+
 
         //*** current weather alarm*************/////
         // Construct an intent that will execute the AlarmReceiver
-        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        // Create a PendingIntent to be triggered when the alarm goes off
-        intent.setAction(CURRENT);
-
-        final PendingIntent pIntent = PendingIntent.getBroadcast(this, 0,
-                intent, 0);
-        try {
-            pIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-        }
-
-        long firstMillist = System.currentTimeMillis();
-        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                INTERVAL_HOUR , pIntent);
-
-
-        //*************Forecast***************//
-        Intent intentForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intentForecast.setAction(SHORT_FORECAST);
-
-
-        // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent fIntent = PendingIntent.getBroadcast(this, 0,
-                intentForecast, 0);
-
-        try {
-            fIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-        }
-
-        // Setup periodic alarm every 5 seconds
-        AlarmManager alarmFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-        alarmFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                INTERVAL_HOUR *3, fIntent);
-
-        //*******long forecast**********//
-        Intent intentLongForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intentLongForecast.setAction(LONG_FORECAST);
-        // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent lIntent = PendingIntent.getBroadcast(this, 0,
-                intentLongForecast, 0);
-        try {
-            lIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-        }
-
-        AlarmManager alarmLongFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-        alarmLongFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-                AlarmManager.INTERVAL_DAY, lIntent);
+//        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+//        // Create a PendingIntent to be triggered when the alarm goes off
+//        intent.setAction(CURRENT);
+//
+//        final PendingIntent pIntent = PendingIntent.getBroadcast(this, 0,
+//                intent, 0);
+//
+//        try {
+//            pIntent.send();
+//        } catch (PendingIntent.CanceledException e) {
+//            e.printStackTrace();
+//        }
+//
+//        long firstMillist = System.currentTimeMillis();
+//        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+//        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
+//                INTERVAL_HOUR , pIntent);
+//
+//
+//        //*************Forecast***************//
+//        Intent intentForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
+//        intentForecast.setAction(SHORT_FORECAST);
+//
+//
+//        // Create a PendingIntent to be triggered when the alarm goes off
+//        final PendingIntent fIntent = PendingIntent.getBroadcast(this, 0,
+//                intentForecast, 0);
+//
+//        try {
+//            fIntent.send();
+//        } catch (PendingIntent.CanceledException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Setup periodic alarm every 5 seconds
+//        AlarmManager alarmFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+//        alarmFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
+//                INTERVAL_HOUR *3, fIntent);
+//
+//        //*******long forecast**********//
+//        Intent intentLongForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
+//        intentLongForecast.setAction(LONG_FORECAST);
+//        // Create a PendingIntent to be triggered when the alarm goes off
+//        final PendingIntent lIntent = PendingIntent.getBroadcast(this, 0,
+//                intentLongForecast, 0);
+//        try {
+//            lIntent.send();
+//        } catch (PendingIntent.CanceledException e) {
+//            e.printStackTrace();
+//        }
+//
+//        AlarmManager alarmLongFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+//        alarmLongFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
+//                AlarmManager.INTERVAL_DAY, lIntent);
 
         //preloadWeather();
     }
 
 
-    private void preloadWeather() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(WeatherMonitorService.this);
-
-        String lastToday = sp.getString("lastToday", "");
-        if (!lastToday.isEmpty()) {
-            new TodayWeatherTask(this, this, progressDialog).execute("cachedResponse", lastToday);
-        }
-        String lastLongterm = sp.getString("lastLongterm", "");
-        if (!lastLongterm.isEmpty()) {
-            new LongTermWeatherTask(this, this, progressDialog).execute("cachedResponse", lastLongterm);
-        }
+    private void preloadWeather(WeatherJobService jobService) {
+        jobService.getCurrentWeather(WeatherMonitorService.this);
+        jobService.getShortWeather(WeatherMonitorService.this);
+        jobService.getLongWeather(WeatherMonitorService.this);
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(WeatherMonitorService.this);
+//
+//        String lastToday = sp.getString("lastToday", "");
+//        if (!lastToday.isEmpty()) {
+//            new TodayWeatherTask(this, this, progressDialog).execute("cachedResponse", lastToday);
+//        }
+//        String lastLongterm = sp.getString("lastLongterm", "");
+//        if (!lastLongterm.isEmpty()) {
+//            new LongTermWeatherTask(this, this, progressDialog).execute("cachedResponse", lastLongterm);
+//        }
     }
 
     private void getTodayWeather() {
@@ -388,11 +396,11 @@ public class WeatherMonitorService extends Service implements LocationListener{
     private void updateTodayWeatherUI() {
         try {
             if (todayWeather.getCountry().isEmpty()) {
-                preloadWeather();
+              //  preloadWeather();
                 return;
             }
         } catch (Exception e) {
-            preloadWeather();
+      //      preloadWeather();
             return;
         }
         String city = todayWeather.getCity();

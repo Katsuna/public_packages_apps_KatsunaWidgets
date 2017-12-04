@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -80,7 +81,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
-        ////System.out.println("I m here");
+        System.out.println("I m here");
         String action = intent.getAction();
 
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
@@ -163,7 +164,14 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 //            } else {
 //                new GetWeatherTask().execute();
 //            }
-            new GetWeatherTask().execute();
+            System.out.println("currentWeather get");
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+                new GetWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            else{
+                new GetWeatherTask().execute();
+
+            }
         } else {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -171,6 +179,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
                 List<Weather> forecast = new ArrayList<>();
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), context);
+               // System.out.println(forecast)
                 ////System.out.println("CurrentWeather from prefs"+sp.getString("lastShortterm", ""));
             }
             else {
@@ -193,7 +202,14 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 //                new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
 //
 //            }
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+            new GetShortTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else{
             new GetShortTermWeatherTask().execute();
+
+        }
+
         } else {
             failed = true;
         }
@@ -211,7 +227,13 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 //            if (isUpdateLocation()) {
 //                new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
 //            }
-            new GetLongTermWeatherTask().execute();
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+                new GetLongTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            else{
+                new GetLongTermWeatherTask().execute();
+
+            }
         } else {
             failed = true;
         }
@@ -223,16 +245,25 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
     private void getWeather() {
         //Log.d("Alarm", "Recurring alarm; requesting download service.");
-        ////System.out.println("Recurring alarm; requesting download service.");
+        System.out.println("Recurring alarm; requesting download service.");
         boolean failed;
         if (isNetworkAvailable()) {
             failed = false;
 //            if (isUpdateLocation()) {
 //                new GetLocationAndWeatherTask().execute(); // This method calls the two methods below once it has determined a location
 //            } else {
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+                new GetWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new GetLongTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new GetShortTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            else{
                 new GetWeatherTask().execute();
                 new GetLongTermWeatherTask().execute();
                 new GetShortTermWeatherTask().execute();
+            }
+
+
 //            }
         } else {
             failed = true;
@@ -354,6 +385,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    System.out.println("IM in getWeather execute2");
 
                 if (urlConnection.getResponseCode() == 200) {
                     String line = null;
@@ -365,6 +397,7 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
                     editor.apply();
                     WeatherMonitorService.saveLastUpdateTime(sp);
 
+                    System.out.println("IM in getWeather execute");
                     Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
                     updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
                     context.startService(updateWeatherIntent);

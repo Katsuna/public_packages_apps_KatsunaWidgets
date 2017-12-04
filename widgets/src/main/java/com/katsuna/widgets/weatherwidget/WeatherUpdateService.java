@@ -185,9 +185,9 @@ public class WeatherUpdateService extends IntentService {
             textColor =R.color.common_white;
         }
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        //intent.setAction(ACTION_MENU_CLICKED);
-        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent intent = new Intent(this, AlarmReceiver.class);
+//        //intent.setAction(ACTION_MENU_CLICKED);
+//        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews remoteViews = null;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -198,17 +198,20 @@ public class WeatherUpdateService extends IntentService {
 
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), this);
         } else {
-            intent.setAction(CURRENT);
-            pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            //System.out.println("current forecast without saved");
+            WeatherJobService jobService = new WeatherJobService();
+            jobService.getCurrentWeather(this);
 
-            //Log.d("api call","Else last day forecast inside update");
-
-            try {
-                pendingIntent2.send();
-            } catch (PendingIntent.CanceledException e) {
-                e.printStackTrace();
-            }
+//            intent.setAction(CURRENT);
+//            pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            //System.out.println("current forecast without saved");
+//
+//            //Log.d("api call","Else last day forecast inside update");
+//
+//            try {
+//                pendingIntent2.send();
+//            } catch (PendingIntent.CanceledException e) {
+//                e.printStackTrace();
+//            }
             if (!sp.getString("lastToday", "").equals("")) {
                 //Log.d("api call","get day forecast inside update");
 
@@ -296,15 +299,19 @@ public class WeatherUpdateService extends IntentService {
 
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), this);
             } else {
-                intent.setAction(LONG_FORECAST);
-                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                //System.out.println("long forecast without saved");
-                try {
-                    pendingIntent2.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
-                }
+                WeatherJobService jobService = new WeatherJobService();
+
+                jobService.getLongWeather(this);
+//                intent.setAction(LONG_FORECAST);
+//                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                //System.out.println("long forecast without saved");
+//                try {
+//                    pendingIntent2.send();
+//                } catch (PendingIntent.CanceledException e) {
+//                    e.printStackTrace();
+//                }
                 if (!sp.getString("lastLongterm", "").equals("")) {
                     //   //System.out.println("im called");
                     ////Log.d("api call","Api call for longTerm forecast inside update");
@@ -373,15 +380,18 @@ public class WeatherUpdateService extends IntentService {
                 ////Log.d("api call","Api call for shortTerm forecast inside update");
                 forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);
             } else {
-                intent.setAction(SHORT_FORECAST);
-                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                WeatherJobService jobService = new WeatherJobService();
 
-                //System.out.println("short forecast without saved");
-                try {
-                    pendingIntent2.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
-                }
+                jobService.getShortWeather(this);
+//                intent.setAction(SHORT_FORECAST);
+//                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                //System.out.println("short forecast without saved");
+//                try {
+//                    pendingIntent2.send();
+//                } catch (PendingIntent.CanceledException e) {
+//                    e.printStackTrace();
+//                }
                 if (!sp.getString("lastShortterm", "").equals("")) {
                     ////Log.d("api call","Api call for shortTerm forecast inside update");
                     forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), this);

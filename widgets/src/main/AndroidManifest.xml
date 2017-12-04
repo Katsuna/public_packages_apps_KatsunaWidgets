@@ -124,6 +124,13 @@
             android:name="com.katsuna.widgets.clockwidget.ClockUpdateService"
             android:exported="false" />
 
+        <service
+            android:name="com.katsuna.widgets.weatherwidget.WeatherJobService"
+            android:label="Word service"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+
+        </service>
+
         <!--<receiver-->
             <!--android:name="com.katsuna.widgets.clockwidget.ClockBootReceiver"-->
             <!--android:permission="android.permission.RECEIVE_BOOT_COMPLETED">-->
@@ -132,12 +139,7 @@
             <!--</intent-filter>-->
         <!--</receiver>-->
 
-<!--    Battery staff -->
 
-
-        <service
-            android:name="com.katsuna.widgets.batterywidget.BatteryUpdateService"
-            android:exported="false"/>
 
         
 
