@@ -120,14 +120,14 @@ public class WidgetCollection extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        //System.out.println("On enabled called!");
+        System.out.println("On enabled called!");
         super.onEnabled(context);
 
 
         context.startService(new Intent(context, ClockMonitorService.class));
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            //System.out.println("Im in enabled and i have permission");
+            System.out.println("Im in enabled and i have permission");
 
             context.startService(new Intent(context, WeatherMonitorService.class));
         }
