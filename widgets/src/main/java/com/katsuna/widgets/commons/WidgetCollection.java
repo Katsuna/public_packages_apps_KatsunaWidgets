@@ -31,6 +31,10 @@ import com.katsuna.widgets.weatherDb.WeatherDbHandler;
 import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.katsuna.widgets.R.string.sunday;
 
 
 public class WidgetCollection extends AppWidgetProvider {
@@ -166,9 +170,10 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         else if (WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
-            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_WEATHER_CHOICE);
-            context.startService(updateWeatherIntent);
+
+//            Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+//            updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_WEATHER_CHOICE);
+//            context.startService(updateWeatherIntent);
 
         }
         else if (VIEW_WEATHER_CLICKED.equals(intent.getAction())) {
@@ -223,7 +228,7 @@ public class WidgetCollection extends AppWidgetProvider {
 //
 //            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+    public PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
@@ -254,5 +259,8 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         return theme;
     }
+
+
+
 
 }
