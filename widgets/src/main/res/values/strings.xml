@@ -181,5 +181,6 @@
     <string name="permission_button">Grant Permissions</string>
     <!-- text in screen when no location permission is granted-->
     <string name="no_permission_text">Please click on the button below to allow access to weather data.</string>
+    <string name="dateFormat">dd MM yyyy</string>
 
 </resources>

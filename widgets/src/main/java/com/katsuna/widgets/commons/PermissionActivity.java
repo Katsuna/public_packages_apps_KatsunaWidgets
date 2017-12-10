@@ -20,7 +20,7 @@ public class PermissionActivity extends Activity {
     private static final String TAG = "PermissionsActivity";
 
     private static final int PERMISSION_ALL = 1;
-    String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION};
+    public static String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION};
 
 
     @Override
@@ -55,12 +55,16 @@ public class PermissionActivity extends Activity {
                     Intent clockIntent = new Intent(this, ClockUpdateService.class);
                     clockIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
                     this.startService(clockIntent);
-                    Intent updateIntent = new Intent(this, WeatherUpdateService.class);
+//                    Intent updateIntent = new Intent(this, WeatherUpdateService.class);
+//
+//                    updateIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+//                    this.startService(updateIntent);
 
-                    updateIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-                    this.startService(updateIntent);
                     WeatherJobService jobService = new WeatherJobService();
-        jobService.schedule(this);
+                    jobService.schedule(this);
+                    jobService.getCurrentWeather(this);
+                    jobService.getShortWeather(this);
+                    jobService.getLongWeather(this);
 //                    this.startService(new Intent(this, WeatherMonitorService.class));
 
                 }

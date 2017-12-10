@@ -161,7 +161,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
     public void scheduleWeatherAlarm() {
 
         WeatherJobService jobService = new WeatherJobService();
-//        jobService.schedule(this);
+        //jobService.schedule(this);
         preloadWeather(jobService);
 
 

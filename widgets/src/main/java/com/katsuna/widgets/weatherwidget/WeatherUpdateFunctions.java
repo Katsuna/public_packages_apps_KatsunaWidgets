@@ -33,7 +33,7 @@ import java.util.List;
 
 public class WeatherUpdateFunctions {
 
-    private RemoteViews createRemoteViews(int layout, Context context, String packageName, WidgetCollection provider, ColorProfile colorProfile) {
+    public RemoteViews createRemoteViews(int layout, Context context, String packageName, WidgetCollection provider, ColorProfile colorProfile) {
         int color2 = ColorCalc.getColor(context,
                 ColorProfileKey.ACCENT2_COLOR, colorProfile);
 
@@ -52,6 +52,7 @@ public class WeatherUpdateFunctions {
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), context);
         } else {
             WeatherJobService jobService = new WeatherJobService();
+            System.out.println("im before get current weather");
             jobService.getCurrentWeather(context);
 
             if (!sp.getString("lastToday", "").equals("")) {

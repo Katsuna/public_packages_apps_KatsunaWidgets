@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -29,6 +30,7 @@ import com.katsuna.widgets.clockwidget.MainActivity;
 import com.katsuna.widgets.weatherDb.WeatherContentProvider;
 import com.katsuna.widgets.weatherDb.WeatherDbHandler;
 import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
+import com.katsuna.widgets.weatherwidget.WeatherUpdateFunctions;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
 import java.util.Calendar;
@@ -67,6 +69,7 @@ public class WidgetCollection extends AppWidgetProvider {
     UserProfileContainer mUserProfileContainer;
     ColorProfile colorProfile;
     private int mTheme;
+    private WeatherUpdateFunctions weatherUpdater;
 
 //    public static int getNumberOfWidgets(final Context context) {
 //        ComponentName componentName = new ComponentName(context, ClockWidget.class);
@@ -95,20 +98,32 @@ public class WidgetCollection extends AppWidgetProvider {
                 super.onUpdate(context, appWidgetManager, appWidgetIds);
                 // CLOCK WIDGET UPDATE
                 // ensure service is running
-                context.startService(new Intent(context, ClockMonitorService.class));
+             //   context.startService(new Intent(context, ClockMonitorService.class));
                 // update the widgets
-                Intent updateIntent = new Intent(context, ClockUpdateService.class);
-                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
-                updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
-                context.startService(updateIntent);
+//                Intent updateIntent = new Intent(context, ClockUpdateService.class);
+//                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
+//                updateIntent.putExtra(ClockUpdateService.EXTRA_WIDGET_IDS, appWidgetIds);
+//                context.startService(updateIntent);
 
                 if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
-                    context.startService(new Intent(context, WeatherMonitorService.class));
-                    Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-                    updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-                    updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
-                    context.startService(updateWeatherIntent);
+
+                    if(weatherUpdater == null){
+                        weatherUpdater = new WeatherUpdateFunctions();
+                    }
+                    setupTheme(context);
+                    if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        System.out.println("Im in enabled and i have permission");
+                        weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+                    }
+
+
+//                    context.startService(new Intent(context, WeatherMonitorService.class));
+//                    Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
+//                    updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
+//                    updateWeatherIntent.putExtra(WeatherUpdateService.WIDGET_IDS, appWidgetIds);
+//                    context.startService(updateWeatherIntent);
                 }
                 else{
                     //System.out.println("Im in update and i don't have permission");
@@ -122,22 +137,24 @@ public class WidgetCollection extends AppWidgetProvider {
         }
     }
 
+
+
     @Override
     public void onEnabled(Context context) {
         System.out.println("On enabled called!");
         super.onEnabled(context);
-
-
-        context.startService(new Intent(context, ClockMonitorService.class));
+        if(weatherUpdater == null){
+            weatherUpdater = new WeatherUpdateFunctions();
+        }
+        setupTheme(context);
+//        context.startService(new Intent(context, ClockMonitorService.class));
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             System.out.println("Im in enabled and i have permission");
+            weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+          //  context.startService(new Intent(context, WeatherMonitorService.class));
+        }
 
-            context.startService(new Intent(context, WeatherMonitorService.class));
-        }
-        else{
-            //System.out.println("Im in enabled and i don't have permission");
-        }
 
 
     }
@@ -205,7 +222,11 @@ public class WidgetCollection extends AppWidgetProvider {
             calendar = true;
             Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
             updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
-            context.startService(updateClockIntent);
+//            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+//                context.startForegroundService(new Intent(context, ClockUpdateService.class));
+//            } else {
+                context.startService(new Intent(context, ClockUpdateService.class));
+//            }
         }
         else if(ADD_PERMISSION_CLICKED.equals(intent.getAction())){
             Intent activityIntent = new Intent(context, PermissionActivity.class);
@@ -215,40 +236,17 @@ public class WidgetCollection extends AppWidgetProvider {
 
     }
 
-
-//            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-//
-//            RemoteViews remoteViews;
-//            ComponentName watchWidget;
-//
-//            remoteViews = new RemoteViews(context.getPackageName(), R.layout.extended_widget_view);
-////            remoteViews.setViewVisibility(R.id.widgetRoot,View.INVISIBLE);
-////            remoteViews.setViewVisibility(R.id.extendedRoot,View.VISIBLE);
-//            watchWidget = new ComponentName(context, WidgetCollection.class);
-//
-//            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-
     public PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
-    
+
 
 
     private void setupTheme(Context context) {
-
-
-       // UserProfile userProfile =   ProfileReader.getUserProfileFromKatsunaServices(context);
-        mUserProfileContainer = ProfileReader.getKatsunaUserProfile(context);
-     //   //System.out.println("the user profile is:"+context.getPackageName().toString());
-//        if(userProfile == null) {
-//            userProfile = ProfileReader.getUserProfileFromAppSettings(context);
-//        }
-        colorProfile = mUserProfileContainer.getColorProfile();
-        //System.out.println("im in finding colorProfile"+colorProfile);
-        mTheme = getTheme(colorProfile);
-       // setTheme(mTheme);
+        UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
+        colorProfile = userProfileContainer.getColorProfile();
     }
 
     private int getTheme(ColorProfile profile) {

@@ -2,6 +2,7 @@ package com.katsuna.widgets.weatherwidget;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
@@ -23,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
 import com.katsuna.widgets.R;
+import com.katsuna.widgets.commons.PermissionActivity;
 import com.katsuna.widgets.weatherDb.Weather;
 
 import java.io.BufferedReader;
@@ -70,9 +72,9 @@ public class WeatherJobService extends JobService implements LocationListener {
 
 
 
-        }
-        getLastBestLocation(context);
-//        if( jobId == JOB_CURRENT_ID) {
+
+            getLastBestLocation(context);
+
             ComponentName component = new ComponentName(context, WeatherJobService.class);
             JobInfo.Builder currentBuilder = new JobInfo.Builder(JOB_CURRENT_ID, component)
                     // schedule it to run any time between 1 - 5 minutes
@@ -80,34 +82,37 @@ public class WeatherJobService extends JobService implements LocationListener {
                     .setOverrideDeadline(60 * ONE_MIN);
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             jobScheduler.schedule(currentBuilder.build());
-//        }
-//        else if( jobId == JOB_SHORT_ID){
-//            ComponentName component = new ComponentName(context, WeatherJobService.class);
+
+
             JobInfo.Builder shortBuilder = new JobInfo.Builder(JOB_SHORT_ID, component)
                     // schedule it to run any time between 1 - 5 minutes
                     .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(60 * ONE_MIN);
+                    .setOverrideDeadline(3*60 * ONE_MIN);
             JobScheduler shortJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        shortJobScheduler.schedule(shortBuilder.build());
-//        }
-//        else if( jobId == JOB_LONG_ID){
-//            ComponentName component = new ComponentName(context, WeatherJobService.class);
+            shortJobScheduler.schedule(shortBuilder.build());
+
             JobInfo.Builder longBuilder = new JobInfo.Builder(JOB_LONG_ID, component)
                     // schedule it to run any time between 1 - 5 minutes
                     .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(60 * ONE_MIN);
+                    .setOverrideDeadline(24* 60 * ONE_MIN);
             JobScheduler longJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         longJobScheduler.schedule(longBuilder.build());
+        }
 //        }
     }
 
     @Override
     public boolean onStartJob(JobParameters params) {
+        System.out.println("context"+getApplicationContext());
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Intent activityIntent = new Intent(getApplicationContext(),PermissionActivity.class);
+            //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+            getApplicationContext().startActivity(activityIntent);
         } else {
 
+            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
 
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
@@ -117,23 +122,19 @@ public class WeatherJobService extends JobService implements LocationListener {
             }
 
 
+            getLastBestLocation(getApplicationContext());
 
+
+            if( params.getJobId() == JOB_CURRENT_ID){
+                getCurrentWeather(getApplicationContext());
+            }
+            else if(params.getJobId() == JOB_SHORT_ID){
+                getShortWeather(getApplicationContext());
+            }
+            else if(params.getJobId() == JOB_LONG_ID){
+                getLongWeather(getApplicationContext());
+            }
         }
-        getLastBestLocation(context);
-
-
-
-
-        if( params.getJobId() == JOB_CURRENT_ID){
-            getCurrentWeather(context);
-        }
-        else if(params.getJobId() == JOB_SHORT_ID){
-            getShortWeather(context);
-        }
-        else if(params.getJobId() == JOB_LONG_ID){
-            getLongWeather(context);
-        }
-
         return true;
     }
 
