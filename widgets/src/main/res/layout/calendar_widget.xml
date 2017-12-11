@@ -96,35 +96,39 @@
                 android:orientation="vertical"
                 >
 
-                <TextView
 
+
+                <TextClock
                     android:id="@+id/appwidget_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_margin="12dp"
                     android:contentDescription="@string/appwidget_text"
                     android:text="@string/default_hour"
                     android:textColor="@android:color/black"
                     android:textSize="36dp"
-                    android:fontFamily="sans-serif-medium"
-                 />
+                    android:fontFamily="sans-serif-medium"/>
 
-                <TextView
+
+
+                <TextClock
                     android:id="@+id/date"
-                    android:fontFamily="sans-serif-medium"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/appwidget_text"
-                    android:layout_margin="12dp"
-                    android:textStyle="normal"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="12dp"
                     android:text="@string/default_date"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
-                  />
+                    android:textStyle="normal"
+                    android:format24Hour="@string/dateFormat"
+                    android:format12Hour="@string/dateFormat"
+                    android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
 
         </LinearLayout>

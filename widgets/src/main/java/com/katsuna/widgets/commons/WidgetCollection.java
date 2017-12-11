@@ -9,11 +9,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.katsuna.commons.entities.ColorProfile;
@@ -33,6 +37,9 @@ import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateFunctions;
 import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
+import java.text.DateFormatSymbols;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -151,7 +158,12 @@ public class WidgetCollection extends AppWidgetProvider {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             System.out.println("Im in enabled and i have permission");
-            weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+            RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+//            remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(context, WidgetCollection.VIEW_CALENDAR_CLICKED));
+//            ComponentName componentName = new ComponentName(context, WidgetCollection.class);
+//            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//            appWidgetManager.updateAppWidget(componentName, remoteViews);
+
           //  context.startService(new Intent(context, WeatherMonitorService.class));
         }
 
@@ -220,13 +232,7 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         else if(VIEW_CALENDAR_CLICKED.equals(intent.getAction())){
             calendar = true;
-            Intent updateClockIntent = new Intent(context, ClockUpdateService.class);
-            updateClockIntent.setAction(ClockUpdateService.ACTION_WIDGET_CALENDAR_VIEW);
-//            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
-//                context.startForegroundService(new Intent(context, ClockUpdateService.class));
-//            } else {
-                context.startService(new Intent(context, ClockUpdateService.class));
-//            }
+            drawWidget(context);
         }
         else if(ADD_PERMISSION_CLICKED.equals(intent.getAction())){
             Intent activityIntent = new Intent(context, PermissionActivity.class);
@@ -258,7 +264,128 @@ public class WidgetCollection extends AppWidgetProvider {
         return theme;
     }
 
+    private void drawWidget(Context context) {
 
+
+        ////System.out.println("im inside draw calendar");
+        //  AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        Resources res = context.getResources();
+        //  Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        boolean shortMonthName = false;
+        boolean mini = false;
+        int numWeeks = 5;
+
+        int color1 = ColorCalc.getColor(context,
+                ColorProfileKey.ACCENT1_COLOR, colorProfile);
+        int color2 = ColorCalc.getColor(context, ColorProfileKey.ACCENT2_COLOR,
+                colorProfile);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.calendar_widget);
+
+        Calendar cal = Calendar.getInstance();
+        int today = cal.get(Calendar.DAY_OF_YEAR);
+        int todayYear = cal.get(Calendar.YEAR);
+        int thisMonth = cal.get(Calendar.MONTH);
+        int todayWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+
+//        rv.setTextViewText(R.id.month_label, DateFormat.format(
+//                shortMonthName ? "MMM yy" : "MMMM yyyy", cal));
+
+        if (!mini) {
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            int monthStartDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            cal.add(Calendar.DAY_OF_MONTH, 1 - monthStartDayOfWeek);
+        } else {
+            int todayDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            cal.add(Calendar.DAY_OF_MONTH, 1 - todayDayOfWeek);
+        }
+
+        rv.removeAllViews(R.id.calendar);
+
+        RemoteViews headerRowRv = new RemoteViews(context.getPackageName(),
+                R.layout.row_header);
+        DateFormatSymbols dfs = DateFormatSymbols.getInstance();
+        String[] weekdays = dfs.getShortWeekdays();
+        for (int day = Calendar.SUNDAY; day <= Calendar.SATURDAY; day++) {
+            RemoteViews dayRv = new RemoteViews(context.getPackageName(), R.layout.cell_header);
+            dayRv.setTextViewText(android.R.id.text1, weekdays[day]);
+            if(todayWeek == day){
+                dayRv.setTextColor(android.R.id.text1,color2);
+            }
+            headerRowRv.addView(R.id.row_container, dayRv);
+
+        }
+        rv.addView(R.id.calendar, headerRowRv);
+
+        for (int week = 0; week < numWeeks; week++) {
+            RemoteViews rowRv = new RemoteViews(context.getPackageName(), R.layout.row_week);
+            for (int day = 0; day < 7; day++) {
+                boolean inMonth = cal.get(Calendar.MONTH) == thisMonth;
+                boolean inYear  = cal.get(Calendar.YEAR) == todayYear;
+                boolean isToday = inYear && inMonth && (cal.get(Calendar.DAY_OF_YEAR) == today);
+
+                boolean isFirstOfMonth = cal.get(Calendar.DAY_OF_MONTH) == Calendar.SUNDAY;
+                int cellLayoutResId = R.layout.cell_day;
+                if (isToday) {
+                    cellLayoutResId = R.layout.cell_today;
+
+                } else if (inMonth) {
+                    cellLayoutResId = R.layout.cell_day_this_month;
+                }
+                RemoteViews cellRv = new RemoteViews(context.getPackageName(), cellLayoutResId);
+
+                cellRv.setTextViewText(android.R.id.text1,
+                        Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+                if (isFirstOfMonth) {
+                    // cellRv.setTextViewText(R.id.month_label, DateFormat.format("MMM", cal));
+                }
+                rowRv.addView(R.id.row_container, cellRv);
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            rv.addView(R.id.calendar, rowRv);
+        }
+
+        //  rv.setInt(R.id.cell_today, "setBackgroundResource", color1);
+        rv.setViewVisibility(R.id.month_bar, numWeeks <= 1 ? View.GONE : View.VISIBLE);
+        rv.setOnClickPendingIntent(R.id.back, getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
+        String []clock = setTime();
+        ////System.out.println("in clock choice with time:"+clock[0]);
+        rv.setTextViewText(R.id.appwidget_text, clock[0]);
+        rv.setTextViewText(R.id.date, clock[1]);
+        rv.setInt(R.id.back, "setBackgroundColor", color1);
+
+        // rv.setInt(R.id.back, "setBackgroundColor", color2);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName componentName = new ComponentName(context, WidgetCollection.class);
+        appWidgetManager.updateAppWidget(componentName, rv);
+    }
+
+    public static String [] setTime() {
+        String []clock;
+        clock = new String[2];
+        Date now = new Date();
+        int hours = now.getHours();
+        String time;
+        if (hours >= 12)
+            time = "PM";
+        else
+            time = "AM";
+        hours = (hours > 12) ? hours - 12 : hours;
+        hours = (hours == 0) ? hours + 12 : hours;
+        int minutes = now.getMinutes();
+        int h1 = hours / 10;
+        int h2 = hours - h1 * 10;
+        int m1 = minutes / 10;
+        int m2 = minutes - m1 * 10;
+        Format formatter = new SimpleDateFormat("EEEE dd MMMM ");
+        String today = formatter.format(new Date());
+        String clockUI = String.format("%d:%d%d %s",hours,m1,m2,time);
+        clock[0] = clockUI;
+        clock[1] = today;
+        //Log.d("Clock Alarm: ", String.format("%d:%d -> %d %d: %d %d %s date: %s", hours, minutes, h1, h2, m1, m2,time,today));
+        return clock;
+    }
 
 
 }
