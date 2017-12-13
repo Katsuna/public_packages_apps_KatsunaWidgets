@@ -97,7 +97,9 @@ public class WidgetCollection extends AppWidgetProvider {
 
             setupTheme(context);
 
-
+            if(weatherUpdater == null){
+                weatherUpdater = new WeatherUpdateFunctions();
+            }
 
 
             if (extended == false &&calendar == false) {
