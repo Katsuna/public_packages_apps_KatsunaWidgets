@@ -1,18 +1,16 @@
 package com.katsuna.widgets.commons;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
-import com.katsuna.commons.utils.Log;
-import com.katsuna.widgets.clockwidget.ClockUpdateService;
 import com.katsuna.widgets.weatherwidget.WeatherJobService;
-import com.katsuna.widgets.weatherwidget.WeatherMonitorService;
-import com.katsuna.widgets.weatherwidget.WeatherUpdateService;
 
 
 public class PermissionActivity extends Activity {
@@ -52,20 +50,13 @@ public class PermissionActivity extends Activity {
             case PERMISSION_ALL: {
                 if(hasPermissions(this, PERMISSIONS)) {
                     permissionsGranted = true;
-                    Intent clockIntent = new Intent(this, ClockUpdateService.class);
-                    clockIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
-                    this.startService(clockIntent);
-//                    Intent updateIntent = new Intent(this, WeatherUpdateService.class);
-//
-//                    updateIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-//                    this.startService(updateIntent);
+
 
                     WeatherJobService jobService = new WeatherJobService();
                     jobService.schedule(this);
                     jobService.getCurrentWeather(this);
                     jobService.getShortWeather(this);
                     jobService.getLongWeather(this);
-//                    this.startService(new Intent(this, WeatherMonitorService.class));
 
                 }
 
@@ -85,6 +76,28 @@ public class PermissionActivity extends Activity {
             }
         }
         return true;
+    }
+
+    private void showGPSDisabledAlertToUser(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Goto Settings Page To Enable GPS",
+                        new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id){
+                                Intent callGPSSettingIntent = new Intent(
+                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(callGPSSettingIntent);
+                            }
+                        });
+        alertDialogBuilder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     private void closeActivity(boolean permissionsGranted) {

@@ -1,12 +1,7 @@
 package com.katsuna.widgets.weatherwidget;
 
 
-import android.app.job.JobParameters;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
@@ -17,8 +12,6 @@ import com.katsuna.commons.entities.ColorProfile;
 import com.katsuna.commons.entities.ColorProfileKey;
 import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.widgets.R;
-import com.katsuna.widgets.clockwidget.ClockUpdateService;
-import com.katsuna.widgets.commons.PermissionActivity;
 import com.katsuna.widgets.commons.WidgetCollection;
 import com.katsuna.widgets.weatherDb.Weather;
 import com.katsuna.widgets.weatherParser.JSONWeatherParser;
@@ -52,7 +45,7 @@ public class WeatherUpdateFunctions {
             widgetWeather = JSONWeatherParser.parseWidgetJson(sp.getString("lastToday", ""), context);
         } else {
             WeatherJobService jobService = new WeatherJobService();
-            System.out.println("im before get current weather");
+//            System.out.println("im before get current weather");
             jobService.getCurrentWeather(context);
 
             if (!sp.getString("lastToday", "").equals("")) {
@@ -142,15 +135,7 @@ public class WeatherUpdateFunctions {
                 WeatherJobService jobService = new WeatherJobService();
 
                 jobService.getLongWeather(context);
-//                intent.setAction(LONG_FORECAST);
-//                pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                //System.out.println("long forecast without saved");
-//                try {
-//                    pendingIntent2.send();
-//                } catch (PendingIntent.CanceledException e) {
-//                    e.printStackTrace();
-//                }
+
                 if (!sp.getString("lastLongterm", "").equals("")) {
                     //   //System.out.println("im called");
                     ////Log.d("api call","Api call for longTerm forecast inside update");
@@ -158,7 +143,7 @@ public class WeatherUpdateFunctions {
                     forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), context);
                 }
                 else{
-                    System.out.println("I HAVEN'T ANY DATA");
+//                    System.out.println("I HAVEN'T ANY DATA");
                 }
             }
 
@@ -175,8 +160,7 @@ public class WeatherUpdateFunctions {
             int color1 = ColorCalc.getColor(context,
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
             remoteViews.setInt(R.id.state_week, "setBackgroundColor", color1);
-//            int color2 = ColorCalc.getColor(context,
-//                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
+
             remoteViews.setTextColor(R.id.state_week, color2);
             remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
             remoteViews.setInt(R.id.back, "setBackgroundColor", color1);
@@ -191,7 +175,6 @@ public class WeatherUpdateFunctions {
 //                j++;
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_WEEK);
-            System.out.println("the day is:"+ day+"forecaste"+forecast.size());
             if(forecast.size()>0) {
                 for (int i = 0; i < 7; i++) {
                     if (i + 1 == day) {
@@ -221,7 +204,6 @@ public class WeatherUpdateFunctions {
                     forecast = JSONWeatherParser.parseShortTermWidgetJson(sp.getString("lastShortterm", ""), context);
                 }
                 else{
-                    System.out.println("I HAVEN'T ANY 2");
                 }
             }
 
@@ -251,10 +233,8 @@ public class WeatherUpdateFunctions {
 
             DateFormat format = new SimpleDateFormat("HH:mm");
             DateFormat formatDay = new SimpleDateFormat("HH");
-            System.out.println("forecast:"+forecast.size());
             if( forecast.size() > 0) {
                 for (int i = 0; i < 7; i++) {
-                    System.out.println("forecast:" + forecast.size() + "time is:" + forecast.get(i).getDate());
 
                     remoteViews.setTextViewText(timeIDS[i], format.format(forecast.get(i).getDate()));
                     remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Integer.parseInt(formatDay.format(forecast.get(i).getDate())), context));
@@ -354,99 +334,4 @@ public class WeatherUpdateFunctions {
         return icon;
     }
 
-//    @Override
-//    public boolean onStartJob(JobParameters params) {
-//        if (params.getJobId() != 0) {
-//            final int action = params.getJobId();
-//            //System.out.println("Im on weatherUpdate service with action="+action);
-//            setupTheme(this);
-//
-//            if( ACTION_WIDGET_WEATHER_CHOICE ==action ){
-//
-//                RemoteViews remoteViews =createRemoteViews(5);
-//                int color1 = ColorCalc.getColor(getApplicationContext(),
-//                        ColorProfileKey.ACCENT1_COLOR, colorProfile);
-//                remoteViews.setInt(R.id.forecast_btn, "setBackgroundColor", color1);
-//                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-//                        colorProfile);
-//                remoteViews.setInt(R.id.forecast_close_btn, "setBackgroundColor", color2);
-//
-//
-//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                appWidgetManager.updateAppWidget(componentName, remoteViews);
-//            }
-//            else if (ACTION_WIDGET_UPDATE == action) {
-//
-//                RemoteViews remoteViews =createRemoteViews(1);
-//
-//                String []clock = ClockUpdateService.setTime();
-//                remoteViews.setOnClickPendingIntent(R.id.time_root, provider.getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
-//
-//                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-//                remoteViews.setTextViewText(R.id.date, clock[1]);
-//
-//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                appWidgetManager.updateAppWidget(componentName, remoteViews);
-//            } else if (ACTION_WIDGET_EXTENDED_NOW == action) {
-//                RemoteViews remoteViews =createRemoteViews(2);
-//
-//                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-//                        colorProfile);
-//                // remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
-//                String []clock = ClockUpdateService.setTime();
-//                remoteViews.setOnClickPendingIntent(R.id.time_root, provider.getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
-//
-//                remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-//                remoteViews.setTextViewText(R.id.date, clock[1]);
-//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                appWidgetManager.updateAppWidget(componentName, remoteViews);
-//            }
-//            else if (ACTION_WIDGET_EXTENDED_WEEK == action){
-//                RemoteViews remoteViews =createRemoteViews(3);
-//                int color2 = ColorCalc.getColor(getApplicationContext(), ColorProfileKey.ACCENT2_COLOR,
-//                        colorProfile);
-//                //   remoteViews.setInt(R.id.back, "setBackgroundColor", color2);
-//
-//
-//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                appWidgetManager.updateAppWidget(componentName, remoteViews);
-//            }
-//            else if (ACTION_WIDGET_EXTENDED_DAY == action){
-//                RemoteViews remoteViews =createRemoteViews(4);
-//
-//
-//
-//                ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                appWidgetManager.updateAppWidget(componentName, remoteViews);
-//            }
-//            else if (ACTION_WIDGET_EXTENDED_BACK == action){
-//                //this.startService(new Intent(this, ClockMonitorService.class));
-//                // update the widgets
-//                Intent updateIntent = new Intent(this, ClockUpdateService.class);
-//                updateIntent.setAction(ClockUpdateService.ACTION_WIDGET_UPDATE);
-//                this.startService(updateIntent);
-//
-//                if(PermissionActivity.hasPermissions(getApplicationContext(), PERMISSIONS)) {
-//                    RemoteViews remoteViews = createRemoteViews(1);
-//
-//                    String []clock = ClockUpdateService.setTime();
-//                    remoteViews.setOnClickPendingIntent(R.id.time_root, provider.getPendingSelfIntent(this, WidgetCollection.VIEW_CALENDAR_CLICKED));
-//
-//                    remoteViews.setTextViewText(R.id.appwidget_text, clock[0]);
-//                    remoteViews.setTextViewText(R.id.date, clock[1]);
-//
-//                    ComponentName componentName = new ComponentName(this, WidgetCollection.class);
-//                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//                    appWidgetManager.updateAppWidget(componentName, remoteViews);
-//                }
-//            }
-//
-//        }
-//        return false;
-//    }
 }

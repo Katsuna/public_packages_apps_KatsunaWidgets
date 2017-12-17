@@ -117,14 +117,6 @@
 
 
         <service
-            android:name="com.katsuna.widgets.clockwidget.ClockMonitorService"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name="com.katsuna.widgets.clockwidget.ClockUpdateService"
-            android:exported="false" />
-
-        <service
             android:name="com.katsuna.widgets.weatherwidget.WeatherJobService"
             android:label="Word service"
             android:permission="android.permission.BIND_JOB_SERVICE" >

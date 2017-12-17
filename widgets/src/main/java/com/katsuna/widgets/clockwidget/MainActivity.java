@@ -50,20 +50,6 @@ public class MainActivity extends Activity {
         //setupTheme();
     }
 
-    private void setupTheme() {
-
-
-        UserProfile userProfile = new UserProfile();
-        userProfile =   ProfileReader.getUserProfileFromKatsunaServices(this);
-        //   System.out.println("the user profile is:"+context.getPackageName().toString());
-//        if(userProfile == null) {
-//            userProfile = ProfileReader.getUserProfileFromAppSettings(context);
-//        }
-        colorProfile = userProfile.colorProfile;
-      //  System.out.println("im in finding colorProfile"+colorProfile);
-        // setTheme(mTheme);
-    }
-
     private void showGPSDisabledAlertToUser(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")

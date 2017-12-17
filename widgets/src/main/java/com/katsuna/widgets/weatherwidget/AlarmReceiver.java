@@ -280,52 +280,6 @@ public class AlarmReceiver extends BroadcastReceiver implements LocationListener
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-
-    private void saveLocation(String result) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        recentCity = preferences.getString("city", DEFAULT_CITY);
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("city", result);
-        editor.commit();
-
-        if (!recentCity.equals(result)) {
-            // New location, update weather
-            getWeather();
-        }
-    }
-
-
-
-    void getCityByLocation() {
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-            }
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            }
-        } else {
-         //   showLocationSettingsDialog();
-        }
-    }
-
-    // @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCityByLocation();
-                }
-                return;
-            }
-        }
-    }
-
     @Override
     public void onLocationChanged(Location location) {
         try {

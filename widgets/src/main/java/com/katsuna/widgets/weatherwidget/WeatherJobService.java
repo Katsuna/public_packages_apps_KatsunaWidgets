@@ -17,6 +17,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -145,165 +147,47 @@ public class WeatherJobService extends JobService implements LocationListener {
     }
 
     public void getCurrentWeather(Context context) {
-        if(locationManager == null){
-            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        }
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        this.context = context;
         getLastBestLocation(context);
 
-        String result = "";
-        try {
-           // context =  this;
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-            String language = Locale.getDefault().getLanguage();
-            if (language.equals("cs")) {
-                language = "cz";
-            }
-            String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-            //
-            URL url = null;
-            if (!latitude.equals("")) {
-                //Log.d("api call","From api day forecast inside alarm with lat:"+latitude+"long:"+longitude);
-                url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&appid=" + apiKey);
-
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-                String format = simpleDateFormat.format(new Date());
-                //Log.d("MainActivity", "Current Timestamp: " + format);
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                System.out.println("IM in getWeather execute2");
-
-                if (urlConnection.getResponseCode() == 200) {
-                    String line = null;
-                    while ((line = r.readLine()) != null) {
-                        result += line + "\n";
-                    }
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("lastToday", result);
-                    editor.apply();
-                    WeatherMonitorService.saveLastUpdateTime(sp);
-
-                    System.out.println("IM in getWeather execute");
-                    Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-                    updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-                    context.startService(updateWeatherIntent);
-
-                } else {
-                    // Connection problem
-                }
-            } else {
-                //Log.d("api call","No permissions for call or no location");
-                //default city url
-                //  url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&appid=" + apiKey);
-            }
-        } catch (IOException e) {
-            // No connection
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+            new GetWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+        else{
+            new GetWeatherTask().execute();
+
+        }
+        WeatherUpdateFunctions updateFunctions= new WeatherUpdateFunctions();
+        //updateFunctions.createRemoteViews(1,this.getPackageName(),pro)
     }
 
     public void getShortWeather(Context context){
-        if(locationManager == null){
-            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        }
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        this.context = context;
+
         getLastBestLocation(context);
 
-        String result = "";
-        try {
-          //  context =  this;
-
-            //   ////System.out.println("short term weather call");
-
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-            String language = Locale.getDefault().getLanguage();
-            if (language.equals("cs")) {
-                language = "cz";
-            }
-            String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-            URL url = null;
-            if (!latitude.equals("")) {
-                url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&&appid=" + apiKey);
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-                String format = simpleDateFormat.format(new Date());
-                //Log.d("MainActivity", "Current Timestamp: " + format);
-
-
-                if (urlConnection.getResponseCode() == 200) {
-                    String line = null;
-                    while ((line = r.readLine()) != null) {
-                        result += line + "\n";
-                    }
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                    //  //Log.i("JSON short",result);
-                    editor.putString("lastShortterm", result);
-                    editor.apply();
-                } else {
-                    //Log.d("Connection problem", "fail Response");
-                }
-            } else {
-
-                //  url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+            new GetShortTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else{
+            new GetShortTermWeatherTask().execute();
 
         }
     }
 
     public void getLongWeather(Context context){
-        if(locationManager == null){
-            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        }
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        this.context = context;
         getLastBestLocation(context);
 
-        String result = "";
-        try {
-        //    context =  this;
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+            new GetLongTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else{
+            new GetLongTermWeatherTask().execute();
 
-            //System.out.println("long term weather call");
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-            String language = Locale.getDefault().getLanguage();
-            if (language.equals("cs")) {
-                language = "cz";
-            }
-            String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
-            URL url = null;
-
-            if (!latitude.equals("")) {
-                url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
-
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-                String format = simpleDateFormat.format(new Date());
-//                Log.d("MainActivity", "Current Timestamp: " + format);
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-                if (urlConnection.getResponseCode() == 200) {
-                    String line = null;
-                    while ((line = r.readLine()) != null) {
-                        result += line + "\n";
-                    }
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                    //   //Log.i("JSON long",result);
-                    editor.putString("lastLongterm", result);
-                    editor.apply();
-                } else {
-                    // Connection problem
-                }
-            } else {
-                //TODO weather from preferennces
-                //   url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -333,7 +217,12 @@ public class WeatherJobService extends JobService implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+
+
+
     private void getLastBestLocation(Context context) {
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         Location locationGPS = null;
         Location locationNet = null;
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
@@ -347,7 +236,20 @@ public class WeatherJobService extends JobService implements LocationListener {
         else{
             return;
         }
-
+        if( locationGPS == null && locationNet == null) {
+            List<String> providers = locationManager.getProviders(true);
+            Location bestLocation = null;
+            for (String provider : providers) {
+                locationGPS = locationManager.getLastKnownLocation(provider);
+                if (locationGPS == null) {
+                    continue;
+                }
+                if (bestLocation == null || locationGPS.getAccuracy() < bestLocation.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    bestLocation = locationGPS;
+                }
+            }
+        }
 
         long GPSLocationTime = 0;
         if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
@@ -365,6 +267,192 @@ public class WeatherJobService extends JobService implements LocationListener {
                 latitude = String.valueOf(locationNet.getLatitude());
                 longitude = String.valueOf(locationNet.getLongitude());
             }
+        }
+    }
+
+    public class GetWeatherTask extends AsyncTask<String, String, Void> {
+
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String result = "";
+            try {
+
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                String language = Locale.getDefault().getLanguage();
+                if (language.equals("cs")) {
+                    language = "cz";
+                }
+                String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
+                //
+                URL url = null;
+                if (!latitude.equals("")) {
+                    //Log.d("api call","From api day forecast inside alarm with lat:"+latitude+"long:"+longitude);
+                    url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&appid=" + apiKey);
+
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                    String format = simpleDateFormat.format(new Date());
+                    //Log.d("MainActivity", "Current Timestamp: " + format);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    System.out.println("IM in getWeather execute2");
+
+                    if (urlConnection.getResponseCode() == 200) {
+                        String line = null;
+                        while ((line = r.readLine()) != null) {
+                            result += line + "\n";
+                        }
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("lastToday", result);
+                        editor.apply();
+                        WeatherMonitorService.saveLastUpdateTime(sp);
+
+                        System.out.println("IM in getWeather execute");
+
+
+                    } else {
+                        // Connection problem
+                    }
+                } else {
+                    //Log.d("api call","No permissions for call or no location");
+                    //default city url
+                    //  url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&appid=" + apiKey);
+                }
+            } catch (IOException e) {
+                // No connection
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+            // Update widgets
+//            AbstractWidgetProvider.updateWidgets(context);
+//            DashClockWeatherExtension.updateDashClock(context);
+        }
+    }
+
+    class GetShortTermWeatherTask extends AsyncTask<String, String, Void> {
+
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String result = "";
+            try {
+
+                //   ////System.out.println("short term weather call");
+
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                String language = Locale.getDefault().getLanguage();
+                if (language.equals("cs")) {
+                    language = "cz";
+                }
+                String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
+                URL url = null;
+                if (!latitude.equals("")) {
+                    url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&&appid=" + apiKey);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                    String format = simpleDateFormat.format(new Date());
+                    //Log.d("MainActivity", "Current Timestamp: " + format);
+
+
+                    if (urlConnection.getResponseCode() == 200) {
+                        String line = null;
+                        while ((line = r.readLine()) != null) {
+                            result += line + "\n";
+                        }
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                        //  //Log.i("JSON short",result);
+                        editor.putString("lastShortterm", result);
+                        editor.apply();
+                    } else {
+                        //Log.d("Connection problem", "fail Response");
+                    }
+                } else {
+
+                    //  url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+
+        }
+    }
+
+
+    class GetLongTermWeatherTask extends AsyncTask<String, String, Void> {
+
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String result = "";
+            try {
+
+                //System.out.println("long term weather call");
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                String language = Locale.getDefault().getLanguage();
+                if (language.equals("cs")) {
+                    language = "cz";
+                }
+                String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
+                URL url = null;
+
+                if (!latitude.equals("")) {
+                    url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
+
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                    String format = simpleDateFormat.format(new Date());
+//                Log.d("MainActivity", "Current Timestamp: " + format);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+                    if (urlConnection.getResponseCode() == 200) {
+                        String line = null;
+                        while ((line = r.readLine()) != null) {
+                            result += line + "\n";
+                        }
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                        //   //Log.i("JSON long",result);
+                        editor.putString("lastLongterm", result);
+                        editor.apply();
+                    } else {
+                        // Connection problem
+                    }
+                } else {
+                    //TODO weather from preferennces
+                    //   url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(sp.getString("city", DEFAULT_CITY), "UTF-8") + "&lang=" + language + "&mode=json&appid=" + apiKey);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+
         }
     }
 }
