@@ -66,7 +66,7 @@ public class WeatherJobService extends JobService implements LocationListener {
             JobInfo.Builder currentBuilder = new JobInfo.Builder(JOB_CURRENT_ID, component)
                     // schedule it to run any time between 1 - 5 minutes
                     .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(45 * ONE_MIN);
+                    .setOverrideDeadline(2 * ONE_MIN);
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             jobScheduler.schedule(currentBuilder.build());
 
@@ -74,14 +74,14 @@ public class WeatherJobService extends JobService implements LocationListener {
             JobInfo.Builder shortBuilder = new JobInfo.Builder(JOB_SHORT_ID, component)
                     // schedule it to run any time between 1 - 5 minutes
                     .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(3*60 * ONE_MIN);
+                    .setOverrideDeadline(2 * ONE_MIN);
             JobScheduler shortJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             shortJobScheduler.schedule(shortBuilder.build());
 
             JobInfo.Builder longBuilder = new JobInfo.Builder(JOB_LONG_ID, component)
                     // schedule it to run any time between 1 - 5 minutes
                     .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(24* 60 * ONE_MIN);
+                    .setOverrideDeadline(5 * ONE_MIN);
             JobScheduler longJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         longJobScheduler.schedule(longBuilder.build());
 
@@ -90,7 +90,7 @@ public class WeatherJobService extends JobService implements LocationListener {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        System.out.println("context"+getApplicationContext());
+        System.out.println("onStartjob"+params.getJobId());
 
         if (ActivityCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Intent activityIntent = new Intent(getApplicationContext(),PermissionActivity.class);
@@ -320,10 +320,10 @@ public class WeatherJobService extends JobService implements LocationListener {
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
 // since it seems the onUpdate() is only fired on that:
-            int[] ids = AppWidgetManager.getInstance(getApplication())
-                    .getAppWidgetIds(new ComponentName(getApplication(), WidgetCollection.class));
+            int[] ids = AppWidgetManager.getInstance(context.getApplicationContext())
+                    .getAppWidgetIds(new ComponentName(context.getApplicationContext(), WidgetCollection.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-            sendBroadcast(intent);
+            context.sendBroadcast(intent);
 //            DashClockWeatherExtension.updateDashClock(context);
         }
     }
