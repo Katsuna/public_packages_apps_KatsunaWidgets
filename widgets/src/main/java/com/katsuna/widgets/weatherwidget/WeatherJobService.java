@@ -57,43 +57,61 @@ public class WeatherJobService extends JobService implements LocationListener {
     String latitude = "";
 
 
-
     public void schedule(Context context) {
         this.context = context;
 
 
-            ComponentName component = new ComponentName(context, WeatherJobService.class);
-            JobInfo.Builder currentBuilder = new JobInfo.Builder(JOB_CURRENT_ID, component)
-                    // schedule it to run any time between 1 - 5 minutes
-                    .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(2 * ONE_MIN);
-            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            jobScheduler.schedule(currentBuilder.build());
+        ComponentName component = new ComponentName(context, WeatherJobService.class);
+        JobInfo jobInfo;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            jobInfo = new JobInfo.Builder(JOB_CURRENT_ID, component)
+                    .setPeriodic(30 * ONE_MIN)
+                    .build();
+        } else {
+            jobInfo = new JobInfo.Builder(JOB_CURRENT_ID, component)
+                    .setPeriodic(30 * ONE_MIN)
+                    .build();
+        }
 
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(jobInfo);
 
-            JobInfo.Builder shortBuilder = new JobInfo.Builder(JOB_SHORT_ID, component)
-                    // schedule it to run any time between 1 - 5 minutes
-                    .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(2 * ONE_MIN);
-            JobScheduler shortJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            shortJobScheduler.schedule(shortBuilder.build());
+        JobInfo shortJobInfo;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            shortJobInfo = new JobInfo.Builder(JOB_SHORT_ID, component)
+                    .setPeriodic(3 * 60 * ONE_MIN)
+                    .build();
+        } else {
+            shortJobInfo = new JobInfo.Builder(JOB_SHORT_ID, component)
+                    .setPeriodic(3 * 60 * ONE_MIN)
+                    .build();
+        }
 
-            JobInfo.Builder longBuilder = new JobInfo.Builder(JOB_LONG_ID, component)
-                    // schedule it to run any time between 1 - 5 minutes
-                    .setMinimumLatency(ONE_MIN)
-                    .setOverrideDeadline(5 * ONE_MIN);
-            JobScheduler longJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        longJobScheduler.schedule(longBuilder.build());
+        JobScheduler shortJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        shortJobScheduler.schedule(shortJobInfo);
+
+        JobInfo longJobInfo;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            longJobInfo = new JobInfo.Builder(JOB_LONG_ID, component)
+                    .setPeriodic(20 * 60 * ONE_MIN)
+                    .build();
+        } else {
+            longJobInfo = new JobInfo.Builder(JOB_LONG_ID, component)
+                    .setPeriodic(20 * 60 * ONE_MIN)
+                    .build();
+        }
+        JobScheduler longJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        longJobScheduler.schedule(longJobInfo);
 
 //        }
     }
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        System.out.println("onStartjob"+params.getJobId());
+//        System.out.println("onStartjob" + params.getJobId());
 
-        if (ActivityCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Intent activityIntent = new Intent(getApplicationContext(),PermissionActivity.class);
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Intent activityIntent = new Intent(getApplicationContext(), PermissionActivity.class);
             //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             getApplicationContext().startActivity(activityIntent);
@@ -101,24 +119,15 @@ public class WeatherJobService extends JobService implements LocationListener {
 
             locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
 
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-            }
-            else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            }
-
 
             getLastBestLocation(getApplicationContext());
 
 
-            if( params.getJobId() == JOB_CURRENT_ID){
+            if (params.getJobId() == JOB_CURRENT_ID) {
                 getCurrentWeather(getApplicationContext());
-            }
-            else if(params.getJobId() == JOB_SHORT_ID){
+            } else if (params.getJobId() == JOB_SHORT_ID) {
                 getShortWeather(getApplicationContext());
-            }
-            else if(params.getJobId() == JOB_LONG_ID){
+            } else if (params.getJobId() == JOB_LONG_ID) {
                 getLongWeather(getApplicationContext());
             }
         }
@@ -136,41 +145,37 @@ public class WeatherJobService extends JobService implements LocationListener {
         this.context = context;
         getLastBestLocation(context);
 
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new GetWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-        else{
+        } else {
             new GetWeatherTask().execute();
 
         }
-        WeatherUpdateFunctions updateFunctions= new WeatherUpdateFunctions();
-        //updateFunctions.createRemoteViews(1,this.getPackageName(),pro)
+
     }
 
-    public void getShortWeather(Context context){
+    public void getShortWeather(Context context) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
 
         getLastBestLocation(context);
 
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new GetShortTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-        else{
+        } else {
             new GetShortTermWeatherTask().execute();
 
         }
     }
 
-    public void getLongWeather(Context context){
+    public void getLongWeather(Context context) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
         getLastBestLocation(context);
 
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new GetLongTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-        else{
+        } else {
             new GetLongTermWeatherTask().execute();
 
         }
@@ -204,24 +209,31 @@ public class WeatherJobService extends JobService implements LocationListener {
     }
 
 
-
-
     private void getLastBestLocation(Context context) {
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+
+
+        if(locationManager!= null){
+            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        }
+
         Location locationGPS = null;
         Location locationNet = null;
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            }
             locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        }
-        else if ( ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
+        } else if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            }
             locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        else{
+        } else {
             return;
         }
-        if( locationGPS == null && locationNet == null) {
+        if (locationGPS == null && locationNet == null) {
             List<String> providers = locationManager.getProviders(true);
             Location bestLocation = null;
             for (String provider : providers) {
@@ -237,14 +249,16 @@ public class WeatherJobService extends JobService implements LocationListener {
         }
 
         long GPSLocationTime = 0;
-        if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+        if (null != locationGPS) {
+            GPSLocationTime = locationGPS.getTime();
+        }
 
         long NetLocationTime = 0;
 
         if (null != locationNet) {
             NetLocationTime = locationNet.getTime();
         }
-        if( locationGPS != null || locationNet!= null) {
+        if (locationGPS != null || locationNet != null) {
             if (0 < GPSLocationTime - NetLocationTime) {
                 latitude = String.valueOf(locationGPS.getLatitude());
                 longitude = String.valueOf(locationGPS.getLongitude());
@@ -285,7 +299,6 @@ public class WeatherJobService extends JobService implements LocationListener {
 
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    System.out.println("IM in getWeather execute2");
 
                     if (urlConnection.getResponseCode() == 200) {
                         String line = null;
@@ -296,8 +309,6 @@ public class WeatherJobService extends JobService implements LocationListener {
                         editor.putString("lastToday", result);
                         editor.apply();
                         WeatherMonitorService.saveLastUpdateTime(sp);
-
-                        System.out.println("IM in getWeather execute");
 
 
                     } else {

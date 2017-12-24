@@ -22,14 +22,14 @@ public class WifiReceiver  extends BroadcastReceiver {
             if(info.isConnected()) {
                 // Wifi is connected
     //            Log.d("Inetify", "Wifi is connected: " + String.valueOf(info));
-                context.startService(new Intent(context, WeatherMonitorService.class));
-                Intent updateWeatherIntent = new Intent(context, WeatherUpdateService.class);
-                updateWeatherIntent.setAction(WeatherUpdateService.ACTION_WIDGET_UPDATE);
-                context.startService(updateWeatherIntent);
+                WeatherJobService weatherJobService = new WeatherJobService();
+                weatherJobService.getCurrentWeather(context);
+                weatherJobService.getShortWeather(context);
+                weatherJobService.getLongWeather(context);
+
                 WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 String ssid = wifiInfo.getSSID();
-    //            System.out.println("Mpika:: " + ssid);
             }
         } else if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             NetworkInfo networkInfo =

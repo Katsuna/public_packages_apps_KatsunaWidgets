@@ -108,11 +108,7 @@ public class WeatherUpdateFunctions {
                 remoteViews.setTextViewText(R.id.widgetHumidity, "Humidity:"+ widgetWeather.getHumidity() + "%");
                 remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
 
-                //       remoteViews.setTextViewText(R.id.precipitation, "Chance of rain/snow: "+ widgetWeather.getPrecipitation());
-//                if(widgetWeather.getWindDirectionDegree() != null)
-//                    remoteViews.setTextViewText(R.id.widgetExWind, widgetWeather.getWindDirection().getLocalizedString(this)+", "+widgetWeather.getWind());
-//
-//                remoteViews.setImageViewResource(R.id.widgetExIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), this));
+
             }
 
             int color1 = ColorCalc.getColor(context,
@@ -180,7 +176,7 @@ public class WeatherUpdateFunctions {
                     if (i + 1 == day) {
                         remoteViews.setTextColor(daysIDS[i], color2);
                     }
-                    ////System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
+//                   System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
                     remoteViews.setTextViewText(daysIDS[i], getDay(forecast.get(i).getDate(),context));
                     remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
                     remoteViews.setTextViewText(tempIDs[i], forecast.get(i).getTemperature());

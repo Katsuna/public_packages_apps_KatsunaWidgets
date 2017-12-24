@@ -85,10 +85,7 @@ public class WidgetCollection extends AppWidgetProvider {
 
                 super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-                RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
-                remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(context, WidgetCollection.VIEW_CALENDAR_CLICKED));
-                ComponentName componentName = new ComponentName(context, WidgetCollection.class);
-                appWidgetManager.updateAppWidget(componentName, remoteViews);
+
 
                 if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -97,17 +94,17 @@ public class WidgetCollection extends AppWidgetProvider {
                         weatherUpdater = new WeatherUpdateFunctions();
                     }
                     setupTheme(context);
-                    if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-                        weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
-                    }
 
+                    RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+                    remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(context, WidgetCollection.VIEW_CALENDAR_CLICKED));
+                    ComponentName componentName = new ComponentName(context, WidgetCollection.class);
+                    appWidgetManager.updateAppWidget(componentName, remoteViews);
 
                 }
                 else{
                     //System.out.println("Im in update and i don't have permission");
 
-                     remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                    RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
                     remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
 
                     appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
@@ -135,6 +132,15 @@ public class WidgetCollection extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(componentName, remoteViews);
 
           //  context.startService(new Intent(context, WeatherMonitorService.class));
+        }
+        else{
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+            remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
+            ComponentName componentName = new ComponentName(context, WidgetCollection.class);
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+
+            appWidgetManager.updateAppWidget( componentName, remoteViews);
         }
 
 

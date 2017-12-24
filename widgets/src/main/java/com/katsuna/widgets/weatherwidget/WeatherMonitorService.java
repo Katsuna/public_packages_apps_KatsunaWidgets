@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -23,10 +22,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,11 +45,7 @@ import com.katsuna.widgets.R;
 import com.katsuna.widgets.utils.UnitConvertor;
 import com.katsuna.widgets.weatherDb.Weather;
 
-import static android.app.AlarmManager.INTERVAL_HALF_HOUR;
-import static android.app.AlarmManager.INTERVAL_HOUR;
-import static com.katsuna.widgets.weatherwidget.AlarmReceiver.CURRENT;
-import static com.katsuna.widgets.weatherwidget.AlarmReceiver.LONG_FORECAST;
-import static com.katsuna.widgets.weatherwidget.AlarmReceiver.SHORT_FORECAST;
+
 
 
 public class WeatherMonitorService extends Service implements LocationListener{
@@ -144,14 +136,7 @@ public class WeatherMonitorService extends Service implements LocationListener{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-
-
         scheduleWeatherAlarm();
-
-
-      //  AlarmReceiver.setRecurringAlarm(this);
-
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
         return Service.START_STICKY;
@@ -164,71 +149,6 @@ public class WeatherMonitorService extends Service implements LocationListener{
         //jobService.schedule(this);
         preloadWeather(jobService);
 
-
-        //*** current weather alarm*************/////
-        // Construct an intent that will execute the AlarmReceiver
-//        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-//        // Create a PendingIntent to be triggered when the alarm goes off
-//        intent.setAction(CURRENT);
-//
-//        final PendingIntent pIntent = PendingIntent.getBroadcast(this, 0,
-//                intent, 0);
-//
-//        try {
-//            pIntent.send();
-//        } catch (PendingIntent.CanceledException e) {
-//            e.printStackTrace();
-//        }
-//
-//        long firstMillist = System.currentTimeMillis();
-//        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-//        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-//                INTERVAL_HOUR , pIntent);
-//
-//
-//        //*************Forecast***************//
-//        Intent intentForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
-//        intentForecast.setAction(SHORT_FORECAST);
-//
-//
-//        // Create a PendingIntent to be triggered when the alarm goes off
-//        final PendingIntent fIntent = PendingIntent.getBroadcast(this, 0,
-//                intentForecast, 0);
-//
-//        try {
-//            fIntent.send();
-//        } catch (PendingIntent.CanceledException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // Setup periodic alarm every 5 seconds
-//        AlarmManager alarmFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-//        alarmFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-//                INTERVAL_HOUR *3, fIntent);
-//
-//        //*******long forecast**********//
-//        Intent intentLongForecast = new Intent(getApplicationContext(), AlarmReceiver.class);
-//        intentLongForecast.setAction(LONG_FORECAST);
-//        // Create a PendingIntent to be triggered when the alarm goes off
-//        final PendingIntent lIntent = PendingIntent.getBroadcast(this, 0,
-//                intentLongForecast, 0);
-//        try {
-//            lIntent.send();
-//        } catch (PendingIntent.CanceledException e) {
-//            e.printStackTrace();
-//        }
-//
-//        AlarmManager alarmLongFore = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-//        alarmLongFore.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillist,
-//                AlarmManager.INTERVAL_DAY, lIntent);
-
-        //preloadWeather();
     }
 
 
@@ -236,16 +156,6 @@ public class WeatherMonitorService extends Service implements LocationListener{
         jobService.getCurrentWeather(WeatherMonitorService.this);
         jobService.getShortWeather(WeatherMonitorService.this);
         jobService.getLongWeather(WeatherMonitorService.this);
-//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(WeatherMonitorService.this);
-//
-//        String lastToday = sp.getString("lastToday", "");
-//        if (!lastToday.isEmpty()) {
-//            new TodayWeatherTask(this, this, progressDialog).execute("cachedResponse", lastToday);
-//        }
-//        String lastLongterm = sp.getString("lastLongterm", "");
-//        if (!lastLongterm.isEmpty()) {
-//            new LongTermWeatherTask(this, this, progressDialog).execute("cachedResponse", lastLongterm);
-//        }
     }
 
     private void getTodayWeather() {
