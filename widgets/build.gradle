@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 // Load keystore
-def keystorePropertiesFile = rootProject.file("../../../vendor/keys/keystore.properties");
+def keystorePropertiesFile = rootProject.file("../../../vendor/keys/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
@@ -13,14 +13,14 @@ android {
         applicationId "com.katsuna.widgets"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
-        project.ext.set("archivesBaseName", "Widgets-" + defaultConfig.versionName);
+        versionCode 3
+        versionName "1.2.0"
+        project.ext.set("archivesBaseName", "Widgets-" + defaultConfig.versionName)
     }
 
     signingConfigs {
         katsunaConfig {
-            storeFile rootProject.file("../../../vendor/keys/katsuna.keystore");
+            storeFile rootProject.file("../../../vendor/keys/katsuna.keystore")
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
