@@ -111,4 +111,5 @@
   <string name="permission_button">Erteilen von Berechtigungen</string>
   <!-- text in screen when no location permission is granted-->
   <string name="no_permission_text">Klicken Sie bitte auf den Button unten, um den Zugriff auf Wetterdaten zu ermöglichen.</string>
+  <string name="dateFormat">EEEE dd MMMM</string>
 </resources>
