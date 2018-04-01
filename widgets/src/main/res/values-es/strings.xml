@@ -111,5 +111,4 @@
   <string name="permission_button">Conceder permisos</string>
   <!-- text in screen when no location permission is granted-->
   <string name="no_permission_text">Haga clic en el botón de abajo para acceder a los datos del tiempo.</string>
-  <string name="dateFormat">EEEE dd MMMM</string>
 </resources>
