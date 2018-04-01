@@ -174,6 +174,7 @@ public class WeatherJobService extends JobService implements LocationListener {
         getLastBestLocation(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
             new GetLongTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             new GetLongTermWeatherTask().execute();
@@ -307,6 +308,7 @@ public class WeatherJobService extends JobService implements LocationListener {
                         }
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("lastToday", result);
+                        editor.commit();
                         editor.apply();
                         WeatherMonitorService.saveLastUpdateTime(sp);
 
@@ -379,6 +381,7 @@ public class WeatherJobService extends JobService implements LocationListener {
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
                         //  //Log.i("JSON short",result);
                         editor.putString("lastShortterm", result);
+                        editor.commit();
                         editor.apply();
                     } else {
                         //Log.d("Connection problem", "fail Response");
@@ -420,11 +423,12 @@ public class WeatherJobService extends JobService implements LocationListener {
                 }
                 String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
                 URL url = null;
+                System.out.println("before call and lati is:"+latitude);
 
                 if (!latitude.equals("")) {
                     url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
 
-
+                    System.out.println("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                     String format = simpleDateFormat.format(new Date());
 //                Log.d("MainActivity", "Current Timestamp: " + format);
@@ -440,6 +444,7 @@ public class WeatherJobService extends JobService implements LocationListener {
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
                         //   //Log.i("JSON long",result);
                         editor.putString("lastLongterm", result);
+                        editor.commit();
                         editor.apply();
                     } else {
                         // Connection problem

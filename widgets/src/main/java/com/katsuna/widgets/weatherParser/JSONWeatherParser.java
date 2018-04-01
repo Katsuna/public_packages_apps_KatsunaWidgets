@@ -10,9 +10,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import com.katsuna.widgets.R;
@@ -214,6 +216,11 @@ public class JSONWeatherParser {
         try {
             JSONObject reader = new JSONObject(result);
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+            boolean currentWeather = false;
+
+
+            Date date = new Date();
+            Calendar cal1 = Calendar.getInstance();
 
             JSONArray list = reader.getJSONArray("list");
             for (i = 0; i < list.length(); i++) {
@@ -229,6 +236,7 @@ public class JSONWeatherParser {
                 }
 
                 weather.setDate(listItem.getString("dt"));
+
                 weather.setTemperature(Math.round(temperature) + "°" + localize(sp, context, "unit", "C"));
                 weather.setDescription(listItem.optJSONArray("weather").getJSONObject(0).getString("description"));
                 JSONObject windObj = listItem.optJSONObject("wind");
@@ -265,9 +273,9 @@ public class JSONWeatherParser {
 
 
             }
+                return forecast;
 
 
-            return forecast;
         } catch (JSONException e) {
             //Log.e("JSONException Data long", result);
             e.printStackTrace();

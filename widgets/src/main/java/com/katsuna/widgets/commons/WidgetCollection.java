@@ -90,6 +90,7 @@ public class WidgetCollection extends AppWidgetProvider {
                 if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
 
+
                     if(weatherUpdater == null){
                         weatherUpdater = new WeatherUpdateFunctions();
                     }

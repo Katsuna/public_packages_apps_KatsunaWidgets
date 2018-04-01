@@ -122,10 +122,15 @@ public class WeatherUpdateFunctions {
 
             List<Weather> forecast = new ArrayList<>();
             if (!sp.getString("lastLongterm", "").equals("")) {
-                //   //System.out.println("im called");
-                ////Log.d("api call","Api call for longTerm forecast inside update");
 
                 forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), context);
+                if(forecast == null){
+                    WeatherJobService jobService = new WeatherJobService();
+                    jobService.getLongWeather(context);
+                    if (!sp.getString("lastLongterm", "").equals("")) {
+                        forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), context);
+                    }
+                }
             } else {
 
                 WeatherJobService jobService = new WeatherJobService();
@@ -133,8 +138,6 @@ public class WeatherUpdateFunctions {
                 jobService.getLongWeather(context);
 
                 if (!sp.getString("lastLongterm", "").equals("")) {
-                    //   //System.out.println("im called");
-                    ////Log.d("api call","Api call for longTerm forecast inside update");
 
                     forecast = JSONWeatherParser.parseLongTermWidgetJson(sp.getString("lastLongterm", ""), context);
                 }
@@ -161,22 +164,26 @@ public class WeatherUpdateFunctions {
             remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
             remoteViews.setInt(R.id.back, "setBackgroundColor", color1);
 
-            int[] daysIDS = new int[] {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
-            int[] iconsIDs = new int[] {R.id.icon1, R.id.icon2, R.id.icon3,R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7 };
-            int[] tempIDs = new int[] {R.id.temp1, R.id.temp2, R.id.temp3,R.id.temp4, R.id.temp5, R.id.temp6, R.id.temp7 };
+            int[] daysIDS = {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
+            int[] iconsIDs =  {R.id.icon1, R.id.icon2, R.id.icon3,R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7 };
+            int[] tempIDs = {R.id.temp1, R.id.temp2, R.id.temp3,R.id.temp4, R.id.temp5, R.id.temp6, R.id.temp7 };
 
             int j = 0;
 
 //            if (!isSameDate(forecast.get(0).getDate()))
 //                j++;
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+            Date date = new Date();
+
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_WEEK);
             if(forecast.size()>0) {
                 for (int i = 0; i < 7; i++) {
-                    if (i + 1 == day) {
-                        remoteViews.setTextColor(daysIDS[i], color2);
-                    }
-//                   System.out.println("the day:"+i+" is the day:"+forecast.get(i).getDate().toString());
+
+                if(  fmt.format(date).equals(fmt.format(forecast.get(i).getDate()) )){
+                    remoteViews.setTextColor(daysIDS[i], color2);
+                }
+
                     remoteViews.setTextViewText(daysIDS[i], getDay(forecast.get(i).getDate(),context));
                     remoteViews.setImageViewResource(iconsIDs[i], getWeatherIconId(forecast.get(i).getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
                     remoteViews.setTextViewText(tempIDs[i], forecast.get(i).getTemperature());
