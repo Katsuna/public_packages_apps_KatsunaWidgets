@@ -4,8 +4,13 @@ package com.katsuna.widgets.weatherwidget;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.widget.RemoteViews;
 
 import com.katsuna.commons.entities.ColorProfile;
@@ -30,9 +35,12 @@ public class WeatherUpdateFunctions {
         int color2 = ColorCalc.getColor(context,
                 ColorProfileKey.ACCENT2_COLOR, colorProfile);
 
-        int textColor;
-        if(color2 == com.katsuna.commons.R.color.common_indigoA700){
+        int textColor = 0;
+        if(color2 == com.katsuna.commons.R.color.common_indigoA700 || color2 == com.katsuna.commons.R.color.common_black
+                || color2 == com.katsuna.commons.R.color.common_grey900 || color2 == com.katsuna.commons.R.color.common_grey600
+                || color2 == com.katsuna.commons.R.color.common_grey300 || colorProfile == ColorProfile.CONTRAST){
             textColor = R.color.common_white;
+
         }
 
         RemoteViews remoteViews = null;
@@ -78,7 +86,10 @@ public class WeatherUpdateFunctions {
                     remoteViews.removeAllViews(R.id.weatherRootContainer);
 
                     remoteViews.addView(R.id.weatherRootContainer, rv);
+                    if(textColor != 0){
+                        remoteViews.setTextColor(R.id.back, textColor);
 
+                    }
                 }
                 else{
                     remoteViews = new RemoteViews(packageName, R.layout.no_permission_layout);
@@ -107,7 +118,10 @@ public class WeatherUpdateFunctions {
                 remoteViews.setTextViewText(R.id.widgetExDescription, widgetWeather.getDescription());
                 remoteViews.setTextViewText(R.id.widgetHumidity, "Humidity:"+ widgetWeather.getHumidity() + "%");
                 remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
-
+                if(textColor != 0){
+                    remoteViews.setTextColor(R.id.back, textColor);
+                    remoteViews.setTextColor(R.id.state_now,textColor);
+                }
 
             }
 
@@ -160,9 +174,13 @@ public class WeatherUpdateFunctions {
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
             remoteViews.setInt(R.id.state_week, "setBackgroundColor", color1);
 
-            remoteViews.setTextColor(R.id.state_week, color2);
+
             remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
             remoteViews.setInt(R.id.back, "setBackgroundColor", color1);
+            remoteViews.setTextColor(R.id.back, color2);
+            remoteViews.setTextColor(R.id.state_week, color2);
+
+
 
             int[] daysIDS = {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
             int[] iconsIDs =  {R.id.icon1, R.id.icon2, R.id.icon3,R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7 };
@@ -220,14 +238,30 @@ public class WeatherUpdateFunctions {
             remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
             remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
 
+            if(textColor != 0){
+//                remoteViews.setTextColor(R.id.back, textColor);
+//                remoteViews.setTextColor(R.id.state_day_day,textColor);
 
+            }
             int color1 = ColorCalc.getColor(context,
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
             remoteViews.setInt(R.id.state_day_day, "setBackgroundColor", color1);
-//            int color2 = ColorCalc.getColor(context,
-//                    ColorProfileKey.ACCENT2_COLOR, colorProfile);
+
             remoteViews.setTextColor(R.id.state_day_day, color2);
+            remoteViews.setTextColor(R.id.back, color2);
+//            Drawable mDrawable = ContextCompat.getDrawable(context, R.drawable.ic_x_icon);
+//            System.out.println("color"+mDrawable);
+//            mDrawable.setColorFilter(new
+//                    PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_IN));
+////            mDrawable = DrawableCompat.wrap(mDrawable);
+////            DrawableCompat.setTint(mDrawable, color2);
+
+////            remoteViews.setInt( R.id.back, "setColorFilter", color2);
             remoteViews.setInt(R.id.back, "setBackgroundColor", color1);
+//            remoteViews.setInt( R.drawable.ic_x_icon, "setBackgroundColor", color1);
+
+            ///   remoteViews.setInt(R.id.back, "setCompoundDrawables", mDrawable);
+
 
             int[] timeIDS = new int[] {R.id.time1, R.id.time2, R.id.time3,R.id.time4, R.id.time5,R.id.time6, R.id.time7};
             int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
@@ -250,6 +284,7 @@ public class WeatherUpdateFunctions {
                 remoteViews = new RemoteViews(packageName, R.layout.collection_widget_weather);
                 remoteViews.setOnClickPendingIntent(R.id.forecast_btn, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
                 remoteViews.setOnClickPendingIntent(R.id.forecast_close_btn, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
+                remoteViews.setTextColor(R.id.forecast_close_btn,textColor);
                 remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
                 remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
                 // remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());

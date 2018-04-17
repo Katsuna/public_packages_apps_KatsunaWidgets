@@ -293,10 +293,8 @@ public class JSONWeatherParser {
     public static Weather getWeather(JSONObject jObj) throws JSONException {
         Weather weather = new Weather();
 
-
         // We start extracting the info
         MyLocation loc = new MyLocation();
-
 
         JSONArray jArr = jObj.getJSONArray("weather");
 

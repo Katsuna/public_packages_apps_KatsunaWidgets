@@ -7,7 +7,6 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "com.katsuna.widgets"
@@ -39,6 +38,7 @@ android {
             }
         }
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -62,12 +62,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
     }
 }
 
-apply plugin: 'org.greenrobot.greendao'
-
-dependencies {
-    compile 'org.greenrobot:greendao:3.2.0'
-}

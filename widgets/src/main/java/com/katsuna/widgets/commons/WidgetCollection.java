@@ -234,6 +234,7 @@ public class WidgetCollection extends AppWidgetProvider {
     private void setupTheme(Context context) {
         UserProfileContainer userProfileContainer = ProfileReader.getKatsunaUserProfile(context);
         colorProfile = userProfileContainer.getColorProfile();
+//        colorProfile =  ColorProfile.CONTRAST;
     }
 
     private int getTheme(ColorProfile profile) {
@@ -334,6 +335,8 @@ public class WidgetCollection extends AppWidgetProvider {
         rv.setTextViewText(R.id.appwidget_text, clock[0]);
         rv.setTextViewText(R.id.date, clock[1]);
         rv.setInt(R.id.back, "setBackgroundColor", color1);
+        rv.setTextColor(R.id.back, color2);
+
 
         // rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
