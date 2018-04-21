@@ -423,12 +423,12 @@ public class WeatherJobService extends JobService implements LocationListener {
                 }
                 String apiKey = sp.getString("apiKey", context.getResources().getString(R.string.open_weather_maps_app_id));
                 URL url = null;
-                System.out.println("before call and lati is:"+latitude);
+//                System.out.println("before call and lati is:"+latitude);
 
                 if (!latitude.equals("")) {
                     url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
 
-                    System.out.println("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
+//                    System.out.println("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&lang=" + language + "&mode=json&appid=" + apiKey);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                     String format = simpleDateFormat.format(new Date());
 //                Log.d("MainActivity", "Current Timestamp: " + format);
