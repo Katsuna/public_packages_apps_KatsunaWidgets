@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/widget_back"
-    android:gravity="left"
+    android:gravity="start"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,19 +13,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:clickable="true"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:focusable="true">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/upper_corners"
             >
 
             <LinearLayout
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-
+                android:layout_alignParentStart="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -37,7 +36,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/time_date"
                     android:textAllCaps="true"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_margin="12dp"
                     android:gravity="center"
                     android:textAlignment="center"
@@ -59,7 +58,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
                 >
@@ -113,22 +112,23 @@
         android:id="@+id/weatherRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxWidth="10000dp"
-        android:maxHeight="130dp"
+
         android:orientation="vertical"
         android:weightSum="1">
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/common_grey300">
+            android:background="@color/common_grey300"
+            >
 
             <LinearLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_alignParentLeft="true"
-
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:baselineAligned="false"
                 android:gravity="center"
+
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -138,29 +138,32 @@
                     android:layout_height="wrap_content"
                     android:text="@string/weather_title"
                     android:textAllCaps="true"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:textSize="20dp"
                     android:layout_margin="12dp"
                     android:drawableLeft="@drawable/ic_widgeticons_weather"
                     android:drawablePadding="12dp"
                     android:fontFamily="sans-serif-medium"
+                    android:paddingBottom="1dp"
                     />
             </LinearLayout>
         </RelativeLayout>
-<LinearLayout
+<RelativeLayout
     android:id="@id/weatherRootContainer"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"  />
         <LinearLayout
             android:id="@id/weatherRootNoData"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+           >
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+               >
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"

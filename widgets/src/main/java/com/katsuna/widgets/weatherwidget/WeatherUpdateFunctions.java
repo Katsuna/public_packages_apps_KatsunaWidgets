@@ -1,6 +1,7 @@
 package com.katsuna.widgets.weatherwidget;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -69,7 +70,7 @@ public class WeatherUpdateFunctions {
 
         if( layout == 1 || layout == 6 || layout ==7) {
             if(widgetWeather.getIcon()!= null) {
-                if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
                     RemoteViews rv = new RemoteViews(packageName, R.layout.current_weather);
                     remoteViews = new RemoteViews(packageName, R.layout.collection_widget_v4);

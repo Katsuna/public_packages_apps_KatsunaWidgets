@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@id/weatherRootCurrent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+       >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:baselineAligned="false"
-        android:paddingLeft="10dp"
-        android:orientation="vertical">
+        android:paddingLeft="10dp">
+
+
 
         <TextView
             android:id="@+id/city"
@@ -72,12 +79,14 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:fontFamily="sans-serif-medium"
+                android:layout_gravity="fill"
                 android:maxLines="2"
                 android:text="@string/no_data"
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
 
 
+        </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>

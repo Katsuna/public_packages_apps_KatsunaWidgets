@@ -3,10 +3,9 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     android:initialLayout="@layout/collection_widget_v4"
                     android:minHeight="240dp"
-                    android:maxHeight="680dp"
+                    android:maxHeight="800dp"
                     android:minWidth="375dp"
                     android:previewImage="@drawable/home_widget_icon"
                     android:updatePeriodMillis="350000"
     >
-
 </appwidget-provider>

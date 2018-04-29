@@ -1,5 +1,6 @@
 package com.katsuna.widgets.commons;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,7 +19,7 @@ public class PermissionActivity extends Activity {
     private static final String TAG = "PermissionsActivity";
 
     private static final int PERMISSION_ALL = 1;
-    public static String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION};
+    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
     @Override
