@@ -219,24 +219,28 @@ public class WeatherJobService extends JobService implements LocationListener {
 
         Location locationGPS = null;
         Location locationNet = null;
-
+//
+//        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+//            }
+//            locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//
+//        } else
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            }
-            locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        } else if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+
+
+                locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
-            locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } else {
             return;
         }
+        Location bestLocation = null;
         if (locationGPS == null && locationNet == null) {
             List<String> providers = locationManager.getProviders(true);
-            Location bestLocation = null;
+
             for (String provider : providers) {
                 locationGPS = locationManager.getLastKnownLocation(provider);
                 if (locationGPS == null) {
@@ -260,13 +264,13 @@ public class WeatherJobService extends JobService implements LocationListener {
             NetLocationTime = locationNet.getTime();
         }
         if (locationGPS != null || locationNet != null) {
-            if (0 < GPSLocationTime - NetLocationTime) {
-                latitude = String.valueOf(locationGPS.getLatitude());
-                longitude = String.valueOf(locationGPS.getLongitude());
-            } else {
+//            if (0 < GPSLocationTime - NetLocationTime) {
+//                latitude = String.valueOf(locationGPS.getLatitude());
+//                longitude = String.valueOf(locationGPS.getLongitude());
+//            } else {
                 latitude = String.valueOf(locationNet.getLatitude());
                 longitude = String.valueOf(locationNet.getLongitude());
-            }
+//            }
         }
     }
 
