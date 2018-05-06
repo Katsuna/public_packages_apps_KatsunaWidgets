@@ -280,21 +280,21 @@ public class WeatherUpdateFunctions {
                 }
             }
         }
-        else if (layout == 5){
-            if(widgetWeather.getIcon()!= null) {
-                remoteViews = new RemoteViews(packageName, R.layout.collection_widget_weather);
-                remoteViews.setOnClickPendingIntent(R.id.forecast_btn, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
-                remoteViews.setOnClickPendingIntent(R.id.forecast_close_btn, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
-                remoteViews.setTextColor(R.id.forecast_close_btn,textColor);
-                remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
-                // remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
-                remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
-            }
-
-
-        }
+//        else if (layout == 5){
+//            if(widgetWeather.getIcon()!= null) {
+//                remoteViews = new RemoteViews(packageName, R.layout.collection_widget_weather);
+//                remoteViews.setOnClickPendingIntent(R.id.forecast_btn, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
+//                remoteViews.setOnClickPendingIntent(R.id.forecast_close_btn, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
+//                remoteViews.setTextColor(R.id.forecast_close_btn,textColor);
+//                remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
+//                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
+//                // remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
+//                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
+//                remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
+//            }
+//
+//
+//        }
 
 
         return remoteViews;

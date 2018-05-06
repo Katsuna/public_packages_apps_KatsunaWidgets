@@ -36,11 +36,11 @@
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/time_date"
                     android:textAllCaps="true"
-                    android:textSize="20dp"
-                    android:layout_margin="12dp"
+                    android:textSize="20sp"
+                    android:layout_margin="9dp"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:drawableLeft="@drawable/ic_widgeticons_timedate"
+                    android:drawableStart="@drawable/ic_widgeticons_timedate"
                     android:drawablePadding="12dp"
                    />
             </LinearLayout>
@@ -49,9 +49,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:gravity="right"
+            android:layout_gravity="end"
+            android:gravity="end"
             android:orientation="vertical"
 
             >
@@ -67,12 +66,14 @@
                     android:id="@+id/appwidget_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:contentDescription="@string/appwidget_text"
                     android:text="@string/default_hour"
                     android:textColor="@android:color/black"
-                    android:textSize="36dp"
+                    android:textSize="36sp"
                     android:fontFamily="sans-serif-medium"/>
 
 
@@ -82,14 +83,12 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/appwidget_text"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginBottom="12dp"
                     android:text="@string/default_date"
                     android:textColor="@android:color/black"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="normal"
                     android:format24Hour="@string/dateFormat"
                     android:format12Hour="@string/dateFormat"
@@ -139,9 +138,9 @@
                     android:text="@string/weather_title"
                     android:textAllCaps="true"
                     android:gravity="start"
-                    android:textSize="20dp"
-                    android:layout_margin="12dp"
-                    android:drawableLeft="@drawable/ic_widgeticons_weather"
+                    android:textSize="20sp"
+                    android:layout_margin="9dp"
+                    android:drawableStart="@drawable/ic_widgeticons_weather"
                     android:drawablePadding="12dp"
                     android:fontFamily="sans-serif-medium"
                     android:paddingBottom="1dp"
@@ -193,7 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no_data"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:fontFamily="sans-serif-medium"
                 android:layout_margin="12dp"/>
         </LinearLayout>
