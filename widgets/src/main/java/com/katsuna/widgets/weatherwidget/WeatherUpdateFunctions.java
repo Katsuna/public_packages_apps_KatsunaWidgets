@@ -180,7 +180,10 @@ public class WeatherUpdateFunctions {
             remoteViews.setInt(R.id.back, "setBackgroundColor", color1);
             remoteViews.setTextColor(R.id.back, color2);
             remoteViews.setTextColor(R.id.state_week, color2);
-
+            if( textColor ==  R.color.common_white){
+                remoteViews.setTextViewCompoundDrawables(R.id.back,R.drawable.ic_x_icon_white,0,0,0);
+                remoteViews.setTextViewCompoundDrawables(R.id.state_week,0,0,0,R.drawable.ic_minus_white);
+            }
 
 
             int[] daysIDS = {R.id.day1, R.id.day2, R.id.day3,R.id.day4, R.id.day5,R.id.day6, R.id.day7};
@@ -239,31 +242,21 @@ public class WeatherUpdateFunctions {
             remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
             remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
 
-            if(textColor != 0){
-//                remoteViews.setTextColor(R.id.back, textColor);
-//                remoteViews.setTextColor(R.id.state_day_day,textColor);
 
-            }
             int color1 = ColorCalc.getColor(context,
                     ColorProfileKey.ACCENT1_COLOR, colorProfile);
             remoteViews.setInt(R.id.state_day_day, "setBackgroundColor", color1);
 
             remoteViews.setTextColor(R.id.state_day_day, color2);
             remoteViews.setTextColor(R.id.back, color2);
-//            Drawable mDrawable = ContextCompat.getDrawable(context, R.drawable.ic_x_icon);
-//            System.out.println("color"+mDrawable);
-//            mDrawable.setColorFilter(new
-//                    PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_IN));
-////            mDrawable = DrawableCompat.wrap(mDrawable);
-////            DrawableCompat.setTint(mDrawable, color2);
 
-////            remoteViews.setInt( R.id.back, "setColorFilter", color2);
             remoteViews.setInt(R.id.back, "setBackgroundColor", color1);
-//            remoteViews.setInt( R.drawable.ic_x_icon, "setBackgroundColor", color1);
 
-            ///   remoteViews.setInt(R.id.back, "setCompoundDrawables", mDrawable);
+            if( textColor ==  R.color.common_white){
 
-
+                remoteViews.setTextViewCompoundDrawables(R.id.back,R.drawable.ic_x_icon_white,0,0,0);
+                remoteViews.setTextViewCompoundDrawables(R.id.state_day_day,0,0,0,R.drawable.ic_minus_white);
+            }
             int[] timeIDS = new int[] {R.id.time1, R.id.time2, R.id.time3,R.id.time4, R.id.time5,R.id.time6, R.id.time7};
             int[] iconsIDs = new int[] {R.id.day_icon1, R.id.day_icon2, R.id.day_icon3,R.id.day_icon4, R.id.day_icon5, R.id.day_icon6, R.id.day_icon7 };
             int[] tempIDs = new int[] {R.id.day_temp1, R.id.day_temp2, R.id.day_temp3,R.id.day_temp4, R.id.day_temp5, R.id.day_temp6, R.id.day_temp7 };
@@ -280,21 +273,7 @@ public class WeatherUpdateFunctions {
                 }
             }
         }
-//        else if (layout == 5){
-//            if(widgetWeather.getIcon()!= null) {
-//                remoteViews = new RemoteViews(packageName, R.layout.collection_widget_weather);
-//                remoteViews.setOnClickPendingIntent(R.id.forecast_btn, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
-//                remoteViews.setOnClickPendingIntent(R.id.forecast_close_btn, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
-//                remoteViews.setTextColor(R.id.forecast_close_btn,textColor);
-//                remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-//                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
-//                // remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-//                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
-//                remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
-//            }
-//
-//
-//        }
+
 
 
         return remoteViews;

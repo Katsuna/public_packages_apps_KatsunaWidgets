@@ -337,7 +337,14 @@ public class WidgetCollection extends AppWidgetProvider {
         rv.setTextViewText(R.id.date, clock[1]);
         rv.setInt(R.id.back, "setBackgroundColor", color1);
         rv.setTextColor(R.id.back, color2);
+        if(color2 == com.katsuna.commons.R.color.common_indigoA700 || color2 == com.katsuna.commons.R.color.common_black
+                || color2 == com.katsuna.commons.R.color.common_grey900 || color2 == com.katsuna.commons.R.color.common_grey600
+                || color2 == com.katsuna.commons.R.color.common_grey300 || colorProfile == ColorProfile.CONTRAST){
 
+            rv.setTextViewCompoundDrawables(R.id.back,R.drawable.ic_x_icon_white,0,0,0);
+//            rv.setImageViewResource(R.id.today_container,R.drawable.oval_black);
+            rv.setInt(R.id.today_container,"setBackgroundResource",R.drawable.oval_black);
+        }
 
         // rv.setInt(R.id.back, "setBackgroundColor", color2);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
