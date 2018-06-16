@@ -7,11 +7,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 
 import com.katsuna.widgets.weatherwidget.WeatherJobService;
+
+import static com.katsuna.commons.utils.ServiceManager.isNetworkAvailable;
 
 
 public class PermissionActivity extends Activity {
@@ -19,7 +23,7 @@ public class PermissionActivity extends Activity {
     private static final String TAG = "PermissionsActivity";
 
     private static final int PERMISSION_ALL = 1;
-    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION};
+    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
     @Override
@@ -52,14 +56,24 @@ public class PermissionActivity extends Activity {
                 if(hasPermissions(this, PERMISSIONS)) {
                     permissionsGranted = true;
 
-
+                    LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
                     WeatherJobService jobService = new WeatherJobService();
                     jobService.schedule(this);
-                    jobService.getCurrentWeather(this);
-                    jobService.getShortWeather(this);
-                    jobService.getLongWeather(this);
+                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        Intent gpsOptionsIntent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(gpsOptionsIntent);
+                    }
+                    else{
+
+                        jobService.getCurrentWeather(this);
+                        jobService.getShortWeather(this);
+                        jobService.getLongWeather(this);
+                    }
+
 
                 }
+
 
                 break;
             }

@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -110,7 +111,7 @@ public class WeatherJobService extends JobService implements LocationListener {
     public boolean onStartJob(JobParameters params) {
 //        System.out.println("onStartjob" + params.getJobId());
 
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             Intent activityIntent = new Intent(getApplicationContext(), PermissionActivity.class);
             //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -220,20 +221,20 @@ public class WeatherJobService extends JobService implements LocationListener {
         Location locationGPS = null;
         Location locationNet = null;
 //
-//        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-//            }
-//            locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//
-//        } else
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 
 
-                locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
+            locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
+        }else if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+            locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } else {
             return;
         }
@@ -264,13 +265,13 @@ public class WeatherJobService extends JobService implements LocationListener {
             NetLocationTime = locationNet.getTime();
         }
         if (locationGPS != null || locationNet != null) {
-//            if (0 < GPSLocationTime - NetLocationTime) {
-//                latitude = String.valueOf(locationGPS.getLatitude());
-//                longitude = String.valueOf(locationGPS.getLongitude());
-//            } else {
+            if (0 < GPSLocationTime - NetLocationTime) {
+                latitude = String.valueOf(locationGPS.getLatitude());
+                longitude = String.valueOf(locationGPS.getLongitude());
+            } else {
                 latitude = String.valueOf(locationNet.getLatitude());
                 longitude = String.valueOf(locationNet.getLongitude());
-//            }
+            }
         }
     }
 
