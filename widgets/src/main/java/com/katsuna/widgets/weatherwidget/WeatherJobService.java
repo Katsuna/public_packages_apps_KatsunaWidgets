@@ -109,7 +109,7 @@ public class WeatherJobService extends JobService implements LocationListener {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-//        System.out.println("onStartjob" + params.getJobId());
+      System.out.println("onStartjob" + params.getJobId());
 
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             Intent activityIntent = new Intent(getApplicationContext(), PermissionActivity.class);
@@ -125,11 +125,11 @@ public class WeatherJobService extends JobService implements LocationListener {
 
 
             if (params.getJobId() == JOB_CURRENT_ID) {
-                getCurrentWeather(getApplicationContext());
+                getCurrentWeather(getApplicationContext(), params);
             } else if (params.getJobId() == JOB_SHORT_ID) {
-                getShortWeather(getApplicationContext());
+                getShortWeather(getApplicationContext(), params);
             } else if (params.getJobId() == JOB_LONG_ID) {
-                getLongWeather(getApplicationContext());
+                getLongWeather(getApplicationContext(), params);
             }
         }
         return true;
@@ -141,7 +141,7 @@ public class WeatherJobService extends JobService implements LocationListener {
         return false;
     }
 
-    public void getCurrentWeather(Context context) {
+    public void getCurrentWeather(Context context, JobParameters params) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
         getLastBestLocation(context);
@@ -152,10 +152,10 @@ public class WeatherJobService extends JobService implements LocationListener {
             new GetWeatherTask().execute();
 
         }
-
+        jobFinished(params, false);
     }
 
-    public void getShortWeather(Context context) {
+    public void getShortWeather(Context context, JobParameters params) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
 
@@ -167,9 +167,11 @@ public class WeatherJobService extends JobService implements LocationListener {
             new GetShortTermWeatherTask().execute();
 
         }
+        jobFinished(params, false);
+
     }
 
-    public void getLongWeather(Context context) {
+    public void getLongWeather(Context context,JobParameters params) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
         getLastBestLocation(context);
@@ -181,6 +183,8 @@ public class WeatherJobService extends JobService implements LocationListener {
             new GetLongTermWeatherTask().execute();
 
         }
+        jobFinished(params, false);
+
     }
 
     @Override
