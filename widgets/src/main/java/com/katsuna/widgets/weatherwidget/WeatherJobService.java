@@ -27,6 +27,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
+import com.katsuna.commons.utils.Log;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.commons.PermissionActivity;
 import com.katsuna.widgets.commons.WidgetCollection;
@@ -109,8 +110,8 @@ public class WeatherJobService extends JobService implements LocationListener {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-      System.out.println("onStartjob" + params.getJobId());
-
+//      System.out.println("onStartjob" + params.getJobId());
+        Log.d("job","startjon"+params.getJobId());
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             Intent activityIntent = new Intent(getApplicationContext(), PermissionActivity.class);
             //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -141,6 +142,7 @@ public class WeatherJobService extends JobService implements LocationListener {
         return false;
     }
 
+
     public void getCurrentWeather(Context context, JobParameters params) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
@@ -153,6 +155,18 @@ public class WeatherJobService extends JobService implements LocationListener {
 
         }
         jobFinished(params, false);
+    }
+    public void getCurrentWeather(Context context) {
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        this.context = context;
+        getLastBestLocation(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new GetWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new GetWeatherTask().execute();
+
+        }
     }
 
     public void getShortWeather(Context context, JobParameters params) {
@@ -171,6 +185,20 @@ public class WeatherJobService extends JobService implements LocationListener {
 
     }
 
+    public void getShortWeather(Context context) {
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        this.context = context;
+
+        getLastBestLocation(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new GetShortTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new GetShortTermWeatherTask().execute();
+
+        }
+
+    }
     public void getLongWeather(Context context,JobParameters params) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         this.context = context;
@@ -185,6 +213,19 @@ public class WeatherJobService extends JobService implements LocationListener {
         }
         jobFinished(params, false);
 
+    }
+    public void getLongWeather(Context context ) {
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        this.context = context;
+        getLastBestLocation(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+            new GetLongTermWeatherTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new GetLongTermWeatherTask().execute();
+
+        }
     }
 
     @Override

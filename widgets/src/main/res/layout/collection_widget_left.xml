@@ -24,8 +24,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:gravity="right"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -33,16 +34,15 @@
                     android:id="@+id/calendar_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/time_date"
-                    android:textAllCaps="true"
-                    android:textSize="20sp"
                     android:layout_margin="9dp"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:drawableStart="@drawable/ic_widgeticons_timedate"
+                    android:drawableEnd="@drawable/ic_widgeticons_timedate"
                     android:drawablePadding="12dp"
-                    />
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="right"
+                    android:text="@string/time_date"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="20sp" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -58,7 +58,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="end"
                 android:orientation="vertical"
                 >
 
@@ -114,87 +114,89 @@
 
         android:orientation="vertical"
         android:weightSum="1">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/common_grey300"
-            >
+            android:background="@color/common_grey300">
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:baselineAligned="false"
-                android:gravity="center"
 
+                android:gravity="right"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
                 <TextView
                     android:id="@+id/weatherHeader"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/weather_title"
-                    android:textAllCaps="true"
-                    android:gravity="start"
-                    android:textSize="20sp"
                     android:layout_margin="9dp"
-                    android:drawableStart="@drawable/ic_widgeticons_weather"
+                    android:drawableEnd="@drawable/ic_widgeticons_weather"
                     android:drawablePadding="12dp"
                     android:fontFamily="sans-serif-medium"
+                    android:gravity="start"
                     android:paddingBottom="1dp"
-                    />
+                    android:text="@string/weather_title"
+                    android:textAllCaps="true"
+                    android:textSize="20sp" />
             </LinearLayout>
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@id/weatherRootContainer"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"  />
-        <LinearLayout
-            android:id="@id/weatherRootNoData"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@id/weatherRootNoData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/widget_weather_3"
                     android:layout_margin="12dp"
-                    />
+                    android:src="@drawable/widget_weather_3" />
+
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/widget_weather_4"
                     android:layout_margin="12dp"
-                    />
+                    android:src="@drawable/widget_weather_4" />
+
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/widget_weather_2"
                     android:layout_margin="12dp"
-                    />
+                    android:src="@drawable/widget_weather_2" />
+
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/widget_weather_1"
                     android:layout_margin="12dp"
-                    />
+                    android:src="@drawable/widget_weather_1" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_data"
-                android:textSize="20sp"
+                android:layout_margin="12dp"
                 android:fontFamily="sans-serif-medium"
-                android:layout_margin="12dp"/>
+                android:text="@string/no_data"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
