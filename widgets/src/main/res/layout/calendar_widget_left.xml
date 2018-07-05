@@ -99,7 +99,7 @@
 
                 <TextClock
                     android:id="@+id/appwidget_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="10dp"
@@ -116,7 +116,7 @@
                 <TextClock
                     android:id="@+id/date"
 
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/appwidget_text"

@@ -16,6 +16,7 @@ import android.widget.RemoteViews;
 
 import com.katsuna.commons.entities.ColorProfile;
 import com.katsuna.commons.entities.ColorProfileKey;
+import com.katsuna.commons.entities.UserProfileContainer;
 import com.katsuna.commons.utils.ColorCalc;
 import com.katsuna.widgets.R;
 import com.katsuna.widgets.commons.WidgetCollection;
@@ -32,7 +33,8 @@ import java.util.List;
 
 public class WeatherUpdateFunctions {
 
-    public RemoteViews createRemoteViews(int layout, Context context, String packageName, WidgetCollection provider, ColorProfile colorProfile) {
+
+    public RemoteViews createRemoteViews(int layout, Context context, String packageName, WidgetCollection provider, ColorProfile colorProfile,UserProfileContainer mUserProfileContainer) {
         int color2 = ColorCalc.getColor(context,
                 ColorProfileKey.ACCENT2_COLOR, colorProfile);
 
@@ -72,8 +74,21 @@ public class WeatherUpdateFunctions {
             if(widgetWeather.getIcon()!= null) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
-                    RemoteViews rv = new RemoteViews(packageName, R.layout.current_weather);
-                    remoteViews = new RemoteViews(packageName, R.layout.collection_widget_v4);
+                    RemoteViews rv = null;
+                    if(mUserProfileContainer !=null) {
+                        if (!mUserProfileContainer.isRightHanded()) {
+                            rv = new RemoteViews(context.getPackageName(), R.layout.current_weather_left);
+                            remoteViews = new RemoteViews(packageName, R.layout.collection_widget_left);
+                        } else {
+                            rv = new RemoteViews(context.getPackageName(), R.layout.current_weather);
+                            remoteViews = new RemoteViews(packageName, R.layout.collection_widget_v4);
+                        }
+                    }
+                    else{
+                        rv = new RemoteViews(context.getPackageName(), R.layout.current_weather);
+                        remoteViews = new RemoteViews(packageName, R.layout.collection_widget_v4);
+                    }
+
                     remoteViews.setOnClickPendingIntent(R.id.weatherRoot, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
 
                     rv.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
@@ -93,44 +108,20 @@ public class WeatherUpdateFunctions {
                     }
                 }
                 else{
-                    remoteViews = new RemoteViews(packageName, R.layout.no_permission_layout);
+                    if (mUserProfileContainer != null) {
+                        if (!mUserProfileContainer.isRightHanded()) {
+                            remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permition_layout_left);
+                        } else {
+                            remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                        }
+                    }
+                    else{
+                        remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                    }
                     remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, provider.getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
 
                 }
             }
-
-        }
-        else if( layout == 2) {
-            if(widgetWeather.getIcon()!= null) {
-                remoteViews = new RemoteViews(packageName, R.layout.extended_widget_view);
-
-                remoteViews.setOnClickPendingIntent(R.id.back, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
-                remoteViews.setOnClickPendingIntent(R.id.state_week, provider.getPendingSelfIntent(context, WidgetCollection.WEEK_CLICKED));
-                remoteViews.setOnClickPendingIntent(R.id.state_day, provider.getPendingSelfIntent(context, WidgetCollection.DAY_CLICKED));
-
-                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
-
-                remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
-                remoteViews.setTextViewText(R.id.widgetDescription, widgetWeather.getDescription()+", "+widgetWeather.getWind());
-                //remoteViews.setTextViewText(R.id.widgetWind, widgetWeather.getWind());
-                remoteViews.setTextViewText(R.id.city, widgetWeather.getCity());
-
-
-                remoteViews.setTextViewText(R.id.widgetExDescription, widgetWeather.getDescription());
-                remoteViews.setTextViewText(R.id.widgetHumidity, "Humidity:"+ widgetWeather.getHumidity() + "%");
-                remoteViews.setImageViewResource(R.id.widgetIcon, getWeatherIconId(widgetWeather.getIcon(), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), context));
-                if(textColor != 0){
-                    remoteViews.setTextColor(R.id.back, textColor);
-                    remoteViews.setTextColor(R.id.state_now,textColor);
-                }
-
-            }
-
-            int color1 = ColorCalc.getColor(context,
-                    ColorProfileKey.ACCENT1_COLOR, colorProfile);
-            remoteViews.setInt(R.id.state_now, "setBackgroundColor", color1);
-
-            remoteViews.setTextColor(R.id.state_now, color2);
 
         }
         else if(layout == 3){
@@ -160,10 +151,18 @@ public class WeatherUpdateFunctions {
 //                    System.out.println("I HAVEN'T ANY DATA");
                 }
             }
-
-            remoteViews = new RemoteViews(packageName, R.layout.week_widget_view);
+            if(mUserProfileContainer != null) {
+                if (!mUserProfileContainer.isRightHanded()) {
+                    remoteViews = new RemoteViews(packageName, R.layout.week_widget_left);
+                } else {
+                    remoteViews = new RemoteViews(packageName, R.layout.week_widget_view);
+                }
+            }
+            else{
+                remoteViews = new RemoteViews(packageName, R.layout.week_widget_view);
+            }
             remoteViews.setOnClickPendingIntent(R.id.back, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
-            remoteViews.setOnClickPendingIntent(R.id.state_now, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
+//            remoteViews.setOnClickPendingIntent(R.id.state_now, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_week_day, provider.getPendingSelfIntent(context, WidgetCollection.DAY_CLICKED));
 
             remoteViews.setTextViewText(R.id.widgetTemperature, widgetWeather.getTemperature());
@@ -231,8 +230,16 @@ public class WeatherUpdateFunctions {
                 else{
                 }
             }
-
-            remoteViews = new RemoteViews(packageName, R.layout.day_widget_view);
+            if( mUserProfileContainer != null) {
+                if (!mUserProfileContainer.isRightHanded()) {
+                    remoteViews = new RemoteViews(packageName, R.layout.day_widget_left);
+                } else {
+                    remoteViews = new RemoteViews(packageName, R.layout.day_widget_view);
+                }
+            }
+            else{
+                remoteViews = new RemoteViews(packageName, R.layout.day_widget_view);
+            }
             remoteViews.setOnClickPendingIntent(R.id.back, provider.getPendingSelfIntent(context, WidgetCollection.BACK_CLICKED));
             remoteViews.setOnClickPendingIntent(R.id.state_day_week, provider.getPendingSelfIntent(context, WidgetCollection.WEEK_CLICKED));
 

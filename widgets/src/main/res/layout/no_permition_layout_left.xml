@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/widget_back"
+    android:gravity="left"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/time_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/upper_corners"
+            android:gravity="right">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/calendar_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:drawableRight="@drawable/ic_widgeticons_timedate"
+                    android:drawablePadding="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="@string/time_date"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="20dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <TextClock
+                    android:id="@+id/appwidget_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="12dp"
+                    android:contentDescription="@string/appwidget_text"
+                    android:text="@string/default_hour"
+                    android:textColor="@android:color/black"
+                    android:textSize="36dp"
+                    android:fontFamily="sans-serif-medium"/>
+
+
+
+                <TextClock
+                    android:id="@+id/date"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/appwidget_text"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/default_date"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:textStyle="normal"
+                    android:format24Hour="@string/dateFormat"
+                    android:format12Hour="@string/dateFormat"
+                    android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1E000000"
+        />
+
+    <LinearLayout
+        android:id="@+id/weatherRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="10000dp"
+        android:maxHeight="130dp"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/common_grey300"
+            android:gravity="right">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_alignParentLeft="true"
+
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/weatherHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:drawablePadding="12dp"
+                    android:drawableRight="@drawable/ic_widgeticons_weather"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="@string/weather_title"
+                    android:textAllCaps="true"
+                    android:textSize="20dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:baselineAligned="false"
+            android:gravity="right"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/no_permission_text"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/addPermissionBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:background="@drawable/rounded_permission_button"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:text="@string/permission_button"
+                android:textAllCaps="false"
+                android:textColor="@color/common_indigoA700"
+
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
