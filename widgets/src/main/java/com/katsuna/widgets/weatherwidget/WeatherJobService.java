@@ -80,7 +80,7 @@ public class WeatherJobService extends JobService implements LocationListener {
         JobInfo shortJobInfo;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             shortJobInfo = new JobInfo.Builder(JOB_SHORT_ID, component)
-                    .setPeriodic(3 * ONE_MIN)
+                    .setPeriodic(3 *60* ONE_MIN)
                     .build();
         } else {
             shortJobInfo = new JobInfo.Builder(JOB_SHORT_ID, component)
@@ -121,7 +121,6 @@ public class WeatherJobService extends JobService implements LocationListener {
 
 
             if (params.getJobId() == JOB_CURRENT_ID) {
-                System.out.println("i m in current weather start job!!");
                 getCurrentWeather(getApplicationContext());
             } else if (params.getJobId() == JOB_SHORT_ID) {
                 getShortWeather(getApplicationContext());
