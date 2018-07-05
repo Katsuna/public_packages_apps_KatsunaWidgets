@@ -97,7 +97,7 @@ public class WidgetCollection extends AppWidgetProvider {
                     }
                     setupTheme(context);
 
-                    RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+                    RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
                     remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(context, WidgetCollection.VIEW_CALENDAR_CLICKED));
                     ComponentName componentName = new ComponentName(context, WidgetCollection.class);
                     appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -105,8 +105,19 @@ public class WidgetCollection extends AppWidgetProvider {
                 }
                 else{
                     //System.out.println("Im in update and i don't have permission");
+                    RemoteViews remoteViews = null;
+                    if (mUserProfileContainer != null){
+                        if( !mUserProfileContainer.isRightHanded()) {
+                            remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permition_layout_left);
+                        }
+                        else {
+                            remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                        }
+                    }
+                    else{
+                        remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                    }
 
-                    RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
                     remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
 
                     appWidgetManager.updateAppWidget( appWidgetIds, remoteViews);
@@ -127,7 +138,7 @@ public class WidgetCollection extends AppWidgetProvider {
 //        context.startService(new Intent(context, ClockMonitorService.class));
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+            RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
             remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(context, WidgetCollection.VIEW_CALENDAR_CLICKED));
             ComponentName componentName = new ComponentName(context, WidgetCollection.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -136,7 +147,17 @@ public class WidgetCollection extends AppWidgetProvider {
           //  context.startService(new Intent(context, WeatherMonitorService.class));
         }
         else{
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+            RemoteViews remoteViews = null;
+            if( mUserProfileContainer != null) {
+                if (!mUserProfileContainer.isRightHanded()) {
+                    remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permition_layout_left);
+                } else {
+                    remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+                }
+            }
+            else{
+                remoteViews = new RemoteViews(context.getPackageName(), R.layout.no_permission_layout);
+            }
             remoteViews.setOnClickPendingIntent(R.id.addPermissionBtn, getPendingSelfIntent(context, WidgetCollection.ADD_PERMISSION_CLICKED));
             ComponentName componentName = new ComponentName(context, WidgetCollection.class);
 
@@ -174,7 +195,7 @@ public class WidgetCollection extends AppWidgetProvider {
       if (WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
 
-          RemoteViews remoteViews = weatherUpdater.createRemoteViews(5,context,context.getPackageName(),this,colorProfile);
+          RemoteViews remoteViews = weatherUpdater.createRemoteViews(5,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
           ComponentName componentName = new ComponentName(context, WidgetCollection.class);
           AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
           appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -182,7 +203,7 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         else if (VIEW_WEATHER_CLICKED.equals(intent.getAction())) {
             extended = true;
-          RemoteViews remoteViews = weatherUpdater.createRemoteViews(4,context,context.getPackageName(),this,colorProfile);
+          RemoteViews remoteViews = weatherUpdater.createRemoteViews(4,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
           ComponentName componentName = new ComponentName(context, WidgetCollection.class);
           AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
           appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -191,7 +212,7 @@ public class WidgetCollection extends AppWidgetProvider {
             extended = false;
             calendar = false;
 
-            RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile);
+            RemoteViews remoteViews = weatherUpdater.createRemoteViews(1,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
             remoteViews.setOnClickPendingIntent(R.id.time_root, getPendingSelfIntent(context, WidgetCollection.VIEW_CALENDAR_CLICKED));
             ComponentName componentName = new ComponentName(context, WidgetCollection.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -200,14 +221,14 @@ public class WidgetCollection extends AppWidgetProvider {
         }
         else if (WEEK_CLICKED.equals(intent.getAction())){
             extended = true;
-            RemoteViews remoteViews = weatherUpdater.createRemoteViews(3,context,context.getPackageName(),this,colorProfile);
+            RemoteViews remoteViews = weatherUpdater.createRemoteViews(3,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
             ComponentName componentName = new ComponentName(context, WidgetCollection.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             appWidgetManager.updateAppWidget(componentName, remoteViews);
         }
         else if (DAY_CLICKED.equals(intent.getAction())){
             extended = true;
-            RemoteViews remoteViews = weatherUpdater.createRemoteViews(4,context,context.getPackageName(),this,colorProfile);
+            RemoteViews remoteViews = weatherUpdater.createRemoteViews(4,context,context.getPackageName(),this,colorProfile, mUserProfileContainer);
             ComponentName componentName = new ComponentName(context, WidgetCollection.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             appWidgetManager.updateAppWidget(componentName, remoteViews);
@@ -262,7 +283,17 @@ public class WidgetCollection extends AppWidgetProvider {
         int color2 = ColorCalc.getColor(context, ColorProfileKey.ACCENT2_COLOR,
                 colorProfile);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.calendar_widget);
+        RemoteViews rv = null;
+        if(mUserProfileContainer != null) {
+            if (!mUserProfileContainer.isRightHanded()) {
+                rv = new RemoteViews(context.getPackageName(), R.layout.calendar_widget_left);
+            } else {
+                rv = new RemoteViews(context.getPackageName(), R.layout.calendar_widget);
+            }
+        }
+        else{
+            rv = new RemoteViews(context.getPackageName(), R.layout.calendar_widget);
+        }
 
         Calendar cal = Calendar.getInstance();
         int today = cal.get(Calendar.DAY_OF_YEAR);
