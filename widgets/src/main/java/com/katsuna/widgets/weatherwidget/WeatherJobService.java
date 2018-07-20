@@ -111,7 +111,7 @@ public class WeatherJobService extends JobService implements LocationListener {
     @Override
     public boolean onStartJob(JobParameters params) {
 //      System.out.println("onStartjob" + params.getJobId());
-        Log.d("job","startjon"+params.getJobId());
+//        Log.d("job","startjon"+params.getJobId());
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             Intent activityIntent = new Intent(getApplicationContext(), PermissionActivity.class);
             //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -154,7 +154,7 @@ public class WeatherJobService extends JobService implements LocationListener {
             new GetWeatherTask().execute();
 
         }
-        jobFinished(params, false);
+        jobFinished(params, true);
     }
     public void getCurrentWeather(Context context) {
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
@@ -181,7 +181,7 @@ public class WeatherJobService extends JobService implements LocationListener {
             new GetShortTermWeatherTask().execute();
 
         }
-        jobFinished(params, false);
+        jobFinished(params, true);
 
     }
 
@@ -211,7 +211,7 @@ public class WeatherJobService extends JobService implements LocationListener {
             new GetLongTermWeatherTask().execute();
 
         }
-        jobFinished(params, false);
+        jobFinished(params, true);
 
     }
     public void getLongWeather(Context context ) {
