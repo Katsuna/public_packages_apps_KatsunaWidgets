@@ -20,12 +20,12 @@
   <!-- title of weather screen -->
   <string name="wind">Wind</string>
   <!-- title of weather screen -->
-  <string name="pressure">Druck</string>
+  <string name="pressure">Luftdruck</string>
   <string name="humidity">Luftfeuchtigkeit</string>
   <string name="sunrise">Sonnenaufgang</string>
   <string name="sunset">Sonnenuntergang</string>
   <!-- Last updated weather text-->
-  <string name="last_update">Letztes Update:</string>
+  <string name="last_update">Letzte Aktualisierung:</string>
   <!-- OK button text-->
   <string name="dialog_ok">OK</string>
   <!-- Cancel button text-->
@@ -104,7 +104,7 @@
   <!-- Battery saver on text-->
   <string name="on">ein</string>
   <!-- Battery saver text-->
-  <string name="battery_saver">Battery Saver</string>
+  <string name="battery_saver">Energiesparmodus</string>
   <!-- downloading data text-->
   <string name="downloading_data">Ihre Daten werden heruntergeladen</string>
   <!--Text on button for adding location permission -->
