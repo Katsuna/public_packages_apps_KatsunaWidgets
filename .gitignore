@@ -34,3 +34,6 @@ local.properties
 app/libs/
 app/src/main/res/drawable/
 build/
+
+# jenkins
+jenkins.properties
