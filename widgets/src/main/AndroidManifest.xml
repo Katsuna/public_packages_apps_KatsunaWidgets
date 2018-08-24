@@ -52,13 +52,14 @@
                 android:resource="@xml/widget" />
 
         </receiver>
-        <receiver android:name="com.katsuna.widgets.weatherwidget.WifiReceiver"
-            android:enabled="true" android:label="com.katsuna.widgets.weatherwidget.WifiReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name="com.katsuna.widgets.utils.ConnectivityReceiver"-->
+            <!--android:enabled="true" android:label="com.katsuna.widgets.utils.ConnectivityReceiver">-->
+            <!--<intent-filter>-->
+                <!--&lt;!&ndash;<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<action android:name="android.net.wifi.STATE_CHANGE"/>&ndash;&gt;-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
         <!--<receiver android:name=".WeatherWidget" >-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
@@ -124,8 +125,10 @@
             <!--</intent-filter>-->
         <!--</receiver>-->
 
-
-
+        <service
+            android:name=".utils.NetworkSchedulerService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         
 
     </application>

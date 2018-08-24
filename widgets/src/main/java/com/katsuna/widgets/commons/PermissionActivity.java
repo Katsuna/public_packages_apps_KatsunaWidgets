@@ -3,6 +3,9 @@ package com.katsuna.widgets.commons;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +14,10 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 
+import com.katsuna.widgets.utils.NetworkSchedulerService;
 import com.katsuna.widgets.weatherwidget.WeatherJobService;
 
 import static com.katsuna.commons.utils.ServiceManager.isNetworkAvailable;
@@ -69,6 +74,12 @@ public class PermissionActivity extends Activity {
                         jobService.getCurrentWeather(this);
                         jobService.getShortWeather(this);
                         jobService.getLongWeather(this);
+
+//                        Intent startServiceIntent = new Intent(this, NetworkSchedulerService.class);
+//                        startService(startServiceIntent);
+//
+//                        scheduleJob();
+
                     }
 
 
@@ -120,6 +131,20 @@ public class PermissionActivity extends Activity {
         intent.putExtra("permissionsGranted", permissionsGranted);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void scheduleJob() {
+        JobInfo myJob = new JobInfo.Builder(0, new ComponentName(this, NetworkSchedulerService.class))
+                .setRequiresCharging(true)
+                .setMinimumLatency(1000)
+                .setOverrideDeadline(2000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(myJob);
     }
 
 }

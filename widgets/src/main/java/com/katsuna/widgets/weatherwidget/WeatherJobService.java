@@ -68,11 +68,14 @@ public class WeatherJobService extends JobService implements LocationListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             jobInfo = new JobInfo.Builder(JOB_CURRENT_ID, component)
                     .setPeriodic(30 * ONE_MIN)
+                    .setPersisted(true)
                     .build();
         } else {
             jobInfo = new JobInfo.Builder(JOB_CURRENT_ID, component)
                     .setPeriodic(30 * ONE_MIN)
+                    .setPersisted(true)
                     .build();
+
         }
 
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
@@ -82,10 +85,12 @@ public class WeatherJobService extends JobService implements LocationListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             shortJobInfo = new JobInfo.Builder(JOB_SHORT_ID, component)
                     .setPeriodic(3 * 60 * ONE_MIN)
+                    .setPersisted(true)
                     .build();
         } else {
             shortJobInfo = new JobInfo.Builder(JOB_SHORT_ID, component)
                     .setPeriodic(3 * 60 * ONE_MIN)
+                    .setPersisted(true)
                     .build();
         }
 
@@ -96,10 +101,12 @@ public class WeatherJobService extends JobService implements LocationListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             longJobInfo = new JobInfo.Builder(JOB_LONG_ID, component)
                     .setPeriodic(20 * 60 * ONE_MIN)
+                    .setPersisted(true)
                     .build();
         } else {
             longJobInfo = new JobInfo.Builder(JOB_LONG_ID, component)
                     .setPeriodic(20 * 60 * ONE_MIN)
+                    .setPersisted(true)
                     .build();
         }
         JobScheduler longJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
