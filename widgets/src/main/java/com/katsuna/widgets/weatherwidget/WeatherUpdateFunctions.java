@@ -87,6 +87,7 @@ public class WeatherUpdateFunctions {
                     else{
                         rv = new RemoteViews(context.getPackageName(), R.layout.current_weather);
                         remoteViews = new RemoteViews(packageName, R.layout.collection_widget_v4);
+
                     }
 
                     remoteViews.setOnClickPendingIntent(R.id.weatherRoot, provider.getPendingSelfIntent(context, WidgetCollection.VIEW_WEATHER_CLICKED));
